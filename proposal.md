@@ -476,3 +476,45 @@ Section,Category,Item,Requirement,Detailed Specification,Acceptance Criteria,Pri
 "26. NEW SERVICES","Eco Construction","First-class service","Full landing page: direct answer + principles + materials + passive design + energy/water + projects + process + FAQ + CTA","No thin page; no greenwashing",P0,""
 "26. NEW SERVICES","Concrete Construction Turnkey","First-class service","Full landing page: direct answer + scope + architecture-to-build process + structural/technical + finishes + project slider + budget guidance + FAQ + CTA","No invented prices; no fake engineering credentials",P0,""
 "27. LOCATIONS","Expansion","Koh Samui Koh Tao Bali","Only where genuine service exists","Unique local expertise; no doorway copies",P0,""
+---
+## Дополнительные требования — Премиум + Трафик + Mobile
+
+### 1. Ультра-премиум визуал
+- Сайт должен выглядеть как дорогой editorial/luxury brand, не шаблон
+- Каждый блок — отдельная дизайнерская композиция (hero → direct answer → visual proof → scope → benefits → process → portfolio → FAQ → CTA)
+- Крупная типографика, editorial photography, generous whitespace
+- Cinematic hero с 3-5 кадрами, плавные переходы
+- CSS-only атмосферный фон (subtle gradient)
+
+### 2. Блочная структура (Landing Page)
+- Минимум 10 уникальных блоков на коммерческих страницах
+- Блоки чередуются: текст/изображение/карточки/процесс/FAQ/CTA
+- Никаких «стен текста» — каждый блок решает свою задачу
+- Reusable компоненты: Hero, Direct Answer, Service Grid, Split Image/Text, Project Slider, Process Timeline, FAQ Accordion, CTA Banner
+
+### 3. Mobile-first скорость
+- Mobile-first разработка (360-430px база, desktop — расширение mobile)
+- LCP ≤ 2.5s, INP ≤ 200ms, CLS ≤ 0.1 (Core Web Vitals)
+- Total page weight ≤ 1.5MB на mobile
+- Images: AVIF/WebP, srcset (5 widths), lazy-load, preload только hero
+- Минимум JS, только критический CSS
+
+### 4. Органический трафик (SEO/GEO)
+- Один primary intent на страницу — никакой каннибализации
+- Direct Answer block (40-60 слов) на всех коммерческих страницах
+- FAQ (6-10 уникальных вопросов) на каждой странице
+- Semantic HTML + JSON-LD schema (Organization, Service, BreadcrumbList, FAQPage, Article)
+- Hreflang для EN/RU/TH/HE + sitemap.xml + robots.txt
+- llms.txt + AI-citability (GEO ready)
+- Internal link graph — все страницы связаны, 0 orphans
+- Content clusters: каждая статья отвечает на реальный поисковый запрос
+
+### 5. 3000+ URL architecture (без doorway)
+- Только страницы с уникальным intent
+- Programmatic pages только где есть genuine контент
+- Location pages с уникальной локальной экспертизой
+
+### 6. Telegram/WhatsApp боты как intake funnel
+- Language → Service → Location → Project Type → Budget → Files → Contact → Submit
+- Service page CTA preselects service
+- Security: sanitize input, rate-limit, validate uploads
