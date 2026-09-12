@@ -154,388 +154,350 @@
 ---
 ## Дополнительная таблица требований (DeepSeek)
 
-Section,Category,Item,Requirement,Detailed Specification,Acceptance Criteria,Priority,Claude Instruction
-"0. MISSION","Role","Lead product designer","Act as lead product designer","Premium tropical architecture editorial aesthetic; magazine-quality","Site feels like high-end architecture studio within 5 seconds",P0,"Never generic contractor template"
-"0. MISSION","Role","Senior frontend engineer","Act as senior frontend engineer","Static-first; no CMS; minimal JS; componentized","No critical content depends on JS; deployable as static",P0,"Document stack rationale in README"
-"0. MISSION","Role","Technical SEO / GEO architect","Act as SEO/GEO architect","Google + Yandex + AI search; schema; hreflang; internal linking; local SEO","All P0 SEO checks pass",P0,""
-"0. MISSION","Role","Premium copywriter","Act as premium architecture copywriter","Specific sensory restrained commercially useful locally relevant fact-based","Passes human editorial review",P0,"No filler; no clichés"
-"0. MISSION","Role","Conversion strategist","Act as conversion strategist","CTA hierarchy; lead bots; consultative conversion","Every commercial page has clear next step",P0,"Not salesy"
-"0. MISSION","Anti-hallucination","Truth rule","Never invent facts","No clients; awards; prices; reviews; team; guarantees; locations; credentials; projects","All facts traceable or marked [[VERIFY]]",P0,"Log assumptions in NOTES.md"
-"0. MISSION","Anti-hallucination","Missing data protocol","Handle missing facts gracefully","Explain factors not numbers; [[VERIFY: ...]] in source","No gap reads as a gap",P0,"Never fabricate"
-"0. MISSION","Decision rule","Autonomous progress","Do not block on missing details","Choose most premium technically-sound SEO-safe option; flag in NOTES.md","Build completes; assumptions documented",P0,"Deliver; no unnecessary questions"
-"1. POSITIONING","Category","Business type","Premium architecture design-build studio","Architecture + interiors + construction + project management under one roof","Positioned above ordinary contractors",P0,""
-"1. POSITIONING","Location","Primary location","Koh Phangan Thailand","Island expertise; tropical climate; logistics; local regulations context","Local knowledge visible on Home About Locations",P0,""
-"1. POSITIONING","Proposition","Core proposition","Design and build exceptional spaces on Koh Phangan — architecture interiors construction and project management under one roof","Reflected in hero About Services CTAs","Phrase or paraphrase on Home",P0,""
-"1. POSITIONING","Voice","Brand voice","Quiet luxury; architectural; confident; intelligent; tropical; human","No hype; no fake awards; no generic contractor phrases","Copy passes editorial review",P0,"Read aloud test"
-"1. POSITIONING","Anti-positioning","What we are not","Not an ordinary contractor; not a directory listing; not real-estate template","Premium above commodity",P0,"Subtle differentiation"
-"2. AUDIENCE","Personas","Villa owners","Build/renovate premium villa","Entry via /services/villa-design/ /services/renovation/","Persona addressed",P0,""
-"2. AUDIENCE","Personas","Investors","Build asset; manage risk","Entry via /services/turnkey-projects/ /services/project-management/","Persona addressed",P0,""
-"2. AUDIENCE","Personas","Expats","Build home on island","Entry via /","Persona addressed",P0,""
-"2. AUDIENCE","Personas","International clients","Remote project delivery","Entry via /process/ /about/","Persona addressed",P1,""
-"2. AUDIENCE","Personas","Hospitality operators","Boutique resort / villa rental development","Entry via /services/villa-design/ /services/landscape-design/","Persona addressed",P1,""
-"2. AUDIENCE","Personas","Developers","Multi-villa / mixed-use","Entry via /services/concrete-construction/ /services/project-management/","Persona addressed",P1,""
-"3. COMMERCIAL","Model","Design only","Architecture + interiors only","Defined deliverables","Scope clear",P0,""
-"3. COMMERCIAL","Model","Design + build","Integrated design-build","Single team; single accountability","Value clear",P0,""
-"3. COMMERCIAL","Model","Turnkey","Concept to handover","Full package","Clear scope",P0,""
-"3. COMMERCIAL","Model","Renovation","Existing villa upgrade","Assessment + design + execution","Scope clear",P0,""
-"3. COMMERCIAL","Model","Supervision only","Independent site supervision","Quality control + reporting","Scope clear",P1,""
-"3. COMMERCIAL","Model","Project management only","PM without construction","Coordination; schedule; budget","Scope clear",P1,""
-"3. COMMERCIAL","Model","Eco construction","Sustainable building","Materials; passive cooling; energy; water","Scope clear",P0,""
-"3. COMMERCIAL","Model","Concrete turnkey","Reinforced concrete design-build","Concept to handover","Scope clear",P0,""
-"3. COMMERCIAL","CRM","Pipeline","Discovery -> Concept -> Design Development -> Permits -> Build -> Supervision -> Handover -> Aftercare","Reflected in process page and bot payload","Payload supports pipeline",P1,""
-"4. IA","Root","/ = Services landing","Root is master Services landing; label = Services not Home","Comprehensive overview of all services","P0",P0,"Critical: preserve this; do not create competing /services/ hub"
-"4. IA","URLs","Architecture","/services/architecture/","Architecture design","Primary intent: architect Koh Phangan",P0,""
-"4. IA","URLs","Villa Design","/services/villa-design/","Bespoke villa design","Primary intent: villa design Koh Phangan",P0,""
-"4. IA","URLs","Interior Design","/services/interior-design/","Interior design","Primary intent: interior design Koh Phangan",P0,""
-"4. IA","URLs","Construction","/services/construction/","Villa/build construction","Primary intent: villa construction Koh Phangan",P0,""
-"4. IA","URLs","Renovation","/services/renovation/ or /services/renovation-remodeling/","Renovation & transformation","Primary intent: villa renovation Koh Phangan",P0,"Pick one slug and stay consistent"
-"4. IA","URLs","Project Management","/services/project-management/","PM","Primary intent: project management Koh Phangan",P0,""
-"4. IA","URLs","Construction Supervision","/services/construction-supervision/","Site/construction supervision","Primary intent: construction supervision Koh Phangan",P0,""
-"4. IA","URLs","Technical Supervision","/services/technical-supervision/","Technical coordination","Primary intent: technical supervision Koh Phangan",P0,""
-"4. IA","URLs","Landscape Design","/services/landscape-design/","Landscape & outdoor","Primary intent: landscape design Koh Phangan",P0,""
-"4. IA","URLs","Permits & Planning","/services/permits-planning/ or /services/planning-permits/","Planning/permit support","Primary intent: building permits Koh Phangan",P0,"Pick one slug"
-"4. IA","URLs","Turnkey Projects","/services/turnkey-projects/","Integrated design-build","Primary intent: turnkey villa Koh Phangan",P0,""
-"4. IA","URLs","Eco Construction","/services/eco-construction/","Sustainable building","Primary intent: eco construction Koh Phangan",P0,""
-"4. IA","URLs","Concrete Construction Turnkey","/services/concrete-construction/ or /services/concrete-construction-turnkey/","Concrete design-build","Primary intent: concrete construction Koh Phangan",P0,"Pick one slug"
-"4. IA","URLs","Projects","/projects/","Portfolio index","Primary intent: architecture portfolio Koh Phangan",P0,""
-"4. IA","URLs","About","/about/","Studio story","Primary intent: architecture studio Koh Phangan",P0,""
-"4. IA","URLs","Process","/process/","How projects work","Primary intent: architecture construction process",P0,""
-"4. IA","URLs","Locations hub","/locations/","Service area","Primary intent: architecture services Koh Phangan",P0,""
-"4. IA","URLs","Koh Phangan","/locations/koh-phangan/","Island-wide","Primary intent: architecture Koh Phangan",P0,""
-"4. IA","URLs","Koh Samui","/locations/koh-samui/","Expansion","Primary intent: architect Koh Samui",P0,"Only if genuine service"
-"4. IA","URLs","Koh Tao","/locations/koh-tao/","Expansion","Primary intent: architect Koh Tao",P0,"Only if genuine service"
-"4. IA","URLs","Bali","/locations/bali/","Expansion","Primary intent: architect Bali",P0,"Only if genuine service"
-"4. IA","URLs","Thong Sala","/locations/thong-sala/","Local","Secondary",P1,"Only if unique content"
-"4. IA","URLs","Sri Thanu","/locations/sri-thanu/","Local","Secondary",P1,"Only if unique content"
-"4. IA","URLs","Haad Rin","/locations/haad-rin/","Local","Secondary",P1,"Only if unique content"
-"4. IA","URLs","Chaloklum","/locations/chaloklum/","Local","Secondary",P1,"Only if unique content"
-"4. IA","URLs","Journal","/journal/","Editorial hub","Primary intent: architecture design knowledge",P1,""
-"4. IA","URLs","Contact","/contact/","Lead conversion","Primary intent: contact architecture studio",P0,""
-"4. IA","URLs","Eco Construction","/services/eco-construction/","P0 service","Full SEO landing page + FAQ + CTA + schema",P0,"No thin page"
-"4. IA","URLs","Concrete Construction Turnkey","/services/concrete-construction/","P0 service","Full SEO landing page + FAQ + budget guidance + CTA + schema",P0,"No thin page"
-"4. IA","Nav","Desktop primary","Services · Projects · About · Process · Locations · Journal · Contact","Services and Locations have dropdown/mega-menu","All visible; active state clear",P0,"Services is first; not Home"
-"4. IA","Nav","Services submenu","Architecture; Villa Design; Interior Design; Construction; Renovation; Project Management; Construction Supervision; Technical Supervision; Landscape Design; Permits & Planning; Turnkey Projects; Eco Construction; Concrete Construction Turnkey","13 services exposed","All 13 in nav (grouping allowed but none disappear)",P0,""
-"4. IA","Nav","Locations submenu","Koh Phangan; Thong Sala; Haad Rin; Sri Thanu; Chaloklum; Baan Tai; Haad Yao; Haad Salad","",P0,""
-"4. IA","Nav","Header CTA","Start a Project (primary); Contact (secondary)","Always visible desktop; sticky mobile","Reachable in 1 interaction",P0,""
-"4. IA","Nav","Mobile menu","Full-screen or large drawer; Services and Locations accordions; language selector; Start a Project CTA","Keyboard/touch accessible; closes predictably","No layout shift",P0,""
-"4. IA","Nav","Language switcher","EN / RU / TH / HE","Preserves current page","Correct hreflang",P0,"Hebrew RTL"
-"5. DESIGN","Direction","Aesthetic","Premium tropical architecture editorial; large photography; whitespace; refined typography; restrained palette; precise grid; natural textures; subtle motion","Architecture-magazine feel; not real-estate template","Premium within 5 seconds",P0,""
-"5. DESIGN","Direction","Anti-patterns","No contractor look; no real-estate template; no SaaS; no loud gradients; no neon","",P0,""
-"5. DESIGN","Color","Base","Warm off-white / stone / ivory","#F7F4EF or similar","Not clinical pure white",P0,""
-"5. DESIGN","Color","Text","Near-black / charcoal","#141210 or similar","Contrast >= 4.5:1",P0,""
-"5. DESIGN","Color","Accent 1","Muted natural green / olive","#5A5F45 or similar","Used sparingly",P0,""
-"5. DESIGN","Color","Accent 2","Sand / bronze / terracotta","#B8714A or similar","Used sparingly",P0,""
-"5. DESIGN","Color","Line","Subtle warm divider","#E5DED4",P0,""
-"5. DESIGN","Typography","Display","Refined architectural display serif (Fraunces GT Sectra Playfair Display)","Large headings","Licensed and web-safe",P0,""
-"5. DESIGN","Typography","Body","Highly legible modern sans (Inter Söhne)","Body and UI","Multilingual support",P0,""
-"5. DESIGN","Typography","Thai fallback","IBM Plex Sans Thai or Noto Sans Thai","Thai pages",P0,""
-"5. DESIGN","Typography","Hebrew fallback","Heebo or Assistant","Hebrew pages",P0,""
-"5. DESIGN","Typography","Scale","H1 72-96 desktop / 40-48 mobile; H2 48-56 / 32; H3 32 / 24; Body L 20; Body M 17","Clear hierarchy",P0,""
-"5. DESIGN","Grid","Desktop 12-col; tablet 8-col; mobile 4-col","Max content width consistent; generous whitespace","No arbitrary margins",P0,""
-"5. DESIGN","Grid","Architectural asymmetry where useful","Intentional composition",P1,""
-"5. DESIGN","Components","Button","Primary + secondary + ghost + text-link","Sharp radius (editorial)","Clear states",P0,""
-"5. DESIGN","Components","Cards","Image-led; minimal borders/shadows; subtle hover","",P0,""
-"5. DESIGN","Components","Header","Transparent on hero; solid on scroll","Sticky",P0,""
-"5. DESIGN","Components","Footer","4-col desktop; accordion mobile","Max 30 links",P0,""
-"5. DESIGN","Components","FAQ","Accordion; large tap target; ARIA","",P0,""
-"5. DESIGN","Components","Slider","Swipe + keyboard + arrows + progress","No CLS",P0,""
-"5. DESIGN","Components","Form","Focus ring visible; labels persistent","",P0,""
-"5. DESIGN","Components","Breadcrumbs","Inline; schema","Inner pages",P1,""
-"5. DESIGN","Components","Mega-menu","Services and Locations","Columns + featured image","",P0,""
-"5. DESIGN","Components","Pull Quote","Editorial emphasis","",P1,""
-"5. DESIGN","Components","Process Timeline","Numbered stages","Mobile vertical",P0,""
-"5. DESIGN","Components","CTA Banner","Full-bleed or split","High contrast but elegant",P0,""
-"5. DESIGN","Motion","Subtle reveal hover transitions","150-500ms; ease-out","Respect prefers-reduced-motion",P0,""
-"5. DESIGN","Motion","Limits","No scroll-jacking; no mobile parallax; max 2 animated per viewport","",P0,""
-"5. DESIGN","Living Background","CSS-only atmospheric gradient","Slow translucent warm-neutral gradient 30-60s; almost imperceptible; no JS/canvas/WebGL/video; respect prefers-reduced-motion","Elegant; no measurable layout shift",P0,""
-"5. DESIGN","Imagery","Style","Full-bleed architecture; material closeups; human-scale moments; tropical context; plans/renders when licensed","Editorial crop; warm neutral grading",P0,""
-"5. DESIGN","Imagery","Sources","Licensed/owned/generated/permitted only; never competitor images","Replaceable via CMS/assets","All assets licensed",P0,""
-"5. DESIGN","Imagery","Captions","Small editorial captions: project type location design focus material","Informative not decorative",P1,""
-"5. DESIGN","Imagery","Optimization","AVIF/WebP; srcset 5 widths; sizes per breakpoint; explicit width/height; lazy below fold; preload LCP hero only","",P0,""
-"6. BLOCKS","B01","Hero Slider","Full-width cinematic; H1; 1-2 line value; primary + secondary CTA; slide progress","3-5 slides; first LCP-optimized",P0,""
-"6. BLOCKS","B02","Direct Answer","40-60 words answering primary question","Immediately below hero",P0,""
-"6. BLOCKS","B03","Editorial Intro","Strong heading + 80-140 word paragraph + optional image","Magazine typography",P0,""
-"6. BLOCKS","B04","Service Grid","6-12 services with concise descriptions and links","Prioritize 6-8 on homepage",P0,""
-"6. BLOCKS","B05","Split Image + Text","Large image one side; editorial copy + CTA other","Alternate alignment",P0,""
-"6. BLOCKS","B06","Project Slider","Large project images; name; location; type; short description; View Project","3-6 projects; drag/swipe + keyboard",P0,""
-"6. BLOCKS","B07","Project Mosaic","Mixed-size cards with strong imagery","Varied aspect ratios",P0,""
-"6. BLOCKS","B08","Process Timeline","5-7 numbered stages with descriptions","Mobile vertical",P0,""
-"6. BLOCKS","B09","Why Us / Principles","4-6 principles with evidence or explanation","No generic claims",P0,""
-"6. BLOCKS","B10","Materials / Design Approach","Palette climate response craft lighting landscape indoor/outdoor","Editorial storytelling",P0,""
-"6. BLOCKS","B11","Budget Guidance","Indicative logic + factors + CTA","Never fabricated prices",P0,""
-"6. BLOCKS","B12","FAQ Accordion","6-10 unique Q + concise A","Unique per page",P0,""
-"6. BLOCKS","B13","Location Block","Context image + service-area text + links","Not doorway",P0,""
-"6. BLOCKS","B14","Journal Cards","3-6 articles with category title excerpt reading time","Topic clusters",P1,""
-"6. BLOCKS","B15","Trust / Proof","Real testimonials completed projects credentials partners process evidence","Verified only",P0,""
-"6. BLOCKS","B16","Final CTA","Large editorial statement + support + Start a Project","Context-specific headline",P0,""
-"6. BLOCKS","B17","Contact Form","Name; email/phone; project type; location; approximate size; stage; budget range optional; message; preferred contact","Short enough to complete",P0,""
-"6. BLOCKS","B18","Footer","Nav; services; locations; languages; contact; socials; legal; copyright","Consistent across languages",P0,""
-"7. TEMPLATES","Homepage","Order","Hero + direct answer + intro + services + projects + process + locations + FAQ + final CTA","H1: Architecture & Design-Build on Koh Phangan","All blocks present",P0,""
-"7. TEMPLATES","Service","Order","Hero + direct answer + scope + process + deliverables + projects + FAQ + CTA","Unique H1/title/meta",P0,""
-"7. TEMPLATES","Project","Order","Hero + facts + concept + scope + services + gallery + outcome + CTA","Unique metadata; breadcrumbs; ImageObject",P0,""
-"7. TEMPLATES","About","Order","Story + philosophy + expertise + local knowledge + team(real) + proof + CTA","Organization/Person schema only if valid",P0,""
-"7. TEMPLATES","Process","Order","Discovery -> Concept -> Design -> Approvals -> Budget -> Build -> Supervision -> Handover","7 stages; responsibilities; approvals; communication",P0,""
-"7. TEMPLATES","Location","Order","Local intro + services + projects + process + FAQ + CTA","Unique local value",P0,""
-"7. TEMPLATES","Journal","Order","Featured articles + categories + topic clusters","Fast cards",P1,""
-"7. TEMPLATES","Article","Order","Title + direct answer + body + images + author/date + related + CTA","Article schema where valid",P1,""
-"7. TEMPLATES","Contact","Order","Contact options + form + location + expectations + CTA","Keyboard-aware form",P0,""
-"8. COPY","Master","English first","Canonical base","RU/TH/HE adapted natively","No literal machine translation",P0,""
-"8. COPY","H1","One per page","Natural phrasing","",P0,""
-"8. COPY","First 150 words","Service + location + value proposition naturally","",P0,""
-"8. COPY","Keywords","Exact only where natural; intent first","",P0,""
-"8. COPY","H2/H3","Cover entities; buyer questions; deliverables; process; outcomes","",P0,""
-"8. COPY","Tone","Premium; calm; confident; concise; specific; commercially useful","",P0,""
-"8. COPY","Local","Koh Phangan naturally; local knowledge; island business context; climate; logistics","",P0,""
-"8. COPY","Forbidden phrases","we turn dreams into reality; unparalleled; one-stop solution; take your business to the next level; state-of-the-art; cutting-edge; world-class (unless verified); best in (unless verified); #1 (unless verified)","Enforce in CI","0 matches",P0,""
-"8. COPY","Pricing","Explain factors; never invent fixed prices","",P0,""
-"8. COPY","CTA","Varied contextual: Start a Project; Discuss Your Site; Request a Consultation; Explore Projects; Ask About Your Project","No repeated Learn More",P0,""
-"8. COPY","Entity clarity","Brand + architecture + design-build + Koh Phangan + Thailand + services + projects","",P0,""
-"8. COPY","FAQ","6-10 useful unique per major page; scope process timing permits budget materials site conditions next steps","40-120 words per answer",P0,""
-"8. COPY","Direct Answer","40-60 words near top of relevant pages","Self-contained",P0,""
-"8. COPY","Volumes","Home 800-1400; Architecture 1000-1800; Villa Design 1000-1800; Interior 1000-1800; Construction 1200-2000; Renovation 1000-1800; PM 900-1600; Supervision 900-1600; Landscape 900-1600; Turnkey 1200-2000; About 900-1500; Process 900-1600; Locations 700-1200; Contact 500-900; Service pages 1500-3000+ when topic supports; Strategic commercial pages 3000-4500","Never pad for length",P0,""
-"8. COPY","Anti-hallucination","All facts traceable or [[VERIFY]]","",P0,""
-"9. LANGUAGE","English","Canonical / x-default","",P0,""
-"9. LANGUAGE","Russian","/ru/","Native; Yandex-aware; separate RU keyword cluster","",P0,""
-"9. LANGUAGE","Thai","/th/","ICU line-breaking; Thai fonts; local search behavior","",P0,""
-"9. LANGUAGE","Hebrew","/he/","dir=rtl lang=he; true RTL","",P0,""
-"9. LANGUAGE","Hebrew RTL","Mirror layout where direction matters; text-align start; margin-inline; bdi for numbers/URLs/email/phone; icons directional mirrored; forms aligned start","",P0,""
-"9. LANGUAGE","Hreflang","Reciprocal + x-default","",P0,""
-"9. LANGUAGE","Terminology","Glossary EN->RU/TH/HE for architecture terms","",P1,""
-"10. SEO","One intent","One primary keyword cluster per indexable page","",P0,""
-"10. SEO","Title","Primary near front; brand/location natural; unique","",P0,""
-"10. SEO","Meta","Topic + differentiator + local + action; unique","",P0,""
-"10. SEO","H1","Natural human-readable aligned with intent","",P0,""
-"10. SEO","URL","Short stable lowercase hyphenated","",P0,""
-"10. SEO","Canonical","Self-referencing","",P0,""
-"10. SEO","Sitemap","Canonical indexable only","",P0,""
-"10. SEO","Robots","Minimal; sitemap referenced","",P0,""
-"10. SEO","Schema","Organization WebSite WebPage BreadcrumbList Service Article ImageObject LocalBusiness/ProfessionalService(only if accurate) Person FAQPage(only where eligible)","",P0,""
-"10. SEO","Internal links","Parent-child-sibling-project-journal-process","",P0,""
-"10. SEO","Cannibalization","No two pages same primary intent","",P0,""
-"10. SEO","Programmatic","Only genuine unique intent","No doorway pages",P0,""
-"10. SEO","Alt text","Describe image; no keyword stuffing","",P0,""
-"10. SEO","Yandex","Webmaster; region; Metrica goals","",P0,""
-"10. SEO","Yandex Title","<= 70 chars","",P0,""
-"10. SEO","Yandex Description","150-200 chars","",P0,""
-"10. SEO","Yandex Business","Card for location","",P1,""
-"10. SEO","Knowledge Panel","Consistent NAP + GBP + Wikidata if applicable","",P1,""
-"11. GEO","llms.txt","Publish at /llms.txt","",P0,""
-"11. GEO","Crawlers","Allow GPTBot ClaudeBot PerplexityBot Google-Extended CCBot","",P0,""
-"11. GEO","Entity home","One page per entity with full definition","",P0,""
-"11. GEO","Q&A","Visible in HTML not hidden","",P0,""
-"11. GEO","Fact tables","Service timeline included excluded","",P0,""
-"11. GEO","Definition block","X is ... 40-80 words top","",P0,""
-"11. GEO","Schema.org","Organization + sameAs + knowsAbout + areaServed + serviceType","",P0,""
-"11. GEO","Language parity","Facts identical across 4 languages","",P0,""
-"12. PERF","LCP <= 2.5s","p75 mobile","",P0,""
-"12. PERF","INP <= 200ms","",P0,""
-"12. PERF","CLS <= 0.1","",P0,""
-"12. PERF","TTFB <= 800ms","",P1,""
-"12. PERF","HTML <= 50 KB gzip","",P0,""
-"12. PERF","CSS <= 40 KB gzip","",P0,""
-"12. PERF","JS <= 120 KB gzip first load","",P0,""
-"12. PERF","Hero <= 250 KB","",P0,""
-"12. PERF","Other images <= 150 KB each","",P0,""
-"12. PERF","Fonts <= 2 families <= 4 weights subset","",P0,""
-"12. PERF","Total page weight <= 1.5 MB mobile","",P0,""
-"12. PERF","Requests <= 50","",P1,""
-"12. PERF","3rd-party <= 3","",P0,""
-"12. PERF","Lighthouse Perf >= 90 mobile >= 95 desktop","",P0,""
-"12. PERF","Lighthouse SEO 100","",P0,""
-"12. PERF","Lighthouse A11y >= 95","",P0,""
-"12. PERF","Lighthouse BP >= 95","",P0,""
-"13. A11Y","Semantic HTML + heading order","",P0,""
-"13. A11Y","Keyboard nav all interactive","",P0,""
-"13. A11Y","Visible focus","",P0,""
-"13. A11Y","Labels on all fields","",P0,""
-"13. A11Y","Alt text descriptive","",P0,""
-"13. A11Y","Contrast WCAG AA","",P0,""
-"13. A11Y","Reduced motion respected","",P0,""
-"13. A11Y","axe-core 0 critical/serious","",P0,""
-"14. TECH","Framework freedom","Static-capable (Astro Vite plain HTML/CSS/JS or justified alt)","Documented in README","Deployable as static; no CMS/admin/database",P0,""
-"14. TECH","Rendering","SSG/SSR for SEO-critical","Core content in crawlable HTML","",P0,""
-"14. TECH","No CMS v1","No admin; no DB; content in source/data files","Easy to migrate later",P0,""
-"14. TECH","Dependencies","Minimal; documented","",P0,""
-"14. TECH","Deployment","Static hosting CDN clean routes redirects headers caching","No app server required",P0,""
-"14. TECH","Content separation","Structured; CMS-ready","",P1,""
-"14. TECH","Security","Validate sanitize; protect forms; no client secrets","",P0,""
-"14. TECH","Lighthouse CI","Block merge on regression","",P0,""
-"15. BOT","Purpose","Structured project intake; not generic AI chat","",P0,""
-"15. BOT","Flow","Language -> Service -> Location -> Project type -> Description -> Budget(opt) -> Timeline(opt) -> Files -> Contact -> Review/Edit -> Submit -> Handoff","",P0,""
-"15. BOT","Service menu","13 services: Architecture; Villa Design; Interior Design; Construction; Renovation & Remodeling; Project Management; Construction Supervision; Technical Supervision; Landscape Design; Planning & Permits; Turnkey Projects; Eco Construction; Concrete Construction","Exact parity with site","",P0,""
-"15. BOT","Location menu","Koh Phangan; Koh Samui; Koh Tao; Bali; Other / Not decided","Exact parity",P0,""
-"15. BOT","Project type","Villa/Residence; Hospitality; Commercial; Renovation; Land/New Build; Other","",P0,""
-"15. BOT","Telegram","Official Telegram Bot API","",P0,""
-"15. BOT","WhatsApp","Official WhatsApp Business/Cloud API or approved provider","",P0,""
-"15. BOT","Attachments","Multiple photos/plans/screenshots/inspiration/docs; validate type/size; fallback if upload fails","",P0,""
-"15. BOT","Lead payload","timestamp channel language service location project_type description budget timeline name contact attachments source URL campaign","CRM-ready",P1,""
-"15. BOT","Contextual CTA","Service page preselects service; location page may preselect location; preserve UTM","",P0,""
-"15. BOT","Security","Protect secrets; validate webhooks; rate-limit; sanitize; validate uploads; avoid sensitive logging","",P0,""
-"15. BOT","Languages","EN/RU/TH/HE localized; Hebrew RTL-safe","",P0,""
-"15. BOT","Human handoff","Available at every stage","",P0,""
-"15. BOT","QA","13 services x 5 locations x 4 languages + edits/back/restart/attachments/submit/handoff","0 dead ends",P0,""
-"16. ANALYTICS","GA4 events","page_view scroll_75 cta_click form_start form_submit form_error bot_start bot_step bot_attachment bot_submit bot_handoff whatsapp_click telegram_click phone_click email_click language_switch article_read_75 project_view","",P0,""
-"16. ANALYTICS","Yandex Metrica","Goals for form bot_start bot_submit call whatsapp","",P0,""
-"16. ANALYTICS","Search Console","Verify; inspect; submit sitemap","",P0,""
-"16. ANALYTICS","Bing Webmaster","Verify; submit","",P1,""
-"16. ANALYTICS","Baseline","30 keyword rank tracking before launch","",P1,""
-"16. ANALYTICS","Reports","Weekly automated Looker Studio","",P1,""
-"17. COMPLIANCE","Cookie consent","Accept/Reject/Settings; blocks GA/Meta until consent","",P0,""
-"17. COMPLIANCE","Privacy Policy","PDPA + GDPR aware","",P0,""
-"17. COMPLIANCE","Lawful basis","Consent marketing; legitimate interest analytics with opt-out","",P0,""
-"17. COMPLIANCE","Retention","Leads and uploaded files","",P0,""
-"17. COMPLIANCE","DPA","Telegram WhatsApp/Meta hosting analytics","",P0,""
-"17. COMPLIANCE","User rights","Access/deletion request form","",P0,""
-"17. COMPLIANCE","Bot files","Auto-delete N days; no public URLs","",P0,""
-"17. COMPLIANCE","Terms","Services payment IP responsibility","",P0,""
-"17. COMPLIANCE","Accessibility statement","Page with contact","",P1,""
-"18. EEAT","Author bio","/about/authors/[slug]/; Person schema; sameAs","",P0,""
-"18. EEAT","Editorial policy","/editorial-policy/","",P0,""
-"18. EEAT","About depth","Team experience location licenses (real)","",P0,""
-"18. EEAT","Contact transparency","Address phone email map legal entity","",P0,""
-"18. EEAT","Reviews","Verified sources only","",P0,""
-"18. EEAT","Case studies","Real projects with photos dates client (where allowed)","",P1,""
-"18. EEAT","Citations","Authoritative sources in Journal >= 2 per article","",P1,""
-"18. EEAT","Updated dates","dateModified in schema and UI","",P0,""
-"18. EEAT","Trust pages","Privacy Terms Cookies PDPA Accessibility","",P0,""
-"19. LINKING","Link graph","Programmatic build: URLs + types + topics","",P0,""
-"19. LINKING","Service links to","Parent hub; 2-3 siblings; 2-3 projects; 1 location; 1-2 journal; contact","",P0,""
-"19. LINKING","Project links to","2-3 services; 1 location; 2 siblings; contact","",P0,""
-"19. LINKING","Location links to","3-5 services; 2-3 projects; contact","",P0,""
-"19. LINKING","Journal links to","2-3 services; 1-2 projects; 1 location; related journal","",P0,""
-"19. LINKING","Orphans","0 orphan commercial","",P0,""
-"19. LINKING","Depth","Important pages <= 3 clicks from root","",P0,""
-"19. LINKING","Anchor","Varied descriptive; not exact-match every time","",P0,""
-"19. LINKING","Footer","Max 30 links; no keyword dump","",P0,""
-"20. TESTS","Build","Production build passes","",P0,""
-"20. TESTS","TypeScript","tsc --noEmit","",P0,""
-"20. TESTS","Bundle size","JS/CSS budgets enforced","",P0,""
-"20. TESTS","HTML validate","0 errors","",P0,""
-"20. TESTS","One H1","Exactly 1 per page","",P0,""
-"20. TESTS","Heading order","No skips","",P0,""
-"20. TESTS","No lorem","0 matches","",P0,""
-"20. TESTS","Forbidden phrases","0 matches","",P0,""
-"20. TESTS","Word count","+/-20% of norm","",P0,""
-"20. TESTS","Primary keyword placement","Title H1 meta first paragraph","",P0,""
-"20. TESTS","Direct answer","40-60 words in top block","",P0,""
-"20. TESTS","FAQ count","6+ unique commercial","",P0,""
-"20. TESTS","No duplicate titles/H1/meta","0 dups","",P0,""
-"20. TESTS","Alt text","Present non-empty non-stuffed","",P0,""
-"20. TESTS","Canonical","Self-reference","",P0,""
-"20. TESTS","Hreflang","Reciprocal valid","",P0,""
-"20. TESTS","Sitemap","Canonical indexable only","",P0,""
-"20. TESTS","Schema JSON-LD","Valid 0 errors","",P0,""
-"20. TESTS","No noindex on indexable","0","",P0,""
-"20. TESTS","Internal links","0 broken 0 orphan","",P0,""
-"20. TESTS","Crawl depth","<= 3 important","",P0,""
-"20. TESTS","i18n keys","0 missing all 4 languages","",P0,""
-"20. TESTS","Hebrew dir","dir=rtl lang=he","",P0,""
-"20. TESTS","Thai line-break","No broken headings","",P0,""
-"20. TESTS","Mixed language","0 blocks","",P0,""
-"20. TESTS","axe-core","0 critical/serious","",P0,""
-"20. TESTS","Keyboard nav","All interactive","",P0,""
-"20. TESTS","Focus visible","All interactive","",P0,""
-"20. TESTS","Lighthouse CI","LCP <= 2.5s INP <= 200ms CLS <= 0.1 Perf >= 90","",P0,""
-"20. TESTS","Image sizes","Hero <= 250 KB others <= 150 KB","",P0,""
-"20. TESTS","E2E CTA","0 dead links","",P0,""
-"20. TESTS","E2E form","Validation success error","",P0,""
-"20. TESTS","E2E mobile menu","Open close Escape focus trap","",P0,""
-"20. TESTS","E2E language switcher","Preserves page","",P0,""
-"20. TESTS","E2E bot","13 services x 5 locations x 4 languages","",P0,""
-"20. TESTS","E2E upload","Type/size/error","",P0,""
-"20. TESTS","Visual regression","6 breakpoints x 4 languages","",P1,""
-"20. TESTS","Rich Results","0 errors all templates","",P0,""
-"20. TESTS","URL Inspection","Representative indexed","",P0,""
-"20. TESTS","NAP consistency","Footer/contact/schema","",P0,""
-"21. CONTENT OPS","Calendar","2 articles/month; topics from clusters","",P1,""
-"21. CONTENT OPS","Refresh","Review every 6 months; update dateModified","",P1,""
-"21. CONTENT OPS","Decay","Monthly report on dropping > 5","",P1,""
-"21. CONTENT OPS","Inventory","URL intent keyword word count schema last updated owner","",P1,""
-"21. CONTENT OPS","Cannibalization audit","Quarterly","",P1,""
-"21. CONTENT OPS","Pruning","No traffic + no links 12 months -> merge/noindex/delete","",P1,""
-"21. CONTENT OPS","Workflow","Draft -> Fact-check -> Edit -> SEO review -> Publish","",P1,""
-"22. QA DOD","Design","Premium editorial visual system; consistent typography spacing; varied layouts; no template feel","",P0,""
-"22. QA DOD","Content","Complete copy CTA FAQs internal links; no filler; no fabricated claims","",P0,""
-"22. QA DOD","SEO","Titles H1 meta canonicals sitemap robots hreflang schema hierarchy verified","",P0,""
-"22. QA DOD","Responsive","No overflow clipping broken grids unreadable type","",P0,""
-"22. QA DOD","Functional","Menus forms links sliders language switcher CTAs work","",P0,""
-"22. QA DOD","Performance","LCP INP CLS optimized; media compressed; minimal JS; Lighthouse passed","",P0,""
-"22. QA DOD","Accessibility","Keyboard focus labels headings alt reduced motion verified","",P0,""
-"22. QA DOD","Multilingual","EN/RU/TH/HE complete; Hebrew true RTL; no untranslated fragments","",P0,""
-"22. QA DOD","Regression","Re-test shared components after template change","",P0,""
-"22. QA DOD","Release","No P0/P1 defects; production build passes; sitemap/robots/canonicals validated; launch checklist done","",P0,""
-"23. DELIVERABLES","Code","Production-ready static site","",P0,""
-"23. DELIVERABLES","Content","Complete core copy all pages all languages","",P0,""
-"23. DELIVERABLES","SEO","Metadata schema internal linking sitemap robots","",P0,""
-"23. DELIVERABLES","Docs","README NOTES.md content inventory launch checklist","",P0,""
-"23. DELIVERABLES","Bots","Telegram + WhatsApp integrated; documented","",P0,""
-"23. DELIVERABLES","Tests","Automated test suite + CI config","",P0,""
-"23. DELIVERABLES","Assumptions","NOTES.md listing all [[VERIFY]] items","",P0,""
-"24. ROOT PAGE","Critical","Root = Services landing","Root URL / is master Services landing; label Services not Home","Do not create competing /services/ hub","P0","Preserve unless explicitly instructed otherwise"
-"25. NAVIGATION","Decision","Services first","Primary visible nav begins with Services","",P0,""
-"26. NEW SERVICES","Eco Construction","First-class service","Full landing page: direct answer + principles + materials + passive design + energy/water + projects + process + FAQ + CTA","No thin page; no greenwashing",P0,""
-"26. NEW SERVICES","Concrete Construction Turnkey","First-class service","Full landing page: direct answer + scope + architecture-to-build process + structural/technical + finishes + project slider + budget guidance + FAQ + CTA","No invented prices; no fake engineering credentials",P0,""
-"27. LOCATIONS","Expansion","Koh Samui Koh Tao Bali","Only where genuine service exists","Unique local expertise; no doorway copies",P0,""
----
-## Дополнительные требования — Премиум + Трафик + Mobile
-
-### 1. Ультра-премиум визуал
-- Сайт должен выглядеть как дорогой editorial/luxury brand, не шаблон
-- Каждый блок — отдельная дизайнерская композиция (hero → direct answer → visual proof → scope → benefits → process → portfolio → FAQ → CTA)
-- Крупная типографика, editorial photography, generous whitespace
-- Cinematic hero с 3-5 кадрами, плавные переходы
-- CSS-only атмосферный фон (subtle gradient)
-
-### 2. Блочная структура (Landing Page)
-- Минимум 10 уникальных блоков на коммерческих страницах
-- Блоки чередуются: текст/изображение/карточки/процесс/FAQ/CTA
-- Никаких «стен текста» — каждый блок решает свою задачу
-- Reusable компоненты: Hero, Direct Answer, Service Grid, Split Image/Text, Project Slider, Process Timeline, FAQ Accordion, CTA Banner
-
-### 3. Mobile-first скорость
-- Mobile-first разработка (360-430px база, desktop — расширение mobile)
-- LCP ≤ 2.5s, INP ≤ 200ms, CLS ≤ 0.1 (Core Web Vitals)
-- Total page weight ≤ 1.5MB на mobile
-- Images: AVIF/WebP, srcset (5 widths), lazy-load, preload только hero
-- Минимум JS, только критический CSS
-
-### 4. Органический трафик (SEO/GEO)
-- Один primary intent на страницу — никакой каннибализации
-- Direct Answer block (40-60 слов) на всех коммерческих страницах
-- FAQ (6-10 уникальных вопросов) на каждой странице
-- Semantic HTML + JSON-LD schema (Organization, Service, BreadcrumbList, FAQPage, Article)
-- Hreflang для EN/RU/TH/HE + sitemap.xml + robots.txt
-- llms.txt + AI-citability (GEO ready)
-- Internal link graph — все страницы связаны, 0 orphans
-- Content clusters: каждая статья отвечает на реальный поисковый запрос
-
-### 5. 3000+ URL architecture (без doorway)
-- Только страницы с уникальным intent
-- Programmatic pages только где есть genuine контент
-- Location pages с уникальной локальной экспертизой
-
-### 6. Telegram/WhatsApp боты как intake funnel
-- Language → Service → Location → Project Type → Budget → Files → Contact → Submit
-- Service page CTA preselects service
-- Security: sanitize input, rate-limit, validate uploads
-
-### 7. Четыре языка — отдельные URL для каждого
-- EN (канонический / x-default): /, /services/, /projects/...
-- RU: /ru/, /ru/services/, /ru/projects/...
-- TH: /th/, /th/services/, /th/projects/...
-- HE (RTL): /he/, /he/services/, /he/projects/...
-- Каждый язык — полноценная копия контента, не автоперевод
-- Hreflang reciprocal для всех страниц во всех 4 языках
-- Canonical self-referencing
-- Hebrew: true RTL layout (dir=rtl, mirror grids, forms, icons)
-- Thai: ICU line-breaking, Noto Sans Thai / IBM Plex Sans Thai
-- Единая структура URL, разный контент под поисковые интенты каждого языка
-- Yandex-aware для RU версии
-
-### 8. Изображения + слайдеры
-- **Источник изображений**: использовать web.archive.org для поиска тематических фото с broservice.in.th (архив adfotoco). Проверить структуру текстов и изображений на archived версиях.
-- **Временные изображения**: тематические placeholders (архитектура, интерьеры, виллы) из лицензированных источников или web.archive
-- **Hero слайдер**: 3-5 полноэкранных изображений с плавными переходами, затемнение, H1 поверх
-- **Project/Portfolio слайдер**: swipe + keyboard + pagination, lazy-load невидимых слайдов
-- **Editorial gallery**: full-bleed, split layouts, project mosaics, alternate горизонтальные блоки
-- **Все изображения**: AVIF/WebP, srcset (5 widths), explicit w/h, lazy-load, preload только hero
+| Section | Item | Requirement | Specification | Criteria | Priority |
+|---------|------|-------------|---------------|---------|----------|
+| **0. MISSION** | Lead product designer | Act as lead product designer | Premium tropical architecture editorial aesthetic; magazine-quality | Site feels like high-end architecture studio within 5 seconds | P0 |
+| **0. MISSION** | Senior frontend engineer | Act as senior frontend engineer | Static-first; no CMS; minimal JS; componentized | No critical content depends on JS; deployable as static | P0 |
+| **0. MISSION** | Technical SEO / GEO architect | Act as SEO/GEO architect | Google + Yandex + AI search; schema; hreflang; internal linking; local SEO | All P0 SEO checks pass | P0 |
+| **0. MISSION** | Premium copywriter | Act as premium architecture copywriter | Specific sensory restrained commercially useful locally relevant fact-based | Passes human editorial review | P0 |
+| **0. MISSION** | Conversion strategist | Act as conversion strategist | CTA hierarchy; lead bots; consultative conversion | Every commercial page has clear next step | P0 |
+| **0. MISSION** | Truth rule | Never invent facts | No clients; awards; prices; reviews; team; guarantees; locations; credentials; projects | All facts traceable or marked [[VERIFY]] | P0 |
+| **0. MISSION** | Missing data protocol | Handle missing facts gracefully | Explain factors not numbers; [[VERIFY: ...]] in source | No gap reads as a gap | P0 |
+| **0. MISSION** | Autonomous progress | Do not block on missing details | Choose most premium technically-sound SEO-safe option; flag in NOTES.md | Build completes; assumptions documented | P0 |
+| **1. POSITIONING** | Business type | Premium architecture design-build studio | Architecture + interiors + construction + project management under one roof | Positioned above ordinary contractors | P0 |
+| **1. POSITIONING** | Primary location | Koh Phangan Thailand | Island expertise; tropical climate; logistics; local regulations context | Local knowledge visible on Home About Locations | P0 |
+| **1. POSITIONING** | Core proposition | Design and build exceptional spaces on Koh Phangan — architecture interiors construction a... | Reflected in hero About Services CTAs | Phrase or paraphrase on Home | P0 |
+| **1. POSITIONING** | Brand voice | Quiet luxury; architectural; confident; intelligent; tropical; human | No hype; no fake awards; no generic contractor phrases | Copy passes editorial review | P0 |
+| **1. POSITIONING** | What we are not | Not an ordinary contractor; not a directory listing; not real-estate template | Premium above commodity | P0 | Subtle differentiation |
+| **2. AUDIENCE** | Villa owners | Build/renovate premium villa | Entry via /services/villa-design/ /services/renovation/ | Persona addressed | P0 |
+| **2. AUDIENCE** | Investors | Build asset; manage risk | Entry via /services/turnkey-projects/ /services/project-management/ | Persona addressed | P0 |
+| **2. AUDIENCE** | Expats | Build home on island | Entry via / | Persona addressed | P0 |
+| **2. AUDIENCE** | International clients | Remote project delivery | Entry via /process/ /about/ | Persona addressed | P1 |
+| **2. AUDIENCE** | Hospitality operators | Boutique resort / villa rental development | Entry via /services/villa-design/ /services/landscape-design/ | Persona addressed | P1 |
+| **2. AUDIENCE** | Developers | Multi-villa / mixed-use | Entry via /services/concrete-construction/ /services/project-management/ | Persona addressed | P1 |
+| **3. COMMERCIAL** | Design only | Architecture + interiors only | Defined deliverables | Scope clear | P0 |
+| **3. COMMERCIAL** | Design + build | Integrated design-build | Single team; single accountability | Value clear | P0 |
+| **3. COMMERCIAL** | Turnkey | Concept to handover | Full package | Clear scope | P0 |
+| **3. COMMERCIAL** | Renovation | Existing villa upgrade | Assessment + design + execution | Scope clear | P0 |
+| **3. COMMERCIAL** | Supervision only | Independent site supervision | Quality control + reporting | Scope clear | P1 |
+| **3. COMMERCIAL** | Project management only | PM without construction | Coordination; schedule; budget | Scope clear | P1 |
+| **3. COMMERCIAL** | Eco construction | Sustainable building | Materials; passive cooling; energy; water | Scope clear | P0 |
+| **3. COMMERCIAL** | Concrete turnkey | Reinforced concrete design-build | Concept to handover | Scope clear | P0 |
+| **3. COMMERCIAL** | Pipeline | Discovery -> Concept -> Design Development -> Permits -> Build -> Supervision -> Handover ... | Reflected in process page and bot payload | Payload supports pipeline | P1 |
+| **4. IA** | / = Services landing | Root is master Services landing; label = Services not Home | Comprehensive overview of all services | P0 | P0 |
+| **4. IA** | Architecture | /services/architecture/ | Architecture design | Primary intent: architect Koh Phangan | P0 |
+| **4. IA** | Villa Design | /services/villa-design/ | Bespoke villa design | Primary intent: villa design Koh Phangan | P0 |
+| **4. IA** | Interior Design | /services/interior-design/ | Interior design | Primary intent: interior design Koh Phangan | P0 |
+| **4. IA** | Construction | /services/construction/ | Villa/build construction | Primary intent: villa construction Koh Phangan | P0 |
+| **4. IA** | Renovation | /services/renovation/ or /services/renovation-remodeling/ | Renovation & transformation | Primary intent: villa renovation Koh Phangan | P0 |
+| **4. IA** | Project Management | /services/project-management/ | PM | Primary intent: project management Koh Phangan | P0 |
+| **4. IA** | Construction Supervision | /services/construction-supervision/ | Site/construction supervision | Primary intent: construction supervision Koh Phangan | P0 |
+| **4. IA** | Technical Supervision | /services/technical-supervision/ | Technical coordination | Primary intent: technical supervision Koh Phangan | P0 |
+| **4. IA** | Landscape Design | /services/landscape-design/ | Landscape & outdoor | Primary intent: landscape design Koh Phangan | P0 |
+| **4. IA** | Permits & Planning | /services/permits-planning/ or /services/planning-permits/ | Planning/permit support | Primary intent: building permits Koh Phangan | P0 |
+| **4. IA** | Turnkey Projects | /services/turnkey-projects/ | Integrated design-build | Primary intent: turnkey villa Koh Phangan | P0 |
+| **4. IA** | Eco Construction | /services/eco-construction/ | Sustainable building | Primary intent: eco construction Koh Phangan | P0 |
+| **4. IA** | Concrete Construction Turnkey | /services/concrete-construction/ or /services/concrete-construction-turnkey/ | Concrete design-build | Primary intent: concrete construction Koh Phangan | P0 |
+| **4. IA** | Projects | /projects/ | Portfolio index | Primary intent: architecture portfolio Koh Phangan | P0 |
+| **4. IA** | About | /about/ | Studio story | Primary intent: architecture studio Koh Phangan | P0 |
+| **4. IA** | Process | /process/ | How projects work | Primary intent: architecture construction process | P0 |
+| **4. IA** | Locations hub | /locations/ | Service area | Primary intent: architecture services Koh Phangan | P0 |
+| **4. IA** | Koh Phangan | /locations/koh-phangan/ | Island-wide | Primary intent: architecture Koh Phangan | P0 |
+| **4. IA** | Koh Samui | /locations/koh-samui/ | Expansion | Primary intent: architect Koh Samui | P0 |
+| **4. IA** | Koh Tao | /locations/koh-tao/ | Expansion | Primary intent: architect Koh Tao | P0 |
+| **4. IA** | Bali | /locations/bali/ | Expansion | Primary intent: architect Bali | P0 |
+| **4. IA** | Thong Sala | /locations/thong-sala/ | Local | Secondary | P1 |
+| **4. IA** | Sri Thanu | /locations/sri-thanu/ | Local | Secondary | P1 |
+| **4. IA** | Haad Rin | /locations/haad-rin/ | Local | Secondary | P1 |
+| **4. IA** | Chaloklum | /locations/chaloklum/ | Local | Secondary | P1 |
+| **4. IA** | Journal | /journal/ | Editorial hub | Primary intent: architecture design knowledge | P1 |
+| **4. IA** | Contact | /contact/ | Lead conversion | Primary intent: contact architecture studio | P0 |
+| **4. IA** | Eco Construction | /services/eco-construction/ | P0 service | Full SEO landing page + FAQ + CTA + schema | P0 |
+| **4. IA** | Concrete Construction Turnkey | /services/concrete-construction/ | P0 service | Full SEO landing page + FAQ + budget guidance + CTA + schema | P0 |
+| **4. IA** | Desktop primary | Services · Projects · About · Process · Locations · Journal · Contact | Services and Locations have dropdown/mega-menu | All visible; active state clear | P0 |
+| **4. IA** | Services submenu | Architecture; Villa Design; Interior Design; Construction; Renovation; Project Management;... | 13 services exposed | All 13 in nav (grouping allowed but none disappear) | P0 |
+| **4. IA** | Locations submenu | Koh Phangan; Thong Sala; Haad Rin; Sri Thanu; Chaloklum; Baan Tai; Haad Yao; Haad Salad |  | P0 |  |
+| **4. IA** | Header CTA | Start a Project (primary); Contact (secondary) | Always visible desktop; sticky mobile | Reachable in 1 interaction | P0 |
+| **4. IA** | Mobile menu | Full-screen or large drawer; Services and Locations accordions; language selector; Start a... | Keyboard/touch accessible; closes predictably | No layout shift | P0 |
+| **4. IA** | Language switcher | EN / RU / TH / HE | Preserves current page | Correct hreflang | P0 |
+| **5. DESIGN** | Aesthetic | Premium tropical architecture editorial; large photography; whitespace; refined typography... | Architecture-magazine feel; not real-estate template | Premium within 5 seconds | P0 |
+| **5. DESIGN** | Anti-patterns | No contractor look; no real-estate template; no SaaS; no loud gradients; no neon |  | P0 |  |
+| **5. DESIGN** | Base | Warm off-white / stone / ivory | #F7F4EF or similar | Not clinical pure white | P0 |
+| **5. DESIGN** | Text | Near-black / charcoal | #141210 or similar | Contrast >= 4.5:1 | P0 |
+| **5. DESIGN** | Accent 1 | Muted natural green / olive | #5A5F45 or similar | Used sparingly | P0 |
+| **5. DESIGN** | Accent 2 | Sand / bronze / terracotta | #B8714A or similar | Used sparingly | P0 |
+| **5. DESIGN** | Line | Subtle warm divider | #E5DED4 | P0 |  |
+| **5. DESIGN** | Display | Refined architectural display serif (Fraunces GT Sectra Playfair Display) | Large headings | Licensed and web-safe | P0 |
+| **5. DESIGN** | Body | Highly legible modern sans (Inter Söhne) | Body and UI | Multilingual support | P0 |
+| **5. DESIGN** | Thai fallback | IBM Plex Sans Thai or Noto Sans Thai | Thai pages | P0 |  |
+| **5. DESIGN** | Hebrew fallback | Heebo or Assistant | Hebrew pages | P0 |  |
+| **5. DESIGN** | Scale | H1 72-96 desktop / 40-48 mobile; H2 48-56 / 32; H3 32 / 24; Body L 20; Body M 17 | Clear hierarchy | P0 |  |
+| **5. DESIGN** | Desktop 12-col; tablet 8-col; mobile 4-col | Max content width consistent; generous whitespace | No arbitrary margins | P0 |  |
+| **5. DESIGN** | Architectural asymmetry where useful | Intentional composition | P1 |  |  |
+| **5. DESIGN** | Button | Primary + secondary + ghost + text-link | Sharp radius (editorial) | Clear states | P0 |
+| **5. DESIGN** | Cards | Image-led; minimal borders/shadows; subtle hover |  | P0 |  |
+| **5. DESIGN** | Header | Transparent on hero; solid on scroll | Sticky | P0 |  |
+| **5. DESIGN** | Footer | 4-col desktop; accordion mobile | Max 30 links | P0 |  |
+| **5. DESIGN** | FAQ | Accordion; large tap target; ARIA |  | P0 |  |
+| **5. DESIGN** | Slider | Swipe + keyboard + arrows + progress | No CLS | P0 |  |
+| **5. DESIGN** | Form | Focus ring visible; labels persistent |  | P0 |  |
+| **5. DESIGN** | Breadcrumbs | Inline; schema | Inner pages | P1 |  |
+| **5. DESIGN** | Mega-menu | Services and Locations | Columns + featured image |  | P0 |
+| **5. DESIGN** | Pull Quote | Editorial emphasis |  | P1 |  |
+| **5. DESIGN** | Process Timeline | Numbered stages | Mobile vertical | P0 |  |
+| **5. DESIGN** | CTA Banner | Full-bleed or split | High contrast but elegant | P0 |  |
+| **5. DESIGN** | Subtle reveal hover transitions | 150-500ms; ease-out | Respect prefers-reduced-motion | P0 |  |
+| **5. DESIGN** | Limits | No scroll-jacking; no mobile parallax; max 2 animated per viewport |  | P0 |  |
+| **5. DESIGN** | CSS-only atmospheric gradient | Slow translucent warm-neutral gradient 30-60s; almost imperceptible; no JS/canvas/WebGL/vi... | Elegant; no measurable layout shift | P0 |  |
+| **5. DESIGN** | Style | Full-bleed architecture; material closeups; human-scale moments; tropical context; plans/r... | Editorial crop; warm neutral grading | P0 |  |
+| **5. DESIGN** | Sources | Licensed/owned/generated/permitted only; never competitor images | Replaceable via CMS/assets | All assets licensed | P0 |
+| **5. DESIGN** | Captions | Small editorial captions: project type location design focus material | Informative not decorative | P1 |  |
+| **5. DESIGN** | Optimization | AVIF/WebP; srcset 5 widths; sizes per breakpoint; explicit width/height; lazy below fold; ... |  | P0 |  |
+| **6. BLOCKS** | Hero Slider | Full-width cinematic; H1; 1-2 line value; primary + secondary CTA; slide progress | 3-5 slides; first LCP-optimized | P0 |  |
+| **6. BLOCKS** | Direct Answer | 40-60 words answering primary question | Immediately below hero | P0 |  |
+| **6. BLOCKS** | Editorial Intro | Strong heading + 80-140 word paragraph + optional image | Magazine typography | P0 |  |
+| **6. BLOCKS** | Service Grid | 6-12 services with concise descriptions and links | Prioritize 6-8 on homepage | P0 |  |
+| **6. BLOCKS** | Split Image + Text | Large image one side; editorial copy + CTA other | Alternate alignment | P0 |  |
+| **6. BLOCKS** | Project Slider | Large project images; name; location; type; short description; View Project | 3-6 projects; drag/swipe + keyboard | P0 |  |
+| **6. BLOCKS** | Project Mosaic | Mixed-size cards with strong imagery | Varied aspect ratios | P0 |  |
+| **6. BLOCKS** | Process Timeline | 5-7 numbered stages with descriptions | Mobile vertical | P0 |  |
+| **6. BLOCKS** | Why Us / Principles | 4-6 principles with evidence or explanation | No generic claims | P0 |  |
+| **6. BLOCKS** | Materials / Design Approach | Palette climate response craft lighting landscape indoor/outdoor | Editorial storytelling | P0 |  |
+| **6. BLOCKS** | Budget Guidance | Indicative logic + factors + CTA | Never fabricated prices | P0 |  |
+| **6. BLOCKS** | FAQ Accordion | 6-10 unique Q + concise A | Unique per page | P0 |  |
+| **6. BLOCKS** | Location Block | Context image + service-area text + links | Not doorway | P0 |  |
+| **6. BLOCKS** | Journal Cards | 3-6 articles with category title excerpt reading time | Topic clusters | P1 |  |
+| **6. BLOCKS** | Trust / Proof | Real testimonials completed projects credentials partners process evidence | Verified only | P0 |  |
+| **6. BLOCKS** | Final CTA | Large editorial statement + support + Start a Project | Context-specific headline | P0 |  |
+| **6. BLOCKS** | Contact Form | Name; email/phone; project type; location; approximate size; stage; budget range optional;... | Short enough to complete | P0 |  |
+| **6. BLOCKS** | Footer | Nav; services; locations; languages; contact; socials; legal; copyright | Consistent across languages | P0 |  |
+| **7. TEMPLATES** | Order | Hero + direct answer + intro + services + projects + process + locations + FAQ + final CTA | H1: Architecture & Design-Build on Koh Phangan | All blocks present | P0 |
+| **7. TEMPLATES** | Order | Hero + direct answer + scope + process + deliverables + projects + FAQ + CTA | Unique H1/title/meta | P0 |  |
+| **7. TEMPLATES** | Order | Hero + facts + concept + scope + services + gallery + outcome + CTA | Unique metadata; breadcrumbs; ImageObject | P0 |  |
+| **7. TEMPLATES** | Order | Story + philosophy + expertise + local knowledge + team(real) + proof + CTA | Organization/Person schema only if valid | P0 |  |
+| **7. TEMPLATES** | Order | Discovery -> Concept -> Design -> Approvals -> Budget -> Build -> Supervision -> Handover | 7 stages; responsibilities; approvals; communication | P0 |  |
+| **7. TEMPLATES** | Order | Local intro + services + projects + process + FAQ + CTA | Unique local value | P0 |  |
+| **7. TEMPLATES** | Order | Featured articles + categories + topic clusters | Fast cards | P1 |  |
+| **7. TEMPLATES** | Order | Title + direct answer + body + images + author/date + related + CTA | Article schema where valid | P1 |  |
+| **7. TEMPLATES** | Order | Contact options + form + location + expectations + CTA | Keyboard-aware form | P0 |  |
+| **8. COPY** | English first | Canonical base | RU/TH/HE adapted natively | No literal machine translation | P0 |
+| **8. COPY** | One per page | Natural phrasing |  | P0 |  |
+| **8. COPY** | Service + location + value proposition naturally |  | P0 |  |  |
+| **8. COPY** | Exact only where natural; intent first |  | P0 |  |  |
+| **8. COPY** | Cover entities; buyer questions; deliverables; process; outcomes |  | P0 |  |  |
+| **8. COPY** | Premium; calm; confident; concise; specific; commercially useful |  | P0 |  |  |
+| **8. COPY** | Koh Phangan naturally; local knowledge; island business context; climate; logistics |  | P0 |  |  |
+| **8. COPY** | we turn dreams into reality; unparalleled; one-stop solution; take your business to the next level; state-of-the-art; cutting-edge; world-class (unless verified); best in (unless verified); #1 (unless verified) | Enforce in CI | 0 matches | P0 |  |
+| **8. COPY** | Explain factors; never invent fixed prices |  | P0 |  |  |
+| **8. COPY** | Varied contextual: Start a Project; Discuss Your Site; Request a Consultation; Explore Projects; Ask About Your Project | No repeated Learn More | P0 |  |  |
+| **8. COPY** | Brand + architecture + design-build + Koh Phangan + Thailand + services + projects |  | P0 |  |  |
+| **8. COPY** | 6-10 useful unique per major page; scope process timing permits budget materials site conditions next steps | 40-120 words per answer | P0 |  |  |
+| **8. COPY** | 40-60 words near top of relevant pages | Self-contained | P0 |  |  |
+| **8. COPY** | Home 800-1400; Architecture 1000-1800; Villa Design 1000-1800; Interior 1000-1800; Construction 1200-2000; Renovation 1000-1800; PM 900-1600; Supervision 900-1600; Landscape 900-1600; Turnkey 1200-2000; About 900-1500; Process 900-1600; Locations 700-1200; Contact 500-900; Service pages 1500-3000+ when topic supports; Strategic commercial pages 3000-4500 | Never pad for length | P0 |  |  |
+| **8. COPY** | All facts traceable or [[VERIFY]] |  | P0 |  |  |
+| **9. LANGUAGE** | Canonical / x-default |  | P0 |  |  |
+| **9. LANGUAGE** | /ru/ | Native; Yandex-aware; separate RU keyword cluster |  | P0 |  |
+| **9. LANGUAGE** | /th/ | ICU line-breaking; Thai fonts; local search behavior |  | P0 |  |
+| **9. LANGUAGE** | /he/ | dir=rtl lang=he; true RTL |  | P0 |  |
+| **9. LANGUAGE** | Mirror layout where direction matters; text-align start; margin-inline; bdi for numbers/URLs/email/phone; icons directional mirrored; forms aligned start |  | P0 |  |  |
+| **9. LANGUAGE** | Reciprocal + x-default |  | P0 |  |  |
+| **9. LANGUAGE** | Glossary EN->RU/TH/HE for architecture terms |  | P1 |  |  |
+| **10. SEO** | One primary keyword cluster per indexable page |  | P0 |  |  |
+| **10. SEO** | Primary near front; brand/location natural; unique |  | P0 |  |  |
+| **10. SEO** | Topic + differentiator + local + action; unique |  | P0 |  |  |
+| **10. SEO** | Natural human-readable aligned with intent |  | P0 |  |  |
+| **10. SEO** | Short stable lowercase hyphenated |  | P0 |  |  |
+| **10. SEO** | Self-referencing |  | P0 |  |  |
+| **10. SEO** | Canonical indexable only |  | P0 |  |  |
+| **10. SEO** | Minimal; sitemap referenced |  | P0 |  |  |
+| **10. SEO** | Organization WebSite WebPage BreadcrumbList Service Article ImageObject LocalBusiness/ProfessionalService(only if accurate) Person FAQPage(only where eligible) |  | P0 |  |  |
+| **10. SEO** | Parent-child-sibling-project-journal-process |  | P0 |  |  |
+| **10. SEO** | No two pages same primary intent |  | P0 |  |  |
+| **10. SEO** | Only genuine unique intent | No doorway pages | P0 |  |  |
+| **10. SEO** | Describe image; no keyword stuffing |  | P0 |  |  |
+| **10. SEO** | Webmaster; region; Metrica goals |  | P0 |  |  |
+| **10. SEO** | <= 70 chars |  | P0 |  |  |
+| **10. SEO** | 150-200 chars |  | P0 |  |  |
+| **10. SEO** | Card for location |  | P1 |  |  |
+| **10. SEO** | Consistent NAP + GBP + Wikidata if applicable |  | P1 |  |  |
+| **11. GEO** | Publish at /llms.txt |  | P0 |  |  |
+| **11. GEO** | Allow GPTBot ClaudeBot PerplexityBot Google-Extended CCBot |  | P0 |  |  |
+| **11. GEO** | One page per entity with full definition |  | P0 |  |  |
+| **11. GEO** | Visible in HTML not hidden |  | P0 |  |  |
+| **11. GEO** | Service timeline included excluded |  | P0 |  |  |
+| **11. GEO** | X is ... 40-80 words top |  | P0 |  |  |
+| **11. GEO** | Organization + sameAs + knowsAbout + areaServed + serviceType |  | P0 |  |  |
+| **11. GEO** | Facts identical across 4 languages |  | P0 |  |  |
+| **12. PERF** | p75 mobile |  | P0 |  |  |
+| **12. PERF** |  | P0 |  |  |  |
+| **12. PERF** |  | P0 |  |  |  |
+| **12. PERF** |  | P1 |  |  |  |
+| **12. PERF** |  | P0 |  |  |  |
+| **12. PERF** |  | P0 |  |  |  |
+| **12. PERF** |  | P0 |  |  |  |
+| **12. PERF** |  | P0 |  |  |  |
+| **12. PERF** |  | P0 |  |  |  |
+| **12. PERF** |  | P0 |  |  |  |
+| **12. PERF** |  | P0 |  |  |  |
+| **12. PERF** |  | P1 |  |  |  |
+| **12. PERF** |  | P0 |  |  |  |
+| **12. PERF** |  | P0 |  |  |  |
+| **12. PERF** |  | P0 |  |  |  |
+| **12. PERF** |  | P0 |  |  |  |
+| **12. PERF** |  | P0 |  |  |  |
+| **13. A11Y** |  | P0 |  |  |  |
+| **13. A11Y** |  | P0 |  |  |  |
+| **13. A11Y** |  | P0 |  |  |  |
+| **13. A11Y** |  | P0 |  |  |  |
+| **13. A11Y** |  | P0 |  |  |  |
+| **13. A11Y** |  | P0 |  |  |  |
+| **13. A11Y** |  | P0 |  |  |  |
+| **13. A11Y** |  | P0 |  |  |  |
+| **14. TECH** | Static-capable (Astro Vite plain HTML/CSS/JS or justified alt) | Documented in README | Deployable as static; no CMS/admin/database | P0 |  |
+| **14. TECH** | SSG/SSR for SEO-critical | Core content in crawlable HTML |  | P0 |  |
+| **14. TECH** | No admin; no DB; content in source/data files | Easy to migrate later | P0 |  |  |
+| **14. TECH** | Minimal; documented |  | P0 |  |  |
+| **14. TECH** | Static hosting CDN clean routes redirects headers caching | No app server required | P0 |  |  |
+| **14. TECH** | Structured; CMS-ready |  | P1 |  |  |
+| **14. TECH** | Validate sanitize; protect forms; no client secrets |  | P0 |  |  |
+| **14. TECH** | Block merge on regression |  | P0 |  |  |
+| **15. BOT** | Structured project intake; not generic AI chat |  | P0 |  |  |
+| **15. BOT** | Language -> Service -> Location -> Project type -> Description -> Budget(opt) -> Timeline(opt) -> Files -> Contact -> Review/Edit -> Submit -> Handoff |  | P0 |  |  |
+| **15. BOT** | 13 services: Architecture; Villa Design; Interior Design; Construction; Renovation & Remodeling; Project Management; Construction Supervision; Technical Supervision; Landscape Design; Planning & Permits; Turnkey Projects; Eco Construction; Concrete Construction | Exact parity with site |  | P0 |  |
+| **15. BOT** | Koh Phangan; Koh Samui; Koh Tao; Bali; Other / Not decided | Exact parity | P0 |  |  |
+| **15. BOT** | Villa/Residence; Hospitality; Commercial; Renovation; Land/New Build; Other |  | P0 |  |  |
+| **15. BOT** | Official Telegram Bot API |  | P0 |  |  |
+| **15. BOT** | Official WhatsApp Business/Cloud API or approved provider |  | P0 |  |  |
+| **15. BOT** | Multiple photos/plans/screenshots/inspiration/docs; validate type/size; fallback if upload fails |  | P0 |  |  |
+| **15. BOT** | timestamp channel language service location project_type description budget timeline name contact attachments source URL campaign | CRM-ready | P1 |  |  |
+| **15. BOT** | Service page preselects service; location page may preselect location; preserve UTM |  | P0 |  |  |
+| **15. BOT** | Protect secrets; validate webhooks; rate-limit; sanitize; validate uploads; avoid sensitive logging |  | P0 |  |  |
+| **15. BOT** | EN/RU/TH/HE localized; Hebrew RTL-safe |  | P0 |  |  |
+| **15. BOT** | Available at every stage |  | P0 |  |  |
+| **15. BOT** | 13 services x 5 locations x 4 languages + edits/back/restart/attachments/submit/handoff | 0 dead ends | P0 |  |  |
+| **16. ANALYTICS** | page_view scroll_75 cta_click form_start form_submit form_error bot_start bot_step bot_attachment bot_submit bot_handoff whatsapp_click telegram_click phone_click email_click language_switch article_read_75 project_view |  | P0 |  |  |
+| **16. ANALYTICS** | Goals for form bot_start bot_submit call whatsapp |  | P0 |  |  |
+| **16. ANALYTICS** | Verify; inspect; submit sitemap |  | P0 |  |  |
+| **16. ANALYTICS** | Verify; submit |  | P1 |  |  |
+| **16. ANALYTICS** | 30 keyword rank tracking before launch |  | P1 |  |  |
+| **16. ANALYTICS** | Weekly automated Looker Studio |  | P1 |  |  |
+| **17. COMPLIANCE** | Accept/Reject/Settings; blocks GA/Meta until consent |  | P0 |  |  |
+| **17. COMPLIANCE** | PDPA + GDPR aware |  | P0 |  |  |
+| **17. COMPLIANCE** | Consent marketing; legitimate interest analytics with opt-out |  | P0 |  |  |
+| **17. COMPLIANCE** | Leads and uploaded files |  | P0 |  |  |
+| **17. COMPLIANCE** | Telegram WhatsApp/Meta hosting analytics |  | P0 |  |  |
+| **17. COMPLIANCE** | Access/deletion request form |  | P0 |  |  |
+| **17. COMPLIANCE** | Auto-delete N days; no public URLs |  | P0 |  |  |
+| **17. COMPLIANCE** | Services payment IP responsibility |  | P0 |  |  |
+| **17. COMPLIANCE** | Page with contact |  | P1 |  |  |
+| **18. EEAT** | /about/authors/[slug]/; Person schema; sameAs |  | P0 |  |  |
+| **18. EEAT** | /editorial-policy/ |  | P0 |  |  |
+| **18. EEAT** | Team experience location licenses (real) |  | P0 |  |  |
+| **18. EEAT** | Address phone email map legal entity |  | P0 |  |  |
+| **18. EEAT** | Verified sources only |  | P0 |  |  |
+| **18. EEAT** | Real projects with photos dates client (where allowed) |  | P1 |  |  |
+| **18. EEAT** | Authoritative sources in Journal >= 2 per article |  | P1 |  |  |
+| **18. EEAT** | dateModified in schema and UI |  | P0 |  |  |
+| **18. EEAT** | Privacy Terms Cookies PDPA Accessibility |  | P0 |  |  |
+| **19. LINKING** | Programmatic build: URLs + types + topics |  | P0 |  |  |
+| **19. LINKING** | Parent hub; 2-3 siblings; 2-3 projects; 1 location; 1-2 journal; contact |  | P0 |  |  |
+| **19. LINKING** | 2-3 services; 1 location; 2 siblings; contact |  | P0 |  |  |
+| **19. LINKING** | 3-5 services; 2-3 projects; contact |  | P0 |  |  |
+| **19. LINKING** | 2-3 services; 1-2 projects; 1 location; related journal |  | P0 |  |  |
+| **19. LINKING** | 0 orphan commercial |  | P0 |  |  |
+| **19. LINKING** | Important pages <= 3 clicks from root |  | P0 |  |  |
+| **19. LINKING** | Varied descriptive; not exact-match every time |  | P0 |  |  |
+| **19. LINKING** | Max 30 links; no keyword dump |  | P0 |  |  |
+| **20. TESTS** | Production build passes |  | P0 |  |  |
+| **20. TESTS** | tsc --noEmit |  | P0 |  |  |
+| **20. TESTS** | JS/CSS budgets enforced |  | P0 |  |  |
+| **20. TESTS** | 0 errors |  | P0 |  |  |
+| **20. TESTS** | Exactly 1 per page |  | P0 |  |  |
+| **20. TESTS** | No skips |  | P0 |  |  |
+| **20. TESTS** | 0 matches |  | P0 |  |  |
+| **20. TESTS** | 0 matches |  | P0 |  |  |
+| **20. TESTS** | +/-20% of norm |  | P0 |  |  |
+| **20. TESTS** | Title H1 meta first paragraph |  | P0 |  |  |
+| **20. TESTS** | 40-60 words in top block |  | P0 |  |  |
+| **20. TESTS** | 6+ unique commercial |  | P0 |  |  |
+| **20. TESTS** | 0 dups |  | P0 |  |  |
+| **20. TESTS** | Present non-empty non-stuffed |  | P0 |  |  |
+| **20. TESTS** | Self-reference |  | P0 |  |  |
+| **20. TESTS** | Reciprocal valid |  | P0 |  |  |
+| **20. TESTS** | Canonical indexable only |  | P0 |  |  |
+| **20. TESTS** | Valid 0 errors |  | P0 |  |  |
+| **20. TESTS** | 0 |  | P0 |  |  |
+| **20. TESTS** | 0 broken 0 orphan |  | P0 |  |  |
+| **20. TESTS** | <= 3 important |  | P0 |  |  |
+| **20. TESTS** | 0 missing all 4 languages |  | P0 |  |  |
+| **20. TESTS** | dir=rtl lang=he |  | P0 |  |  |
+| **20. TESTS** | No broken headings |  | P0 |  |  |
+| **20. TESTS** | 0 blocks |  | P0 |  |  |
+| **20. TESTS** | 0 critical/serious |  | P0 |  |  |
+| **20. TESTS** | All interactive |  | P0 |  |  |
+| **20. TESTS** | All interactive |  | P0 |  |  |
+| **20. TESTS** | LCP <= 2.5s INP <= 200ms CLS <= 0.1 Perf >= 90 |  | P0 |  |  |
+| **20. TESTS** | Hero <= 250 KB others <= 150 KB |  | P0 |  |  |
+| **20. TESTS** | 0 dead links |  | P0 |  |  |
+| **20. TESTS** | Validation success error |  | P0 |  |  |
+| **20. TESTS** | Open close Escape focus trap |  | P0 |  |  |
+| **20. TESTS** | Preserves page |  | P0 |  |  |
+| **20. TESTS** | 13 services x 5 locations x 4 languages |  | P0 |  |  |
+| **20. TESTS** | Type/size/error |  | P0 |  |  |
+| **20. TESTS** | 6 breakpoints x 4 languages |  | P1 |  |  |
+| **20. TESTS** | 0 errors all templates |  | P0 |  |  |
+| **20. TESTS** | Representative indexed |  | P0 |  |  |
+| **20. TESTS** | Footer/contact/schema |  | P0 |  |  |
+| **21. CONTENT OPS** | 2 articles/month; topics from clusters |  | P1 |  |  |
+| **21. CONTENT OPS** | Review every 6 months; update dateModified |  | P1 |  |  |
+| **21. CONTENT OPS** | Monthly report on dropping > 5 |  | P1 |  |  |
+| **21. CONTENT OPS** | URL intent keyword word count schema last updated owner |  | P1 |  |  |
+| **21. CONTENT OPS** | Quarterly |  | P1 |  |  |
+| **21. CONTENT OPS** | No traffic + no links 12 months -> merge/noindex/delete |  | P1 |  |  |
+| **21. CONTENT OPS** | Draft -> Fact-check -> Edit -> SEO review -> Publish |  | P1 |  |  |
+| **22. QA DOD** | Premium editorial visual system; consistent typography spacing; varied layouts; no template feel |  | P0 |  |  |
+| **22. QA DOD** | Complete copy CTA FAQs internal links; no filler; no fabricated claims |  | P0 |  |  |
+| **22. QA DOD** | Titles H1 meta canonicals sitemap robots hreflang schema hierarchy verified |  | P0 |  |  |
+| **22. QA DOD** | No overflow clipping broken grids unreadable type |  | P0 |  |  |
+| **22. QA DOD** | Menus forms links sliders language switcher CTAs work |  | P0 |  |  |
+| **22. QA DOD** | LCP INP CLS optimized; media compressed; minimal JS; Lighthouse passed |  | P0 |  |  |
+| **22. QA DOD** | Keyboard focus labels headings alt reduced motion verified |  | P0 |  |  |
+| **22. QA DOD** | EN/RU/TH/HE complete; Hebrew true RTL; no untranslated fragments |  | P0 |  |  |
+| **22. QA DOD** | Re-test shared components after template change |  | P0 |  |  |
+| **22. QA DOD** | No P0/P1 defects; production build passes; sitemap/robots/canonicals validated; launch checklist done |  | P0 |  |  |
+| **23. DELIVERABLES** | Production-ready static site |  | P0 |  |  |
+| **23. DELIVERABLES** | Complete core copy all pages all languages |  | P0 |  |  |
+| **23. DELIVERABLES** | Metadata schema internal linking sitemap robots |  | P0 |  |  |
+| **23. DELIVERABLES** | README NOTES.md content inventory launch checklist |  | P0 |  |  |
+| **23. DELIVERABLES** | Telegram + WhatsApp integrated; documented |  | P0 |  |  |
+| **23. DELIVERABLES** | Automated test suite + CI config |  | P0 |  |  |
+| **23. DELIVERABLES** | NOTES.md listing all [[VERIFY]] items |  | P0 |  |  |
+| **24. ROOT PAGE** | Root = Services landing | Root URL / is master Services landing; label Services not Home | Do not create competing /services/ hub | P0 | Preserve unless explicitly instructed otherwise |
+| **25. NAVIGATION** | Services first | Primary visible nav begins with Services |  | P0 |  |
+| **26. NEW SERVICES** | First-class service | Full landing page: direct answer + principles + materials + passive design + energy/water ... | No thin page; no greenwashing | P0 |  |
+| **26. NEW SERVICES** | First-class service | Full landing page: direct answer + scope + architecture-to-build process + structural/tech... | No invented prices; no fake engineering credentials | P0 |  |
+| **27. LOCATIONS** | Koh Samui Koh Tao Bali | Only where genuine service exists | Unique local expertise; no doorway copies | P0 |  |
+| **- Сайт должен выглядеть как дорогой editorial/luxury brand** |  |  |  |  |  |
+| **- Крупная типографика** | generous whitespace |  |  |  |  |
+| **- Cinematic hero с 3-5 кадрами** |  |  |  |  |  |
+| **- Reusable компоненты: Hero** | Service Grid | Split Image/Text | Project Slider | Process Timeline | FAQ Accordion |
+| **- Mobile-first разработка (360-430px база** |  |  |  |  |  |
+| **- LCP ≤ 2.5s** | CLS ≤ 0.1 (Core Web Vitals) |  |  |  |  |
+| **- Images: AVIF/WebP** | lazy-load | preload только hero |  |  |  |
+| **- Минимум JS** |  |  |  |  |  |
+| **- Semantic HTML + JSON-LD schema (Organization** | BreadcrumbList | FAQPage | Article) |  |  |
+| **- Internal link graph — все страницы связаны** |  |  |  |  |  |
+| **- Security: sanitize input** | validate uploads |  |  |  |  |
+| **- EN (канонический / x-default): /** | /projects/... |  |  |  |  |
+| **- RU: /ru/** | /ru/projects/... |  |  |  |  |
+| **- TH: /th/** | /th/projects/... |  |  |  |  |
+| **- HE (RTL): /he/** | /he/projects/... |  |  |  |  |
+| **- Каждый язык — полноценная копия контента** |  |  |  |  |  |
+| **- Hebrew: true RTL layout (dir=rtl** | forms | icons) |  |  |  |
+| **- Thai: ICU line-breaking** |  |  |  |  |  |
+| **- Единая структура URL** |  |  |  |  |  |
+| **- **Временные изображения**: тематические placeholders (архитектура** | виллы) из лицензированных источников или web.archive |  |  |  |  |
+| **- **Hero слайдер**: 3-5 полноэкранных изображений с плавными переходами** | H1 поверх |  |  |  |  |
+| **- **Project/Portfolio слайдер**: swipe + keyboard + pagination** |  |  |  |  |  |
+| **- **Editorial gallery**: full-bleed** | project mosaics | alternate горизонтальные блоки |  |  |  |
+| **- **Все изображения**: AVIF/WebP** | explicit w/h | lazy-load | preload только hero |  |  |
