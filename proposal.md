@@ -1,4 +1,44 @@
 # Техническое задание — FORMA.in.th
+
+## 🎯 МИССИЯ
+Создать премиум сайт архитектурного бюро проектирования и строительства вилл на Koh Phangan (Таиланд).  
+Сайт должен выглядеть как дорогой editorial архитектурный журнал, конвертировать посетителей в лиды,  
+собирать органический трафик через SEO/GEO и работать на 4 языках (EN/RU/TH/HE).
+
+## 🏗 ЧТО ДЕЛАЕМ
+- Полноценный многостраничный сайт с блочной landing-page структурой
+- Telegram и WhatsApp боты для сбора заявок (intake funnel)
+- SEO/GEO оптимизация для органического трафика
+- 4 языка с отдельными URL, Hebrew RTL
+- 13 услуг с отдельными landing страницами
+- Premium дизайн: editorial aesthetic, крупные фото, слайдеры
+
+## 🛣 ROADMAP
+1. Brand shell + design system
+2. Global layout (header/footer/nav)
+3. Homepage + service template
+4. 13 service pages + projects + about + process + locations
+5. Bot integration (Telegram + WhatsApp)
+6. SEO/schema/hreflang/sitemap/llms.txt
+7. 4 languages (EN/RU/TH/HE)
+8. Performance optimization (CWV)
+9. QA + тестирование
+10. Launch checklist
+
+## ✅ ТЕСТИРОВАНИЕ — ОБЯЗАТЕЛЬНО ДЛЯ ВСЕГО
+- **Каждая страница**: title, H1, meta, canonicals, hreflang, schema, alt text
+- **Все ссылки**: 0 broken, 0 orphan, передают вес
+- **Core Web Vitals**: LCP ≤ 2.5s, INP ≤ 200ms, CLS ≤ 0.1
+- **Адаптивность**: mobile (320-430px), tablet, desktop (1440-1920px)
+- **4 языка**: контент полный, Hebrew true RTL, Thai ICU line-breaking
+- **Боты**: 13 услуг × 5 локаций × 4 языка — 0 dead ends
+- **Формы**: валидация, успех/ошибка, spam protection
+- **Доступность**: axe-core 0 critical/serious, keyboard nav, focus visible
+- **Lighthouse**: Performance ≥ 90, SEO 100, A11y ≥ 95
+
+---
+
+# Техническое задание — FORMA.in.th
 ## Архитектурное бюро проектирования и строительства вилл, Koh Phangan
 
 *Источник: Claude Master Brief*
