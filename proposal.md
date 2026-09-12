@@ -518,3 +518,16 @@ Section,Category,Item,Requirement,Detailed Specification,Acceptance Criteria,Pri
 - Language → Service → Location → Project Type → Budget → Files → Contact → Submit
 - Service page CTA preselects service
 - Security: sanitize input, rate-limit, validate uploads
+
+### 7. Четыре языка — отдельные URL для каждого
+- EN (канонический / x-default): /, /services/, /projects/...
+- RU: /ru/, /ru/services/, /ru/projects/...
+- TH: /th/, /th/services/, /th/projects/...
+- HE (RTL): /he/, /he/services/, /he/projects/...
+- Каждый язык — полноценная копия контента, не автоперевод
+- Hreflang reciprocal для всех страниц во всех 4 языках
+- Canonical self-referencing
+- Hebrew: true RTL layout (dir=rtl, mirror grids, forms, icons)
+- Thai: ICU line-breaking, Noto Sans Thai / IBM Plex Sans Thai
+- Единая структура URL, разный контент под поисковые интенты каждого языка
+- Yandex-aware для RU версии
