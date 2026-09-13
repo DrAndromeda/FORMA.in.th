@@ -1270,34 +1270,111 @@ EN: 44 страницы. RU/TH/HE: только `/`, `/contact/`, `/thank-you/`.
 - Карточки услуг на мобильном — достаточно ли 2 колонки?
 - Slider проектов — snappy скролл, проверить touch
 
-## 44.4 Инструкции для Claude при следующей сборке
+## 44.4 СТРУКТУРА МЕНЮ — только ключевые слова
 
-При пересборке сайта Claude должен:
+### Принцип
+В главном меню **нет общих/деревянных слов** (Home, About, Process, Journal, Projects, Contact, Services).
+Каждый пункт меню = поисковый ключевой запрос, который реально гуглят клиенты.
 
-### ДИЗАЙН
-1. **Добавить общую страницу `/services/`** — список 13 услуг с краткими описаниями и ссылками
-2. **Разнообразить hero слайды** — 5-6 разных типов: архитектура/интерьер/строительство/ландшафт/детали
-3. **Добавить премиум-анимации** — fade-in при скролле, subtle hover effects
-4. **Добавить иконки для услуг** — перед текстом или как декоративный элемент на карточке
+### Главное меню (десктоп и мобильное)
 
-### КОНТЕНТ / ТЕКСТЫ
-5. **Полный перевод RU/TH/HE** — все 44 страницы. Не только заголовки, но и body text
-6. **Заменить заглушки** — `+66-00-000-0000`, `studio@forma.in.th`, `wa.me/66000000000`
-7. **Убрать Unsplash ссылки** — заменить на референс-фото из `assets/ref-images/`
+```
+🏛️ FORMA (логотип → /)
+├── Architecture
+├── Villa Design
+├── Interior Design
+├── Construction
+├── Renovation
+├── Project Management
+├── Construction Supervision
+├── Technical Supervision
+├── Landscape Design
+├── Permits & Planning
+├── Turnkey Projects
+├── Eco Construction
+├── Concrete Construction
+└── [📞 Start a Project] — CTA-кнопка, не ссылка, кнопка действия
+```
 
-### ТЕХНИЧЕСКИЕ
-8. **Проверить меню** — выпадающие Services/Locations, мобильный гамбургер, touch на iOS/Android
-9. **Форма контактов** — должна отправлять данные (через внешний сервис или API)
-10. **AVIF/WebP** — все изображения в современных форматах с srcset
-11. **Base path при деплое не на корне** — если сайт на `/FORMA.in.th/`, все пути должны быть с base префиксом
+### Чего НЕТ в главном меню (перенесено)
+- **Locations** → НЕ в главном меню. Показывать на каждой странице услуги внизу как секцию "Service Areas" со ссылками на локации
+- **About / Process** → Только в футере
+- **Journal / Blog** → Только в футере
+- **Projects / Portfolio** → Только в футере
+- **Contact** → Только CTA-кнопка в хедере + футер
 
-### ТЕСТИРОВАНИЕ (обязательно)
-12. Lighthouse: Performance ≥ 90, SEO 100, A11y ≥ 95
-13. Все breakpoints: 320px, 375px, 430px, 768px, 1024px, 1440px, 1920px
-14. Нет горизонтального скролла ни на одном разрешении
-15. Keyboard navigation: Tab через всё меню, focus visible, skip-to-content
-16. axe-core: 0 critical/serious
-17. Все ссылки 200, нет orphan pages, sitemap соответствует реальным страницам
+### Мобильное меню
+То же самое, но вертикальный список с возможностью скролла. Кнопка CTA всегда видна.
+
+## 44.5 ХЛЕБНЫЕ КРОШКИ (BREADCRUMBS)
+
+### Сейчас (сломано)
+```
+Services → Services → Construction
+(обе ссылки ведут на главную /FORMA.in.th/)
+```
+
+### Как должно быть
+```
+🏠 Home  /  Architecture  /  Villa Design
+ ↑ ссылка на /    ↑ ссылка на /services/    ↑ текущая страница (текст)
+```
+
+**Правила:**
+- Первый элемент: `🏠 Home` → ссылка на `/`
+- Второй элемент: название категории (услуга/проект/локация) → ссылка на родительскую страницу
+- Третий (текущий): только текст, без ссылки
+- JSON-LD BreadcrumbList schema обязательна
+
+## 44.6 ТАБЛИЦА ЦЕН НА КАЖДОЙ СТРАНИЦЕ УСЛУГИ
+
+### Формат
+На каждой странице услуги — блок с таблицей примерных цен на услуги на Koh Phangan:
+
+```
+| Service | Price Range | Details |
+|---------|------------|--------|
+| Full architectural design (villa up to 200m²) | THB 150,000 – 300,000 | Concept + design development + permit docs |
+| Full architectural design (villa 200–400m²) | THB 300,000 – 600,000 | Full scope incl. site analysis |
+| Interior design | THB 80,000 – 250,000 | Per project, depends on scope |
+| Construction (per m², shell only) | THB 25,000 – 40,000 / m² | Materials + labour, island pricing |
+| Construction (per m², fully finished) | THB 40,000 – 65,000 / m² | Turnkey, excluding land |
+| Project management | 10–15% of construction cost | Independent PM fee |
+| Renovation (per m²) | THB 15,000 – 35,000 / m² | Depends on existing condition |
+| Landscape design | THB 50,000 – 150,000 | Concept + planting plan + site supervision |
+```
+
+> ⚠️ Цены — оценочные, на основе среднерыночных по Koh Phangan. Никогда не указывать точные цены без консультации. Формат: "Starting from", "Estimated range".
+
+### Где размещать
+- На странице каждой услуги — блок "Pricing & Budget" или "Estimated Investment"
+- После описания услуги, до FAQ
+- С дисклеймером: "Prices are indicative. Each project is unique — contact us for a detailed quote."
+- JSON-LD Schema markup с `estimatedPrice` для Rich Results
+
+## 44.7 КОНТЕНТ / ТЕКСТЫ
+
+1. **Полный перевод RU/TH/HE** — все 44 страницы. Не только заголовки, но и body text
+2. **Заменить заглушки** — `+66-00-000-0000`, `studio@forma.in.th`, `wa.me/66000000000`
+3. **Убрать Unsplash ссылки** — заменить на референс-фото из `assets/ref-images/`
+
+## 44.8 ТЕХНИЧЕСКИЕ ТРЕБОВАНИЯ
+
+1. **Форма контактов** — должна реально отправлять данные (через внешний сервис, API, webhook)
+2. **AVIF/WebP** — все изображения в современных форматах с srcset
+3. **Base path при деплое не на корне** — если сайт на поддиректории, все пути должны быть с правильным префиксом
+4. **Канонические URL** — указывать на реальный домен, не на GitHub Pages
+
+## 44.9 ТЕСТИРОВАНИЕ (обязательно)
+
+1. Lighthouse: Performance ≥ 90, SEO 100, A11y ≥ 95
+2. Все breakpoints: 320px, 375px, 430px, 768px, 1024px, 1440px, 1920px
+3. Нет горизонтального скролла ни на одном разрешении
+4. Keyboard navigation: Tab через всё меню, focus visible, skip-to-content
+5. axe-core: 0 critical/serious
+6. Все ссылки 200, нет orphan pages, sitemap соответствует реальным страницам
+7. Хлебные крошки — все ссылки ведут на правильные URL, не на главную
+8. Таблицы цен — отображаются корректно на всех разрешениях
 
 ---
 
