@@ -183,6 +183,55 @@ high-traffic launch: in-memory session storage (fine for one process, documented
 for Redis/KV), no automated tests, and `express`'s transitive `qs` dependency has an open
 moderate-severity advisory pending an Express major-version upgrade.
 
+## Critical audit findings (13 Sep 2026)
+
+Found during a live-deployment audit (originally recorded as §44 of what was
+`proposal(NEW2).md`, now merged into `proposal.md`). These are **current,
+concrete defects**, not spec wording — several contradict the "Done" status
+recorded elsewhere for the epics/tasks that produced this work, so treat
+those statuses as provisional until these are fixed and re-verified.
+
+- **`/services/` 404s.** The root services-landing page (the page
+  `proposal.md` §24 ROOT PAGE requires as *the* master Services page) was
+  never created.
+- **Only 3 of 44 pages are actually translated** (`/`, `/contact/`,
+  `/thank-you/`) in RU/TH/HE, despite the UI shell/dictionary being fully
+  translated. Matches what `EPIC-*` (4 Languages) already says — flagged
+  here too since it's the same underlying gap, seen from the live site.
+- **The lead form doesn't work on the current host.** It depends on
+  `functions/api/lead.ts`, a Cloudflare Pages Function — those don't run on
+  GitHub Pages. Needs either a host with server functions, or the form
+  wired to an external form service.
+- **Breadcrumbs are broken**: both the "Services" and category links point
+  at the homepage instead of their actual parent pages. (Related to, but
+  more severe than, the RTL-fallback gap already noted below.)
+- **Mobile menu / dropdown touch behavior untested** on a real device or
+  emulator — flagged, not yet verified either way.
+- **Live placeholder data**: phone `+66-00-000-0000`, email
+  `studio@forma.in.th` (domain not owned), a placeholder `wa.me` number —
+  all still literally on the production pages, not just in source as
+  `[[VERIFY]]` markers.
+- **Hero slider lacks visual variety** — all 4 slides are similar Unsplash
+  villa exteriors; no interiors/construction/landscape/detail shots.
+- **Primary navigation structure is under review.** The audit proposes
+  replacing the current Home/Services/Projects/About/Process/Locations/
+  Journal/Contact top-level nav with the 13 services listed directly (no
+  generic labels), moving About/Process/Journal/Projects to the footer
+  only, and Locations to a per-service-page "Service Areas" block instead
+  of a nav item. **Not yet decided or built** — needs a deliberate call,
+  not a silent implementation, since it's a real IA change from what's
+  live today.
+- **No indicative pricing table on service pages yet** — `proposal.md` (via
+  the merged Part 2) requires a per-service "Estimated Investment" table
+  with a disclaimer, similar to CreativeLAB's. Not yet added to
+  `ServicePage.astro`.
+- **A three-variant homepage/menu exploration is entirely unbuilt**:
+  Editorial, Premium/dark, and Local-Expert variants at `/v1/`, `/v2/`,
+  `/v3/`, to compare and then pick one (deleting the other two). See the
+  merged `proposal.md`'s Part 2 addendum. This is real, sizeable,
+  unstarted work — tracked as its own large task, not a tweak to an
+  existing epic.
+
 ## Known minor gaps
 
 - **WhatsApp has no deep-link start-parameter equivalent** to Telegram's

@@ -119,8 +119,26 @@ alongside a 100% static Astro build with zero extra infrastructure:
 3. Deploy the `bots/` project separately (see `bots/README.md`) — it is not part of this
    build and runs as its own always-on process.
 
+## Team workflow
+
+Work is tracked as GitHub Issues (Epics/Tasks/Bugs) on one Project board, with branches and
+PRs bound to issues by number. Full reference: **[`docs/Index.md`](docs/Index.md)** (start
+there), or run `make help` for every available command.
+
+```bash
+make board-setup                                    # one-time
+make task-new TITLE="..." EPIC=<n> PRIORITY=P1       # file a task
+make task-start TASK=<n>                             # branch + board card → In Progress
+gh pr create --title "..." --body "Closes #<n>\n\n..."
+```
+
+See `docs/WORKFLOW.md` for how it fits together and `docs/HowTo.md` for the exact commands,
+step by step.
+
 ## Documentation
 
+- `docs/Index.md` — navigation hub for everything below, plus this README and `NOTES.md`.
+- `docs/WORKFLOW.md` / `docs/HowTo.md` — the team workflow (Issues + Projects board).
 - `NOTES.md` — assumptions made, every `[[VERIFY]]` item, content inventory, and the
   pre-launch QA checklist.
 - `proposal.md` — the original brief this site was built from.

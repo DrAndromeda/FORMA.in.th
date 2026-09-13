@@ -1,0 +1,49 @@
+name: "✅ Task"
+description: A single, actionable unit of work. See docs/WORKFLOW.md.
+title: "[TASK] "
+labels: ["type: task"]
+body:
+  - type: input
+    id: parent-epic
+    attributes:
+      label: Parent epic
+      description: Issue number of the epic this belongs to, if any (e.g. #12) — prefer scripts/create-task.sh --epic for a real linked sub-issue instead of just a text reference here
+    validations:
+      required: false
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What needs to be done
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: How do we know this is actually done?
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - P0 — must happen / blocking
+        - P1 — should happen soon
+        - P2 — nice to have
+    validations:
+      required: true
+
+  - type: input
+    id: phase
+    attributes:
+      label: Phase
+      placeholder: "e.g. Phase 7"
+    validations:
+      required: false

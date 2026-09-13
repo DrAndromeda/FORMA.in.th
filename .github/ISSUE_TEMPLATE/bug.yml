@@ -1,0 +1,41 @@
+name: "🐛 Bug"
+description: Something is broken.
+title: "[BUG] "
+labels: ["type: bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What's broken
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Page / location
+      description: URL or file path where this happens
+    validations:
+      required: false
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Go to ...
+        2. Click ...
+        3. See ...
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - P0 — must happen / blocking
+        - P1 — should happen soon
+        - P2 — nice to have
+    validations:
+      required: true

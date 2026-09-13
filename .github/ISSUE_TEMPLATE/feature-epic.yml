@@ -1,0 +1,59 @@
+name: "🎯 Epic"
+description: A body of work spanning multiple tasks. See docs/WORKFLOW.md.
+title: "[EPIC] "
+labels: ["type: epic"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What is this epic, in a few sentences?
+    validations:
+      required: true
+
+  - type: input
+    id: proposal-ref
+    attributes:
+      label: Proposal reference
+      description: Link or path to the proposal/brief this comes from, if any (e.g. proposal.md, or docs/proposals/<slug>.md)
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - P0 — must happen / blocking
+        - P1 — should happen soon
+        - P2 — nice to have
+    validations:
+      required: true
+
+  - type: input
+    id: phase
+    attributes:
+      label: Phase
+      description: Which roadmap phase does this belong to, if applicable? (see docs/WORKFLOW.md §3)
+      placeholder: "e.g. Phase 7"
+    validations:
+      required: false
+
+  - type: textarea
+    id: tasks
+    attributes:
+      label: Task checklist
+      description: Reference task issues as they're created (this is a convenience checklist — the authoritative link is `gh issue create --parent`, i.e. native sub-issues)
+      placeholder: |
+        - [ ] #123
+        - [ ] #124
+    validations:
+      required: false
+
+  - type: input
+    id: spec-pointer
+    attributes:
+      label: Detailed spec
+      description: If this epic has a longer spec than fits here, link the docs/epics/EPIC-XXX-*.md file
+    validations:
+      required: false

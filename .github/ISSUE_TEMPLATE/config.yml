@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: How this repo's workflow works
+    url: https://github.com/stoianov46/Forma/blob/main/docs/WORKFLOW.md
+    about: Read this before filing anything — Epic/Task/Bug, the board, branches, PRs.
