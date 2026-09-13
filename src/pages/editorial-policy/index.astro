@@ -1,0 +1,8 @@
+---
+import LegalPage from '../../templates/LegalPage.astro';
+import { legalEn } from '../../content/legal/en';
+
+const p = legalEn.editorialPolicy;
+---
+
+<LegalPage path="/editorial-policy/" navLabel="Editorial Policy" title={p.title} description={p.description} h1={p.h1} body={p.body} />

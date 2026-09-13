@@ -1,0 +1,127 @@
+---
+import { Image, getImage as astroGetImage } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/layout/Breadcrumbs.astro';
+import ServiceGrid from '../components/blocks/ServiceGrid.astro';
+import CTABanner from '../components/blocks/CTABanner.astro';
+import { getDictionary } from '../i18n/dictionary';
+import { localizePath, LOCALES, type Locale } from '../lib/i18n';
+import { getProject, hasProjectTranslation } from '../content/projects';
+import { getLocation, locationHrefSmart } from '../content/locations';
+import { services as allServices } from '../content/services';
+import { getImage } from '../lib/images';
+
+interface Props {
+  locale: Locale;
+  slug: string;
+}
+const { locale, slug } = Astro.props;
+const t = getDictionary(locale);
+const project = getProject(slug);
+if (!project) throw new Error(`Unknown project slug: ${slug}`);
+const tr = project.translations[locale];
+const path = `/projects/${slug}/`;
+const location = getLocation(project.locationSlug);
+const relatedServices = project.serviceSlugs.map((s) => allServices.find((svc) => svc.slug === s)).filter((s): s is NonNullable<typeof s> => Boolean(s));
+const optimizedOg = await astroGetImage({ src: getImage(project.images[0]), width: 1200, height: 630 });
+const availableLocales = LOCALES.filter((l) => hasProjectTranslation(l, slug));
+---
+
+<BaseLayout locale={locale} path={path} title={tr.seo.title} description={tr.seo.description} image={optimizedOg.src} availableLocales={availableLocales}>
+  <Breadcrumbs locale={locale} items={[{ name: t.nav.projects, path: '/projects/' }, { name: tr.name, path }]} />
+
+  <section class="wrap pb-6 pt-2">
+    <p class="rounded-full bg-stone-100 px-3 py-1 text-xs font-semibold tracking-wide text-ink-900/60 uppercase inline-block">
+      Concept study — representative of our design approach
+    </p>
+    <h1 class="mt-4 max-w-3xl">{tr.name}</h1>
+    <p class="body-l mt-3 max-w-2xl text-ink-900/70">{tr.summary}</p>
+  </section>
+
+  <section class="wrap">
+    <div class="aspect-[16/9] overflow-hidden rounded-2xl">
+      <Image
+        src={getImage(project.images[0])}
+        alt={tr.name}
+        width={1600}
+        height={900}
+        widths={[640, 960, 1280, 1600]}
+        sizes="100vw"
+        format="avif"
+        loading="eager"
+        class="h-full w-full object-cover"
+      />
+    </div>
+  </section>
+
+  <section class="wrap py-14 sm:py-20">
+    <div class="content-grid mb-12">
+      <div class="col-span-2 md:col-span-2 lg:col-span-2">
+        <p class="text-xs font-semibold tracking-wide text-ink-900/50 uppercase">Location</p>
+        <a href={locationHrefSmart(locale, project.locationSlug)} class="mt-1 block font-medium hover:text-olive-700">{location?.translations[locale].name}</a>
+      </div>
+      <div class="col-span-2 md:col-span-2 lg:col-span-2">
+        <p class="text-xs font-semibold tracking-wide text-ink-900/50 uppercase">Type</p>
+        <p class="mt-1 font-medium">{project.tags.join(', ')}</p>
+      </div>
+      <div class="col-span-4 md:col-span-4 lg:col-span-2">
+        <p class="text-xs font-semibold tracking-wide text-ink-900/50 uppercase">Status</p>
+        <p class="mt-1 font-medium capitalize">{project.status}</p>
+      </div>
+    </div>
+
+    <div class="content-grid gap-y-10">
+      <div class="col-span-4 md:col-span-4 lg:col-span-6">
+        <h2 class="text-2xl">The brief</h2>
+        <p class="body-m mt-3 text-ink-900/80">{tr.story}</p>
+      </div>
+      <div class="col-span-4 md:col-span-4 lg:col-span-6">
+        <h2 class="text-2xl">Design approach</h2>
+        <p class="body-m mt-3 text-ink-900/80">{tr.design}</p>
+      </div>
+      <div class="col-span-4 md:col-span-4 lg:col-span-6">
+        <h2 class="text-2xl">Materials</h2>
+        <p class="body-m mt-3 text-ink-900/80">{tr.materials}</p>
+      </div>
+      <div class="col-span-4 md:col-span-4 lg:col-span-6">
+        <h2 class="text-2xl">Outcome</h2>
+        <p class="body-m mt-3 text-ink-900/80">{tr.outcome}</p>
+      </div>
+    </div>
+  </section>
+
+  {project.images.length > 1 && (
+    <section class="wrap pb-14 sm:pb-20">
+      <div class="grid gap-5 sm:grid-cols-2">
+        {project.images.slice(1).map((img) => (
+          <div class="aspect-[4/3] overflow-hidden rounded-2xl">
+            <Image
+              src={getImage(img)}
+              alt={tr.name}
+              width={960}
+              height={720}
+              widths={[480, 720, 960]}
+              sizes="(min-width: 640px) 50vw, 100vw"
+              format="avif"
+              loading="lazy"
+              class="h-full w-full object-cover"
+            />
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {relatedServices.length > 0 && (
+    <section class="wrap py-14 sm:py-20">
+      <h2 class="mb-8">Services on this project</h2>
+      <ServiceGrid locale={locale} services={relatedServices} />
+    </section>
+  )}
+
+  <CTABanner
+    heading={t.home.finalCtaHeading}
+    body={t.home.finalCtaBody}
+    cta={{ label: t.cta.startProject, href: localizePath(locale, '/contact/') }}
+  />
+</BaseLayout>

@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/layout/Breadcrumbs.astro';
+import DirectAnswer from '../components/blocks/DirectAnswer.astro';
+import JournalCards from '../components/blocks/JournalCards.astro';
+import CTABanner from '../components/blocks/CTABanner.astro';
+import { getDictionary } from '../i18n/dictionary';
+import { localizePath, type Locale } from '../lib/i18n';
+import { getJournalArticles, getLocalesWithAnyArticles } from '../lib/journal';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const articles = await getJournalArticles(locale);
+const availableLocales = await getLocalesWithAnyArticles();
+
+const title = `${t.nav.journal} | FORMA — Villa Design & Tropical Architecture Insight`;
+const description =
+  'Original articles on villa design, tropical architecture, construction logistics, renovation and building on Koh Phangan from the FORMA studio.';
+---
+
+<BaseLayout locale={locale} path="/journal/" title={title} description={description} availableLocales={availableLocales}>
+  <Breadcrumbs locale={locale} items={[{ name: t.nav.journal, path: '/journal/' }]} />
+  <section class="wrap pb-6 pt-2">
+    <h1 class="max-w-3xl">{t.nav.journal}</h1>
+  </section>
+  <DirectAnswer text={description} />
+
+  <JournalCards locale={locale} t={t} articles={articles} />
+
+  <CTABanner
+    heading={t.home.finalCtaHeading}
+    body={t.home.finalCtaBody}
+    cta={{ label: t.cta.startProject, href: localizePath(locale, '/contact/') }}
+  />
+</BaseLayout>

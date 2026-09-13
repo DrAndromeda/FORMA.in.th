@@ -1,0 +1,26 @@
+---
+interface Props {
+  heading: string;
+  body: string;
+  cta: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+const { heading, body, cta, secondaryCta } = Astro.props;
+---
+
+<section class="bg-ink-900 py-16 sm:py-24">
+  <div class="wrap flex flex-col items-start gap-6">
+    <h2 class="max-w-2xl text-stone-50">{heading}</h2>
+    <p class="body-l max-w-xl text-stone-50/75">{body}</p>
+    <div class="flex flex-wrap gap-4">
+      <a href={cta.href} class="inline-flex items-center justify-center rounded-full bg-stone-50 px-7 py-3.5 text-sm font-medium tracking-wide text-ink-900 transition-colors hover:bg-stone-200">
+        {cta.label}
+      </a>
+      {secondaryCta && (
+        <a href={secondaryCta.href} class="inline-flex items-center justify-center rounded-full border border-stone-50/40 px-7 py-3.5 text-sm font-medium tracking-wide text-stone-50 transition-colors hover:bg-stone-50/10">
+          {secondaryCta.label}
+        </a>
+      )}
+    </div>
+  </div>
+</section>

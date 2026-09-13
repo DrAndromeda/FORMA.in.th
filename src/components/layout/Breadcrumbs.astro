@@ -1,0 +1,41 @@
+---
+import { SITE_URL } from '../../lib/site';
+import { localizePath, type Locale } from '../../lib/i18n';
+import { getDictionary } from '../../i18n/dictionary';
+import JsonLd from '../seo/JsonLd.astro';
+import { breadcrumbSchema, graph } from '../../lib/schema';
+
+interface Crumb {
+  name: string;
+  path: string; // locale-agnostic
+}
+
+interface Props {
+  locale: Locale;
+  items: Crumb[];
+}
+
+const { locale, items } = Astro.props;
+const t = getDictionary(locale);
+
+const trail = [{ name: t.common.breadcrumbHome, path: '/' }, ...items];
+const withUrls = trail.map((c) => ({ name: c.name, url: new URL(localizePath(locale, c.path), SITE_URL).toString() }));
+---
+
+<nav aria-label="Breadcrumb" class="wrap py-4">
+  <ol class="flex flex-wrap items-center gap-1.5 text-sm text-ink-900/60">
+    {
+      trail.map((c, i) => (
+        <li class="flex items-center gap-1.5">
+          {i > 0 && <span aria-hidden="true">/</span>}
+          {i === trail.length - 1 ? (
+            <span aria-current="page" class="text-ink-900">{c.name}</span>
+          ) : (
+            <a href={localizePath(locale, c.path)} class="hover:text-ink-900">{c.name}</a>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+<JsonLd data={graph([breadcrumbSchema(withUrls)])} />

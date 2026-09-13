@@ -1,0 +1,55 @@
+---
+import { Image } from 'astro:assets';
+import { getImage } from '../../lib/images';
+import { locationHrefSmart } from '../../content/locations';
+import type { Location } from '../../lib/types';
+import type { Locale } from '../../lib/i18n';
+import type { Dictionary } from '../../i18n/dictionary';
+
+interface Props {
+  locale: Locale;
+  t: Dictionary;
+  locations: Location[];
+  heading: string;
+  intro: string;
+  viewAllHref: string;
+}
+const { locale, t, locations, heading, intro, viewAllHref } = Astro.props;
+---
+
+<section class="wrap py-14 sm:py-20">
+  <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <h2>{heading}</h2>
+      <p class="body-l mt-3 max-w-xl text-ink-900/70">{intro}</p>
+    </div>
+    <a href={viewAllHref} class="text-sm font-medium text-olive-700 hover:text-olive-600 whitespace-nowrap">{t.nav.viewAllLocations} →</a>
+  </div>
+  <div class="content-grid">
+    {
+      locations.map((loc) => {
+        const tr = loc.translations[locale];
+        return (
+          <a href={locationHrefSmart(locale, loc.slug)} class="group col-span-4 md:col-span-4 lg:col-span-3 overflow-hidden rounded-2xl border border-ink-900/10">
+            <div class="aspect-[4/3] overflow-hidden">
+              <Image
+                src={getImage(loc.image)}
+                alt={tr.name}
+                width={480}
+                height={360}
+                widths={[320, 400, 480]}
+                sizes="(min-width: 1024px) 25vw, 50vw"
+                format="avif"
+                loading="lazy"
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+            <div class="p-4">
+              <h3 class="text-base">{tr.name}</h3>
+            </div>
+          </a>
+        );
+      })
+    }
+  </div>
+</section>

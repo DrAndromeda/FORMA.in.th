@@ -1,0 +1,17 @@
+---
+import JournalIndexPage from '../../../templates/JournalIndexPage.astro';
+import { getCollection } from 'astro:content';
+import type { Locale } from '../../../lib/i18n';
+
+export async function getStaticPaths() {
+  const all = await getCollection('journal');
+  const translatedLocales: Locale[] = ['ru', 'th', 'he'];
+  return translatedLocales.filter((locale) => all.some((e) => e.id.startsWith(`${locale}/`))).map((locale) => ({
+    params: { locale },
+  }));
+}
+
+const { locale } = Astro.params as { locale: Locale };
+---
+
+<JournalIndexPage locale={locale} />

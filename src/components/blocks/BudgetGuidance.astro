@@ -1,0 +1,33 @@
+---
+interface Props {
+  heading: string;
+  intro: string;
+  factors: string[];
+  cta: { label: string; href: string };
+}
+const { heading, intro, factors, cta } = Astro.props;
+---
+
+<section class="wrap py-14 sm:py-20">
+  <div class="rounded-2xl border border-ink-900/10 bg-stone-100 p-8 sm:p-12">
+    <div class="content-grid">
+      <div class="col-span-4 md:col-span-3 lg:col-span-5">
+        <h2>{heading}</h2>
+        <p class="body-m mt-4 text-ink-900/70">{intro}</p>
+        <a href={cta.href} class="mt-6 inline-flex items-center rounded-full bg-ink-900 px-6 py-3 text-sm font-medium text-stone-50 hover:bg-olive-700">
+          {cta.label}
+        </a>
+      </div>
+      <ul class="col-span-4 md:col-span-5 lg:col-span-6 lg:col-start-7 space-y-3">
+        {
+          factors.map((f) => (
+            <li class="flex gap-3 text-sm text-ink-900/80">
+              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-terracotta-500" />
+              {f}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

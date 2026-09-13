@@ -1,0 +1,16 @@
+---
+import LocationsIndexPage from '../../../templates/LocationsIndexPage.astro';
+import { translatedLocationSlugs } from '../../../content/locations';
+import type { Locale } from '../../../lib/i18n';
+
+export function getStaticPaths() {
+  const translatedLocales: Locale[] = ['ru', 'th', 'he'];
+  return translatedLocales.filter((locale) => translatedLocationSlugs(locale).length > 0).map((locale) => ({
+    params: { locale },
+  }));
+}
+
+const { locale } = Astro.params as { locale: Locale };
+---
+
+<LocationsIndexPage locale={locale} />

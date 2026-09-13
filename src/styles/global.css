@@ -1,0 +1,260 @@
+@import "tailwindcss";
+
+/* Self-hosted editorial type system — see proposal.md §5 DESIGN */
+@import "@fontsource-variable/fraunces/standard.css";
+@import "@fontsource-variable/inter";
+@import "@fontsource/ibm-plex-sans-thai/400.css";
+@import "@fontsource/ibm-plex-sans-thai/500.css";
+@import "@fontsource/ibm-plex-sans-thai/600.css";
+@import "@fontsource/heebo/400.css";
+@import "@fontsource/heebo/500.css";
+@import "@fontsource/heebo/600.css";
+
+@theme {
+  /* Palette — warm tropical editorial, restrained accents */
+  --color-stone-50: #f7f4ef;
+  --color-stone-100: #efe9df;
+  --color-stone-200: #e5ded4;
+  --color-stone-400: #a89c8a;
+  --color-ink-900: #141210;
+  --color-ink-700: #2b2723;
+  --color-olive-600: #5a5f45;
+  --color-olive-700: #454a34;
+  --color-terracotta-500: #b8714a;
+  --color-terracotta-600: #9c5c3a;
+
+  --font-display: "Fraunces Variable", "Fraunces", Georgia, serif;
+  --font-sans: "Inter Variable", "Inter", -apple-system, sans-serif;
+  --font-sans-th: "IBM Plex Sans Thai", "Inter Variable", sans-serif;
+  --font-sans-he: "Heebo", "Inter Variable", sans-serif;
+
+  --breakpoint-xs: 23.4375rem; /* 375px */
+
+  --animate-atmosphere: atmosphere 48s ease-in-out infinite;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  body {
+    background-color: var(--color-stone-50);
+    color: var(--color-ink-900);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  [lang="th"] body,
+  [lang="th"] {
+    font-family: var(--font-sans-th);
+    word-break: normal;
+    overflow-wrap: anywhere;
+    line-break: strict;
+  }
+
+  [lang="he"] body,
+  [lang="he"] {
+    font-family: var(--font-sans-he);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 480;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+    color: var(--color-ink-900);
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 1.9rem + 3vw, 6rem);
+  }
+
+  h2 {
+    font-size: clamp(2rem, 1.6rem + 2vw, 3.5rem);
+    line-height: 1.1;
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+    line-height: 1.2;
+  }
+
+  p {
+    line-height: 1.6;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  ::selection {
+    background: var(--color-olive-600);
+    color: var(--color-stone-50);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-terracotta-500);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  .body-l {
+    font-size: 1.25rem;
+    line-height: 1.65;
+  }
+
+  .body-m {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 48rem) {
+    .content-grid {
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+
+  @media (min-width: 90rem) {
+    .content-grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 1.75rem;
+    }
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: 90rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 48rem) {
+    .wrap {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  @media (min-width: 90rem) {
+    .wrap {
+      padding-inline: 4rem;
+    }
+  }
+
+  /* CSS-only atmospheric background — imperceptible, non-decorative, respects reduced motion */
+  .atmosphere {
+    background: radial-gradient(
+        120% 140% at 15% 0%,
+        color-mix(in oklab, var(--color-olive-600) 8%, transparent) 0%,
+        transparent 55%
+      ),
+      radial-gradient(
+        120% 140% at 85% 100%,
+        color-mix(in oklab, var(--color-terracotta-500) 7%, transparent) 0%,
+        transparent 55%
+      ),
+      var(--color-stone-50);
+    background-size:
+      160% 160%,
+      160% 160%,
+      auto;
+    animation: var(--animate-atmosphere);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .atmosphere {
+      animation: none;
+    }
+  }
+
+  .prose-article {
+    max-width: 42rem;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--color-ink-900);
+  }
+
+  .prose-article h2 {
+    margin-top: 2.25em;
+    margin-bottom: 0.6em;
+    font-size: 1.5rem;
+  }
+
+  .prose-article p {
+    margin-bottom: 1.25em;
+    color: color-mix(in oklab, var(--color-ink-900) 82%, transparent);
+  }
+
+  .prose-article a {
+    color: var(--color-olive-700);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .prose-article ul,
+  .prose-article ol {
+    margin-bottom: 1.25em;
+    padding-inline-start: 1.25em;
+  }
+
+  .prose-article li {
+    margin-bottom: 0.5em;
+  }
+
+  .prose-article ul {
+    list-style: disc;
+  }
+
+  .prose-article ol {
+    list-style: decimal;
+  }
+}
+
+@keyframes atmosphere {
+  0% {
+    background-position:
+      0% 0%,
+      100% 100%;
+  }
+  50% {
+    background-position:
+      15% 10%,
+      85% 90%;
+  }
+  100% {
+    background-position:
+      0% 0%,
+      100% 100%;
+  }
+}

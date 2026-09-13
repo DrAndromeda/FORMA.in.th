@@ -1,0 +1,12 @@
+---
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+---
+
+<section class="wrap py-10 sm:py-14">
+  <p class="body-l max-w-3xl border-s-2 border-terracotta-500 ps-6 font-medium text-ink-900">
+    {text}
+  </p>
+</section>

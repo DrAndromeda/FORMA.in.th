@@ -1,0 +1,12 @@
+---
+import LocationPage from '../../templates/LocationPage.astro';
+import { locations } from '../../content/locations';
+
+export function getStaticPaths() {
+  return locations.map((l) => ({ params: { slug: l.slug } }));
+}
+
+const { slug } = Astro.params;
+---
+
+<LocationPage locale="en" slug={slug} />

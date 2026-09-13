@@ -1,0 +1,18 @@
+---
+import JournalArticlePage from '../../../templates/JournalArticlePage.astro';
+import { getCollection } from 'astro:content';
+import { localeSlug } from '../../../lib/journal';
+import type { Locale } from '../../../lib/i18n';
+
+export async function getStaticPaths() {
+  const all = await getCollection('journal');
+  const translatedLocales: Locale[] = ['ru', 'th', 'he'];
+  return translatedLocales.flatMap((locale) =>
+    all.filter((e) => e.id.startsWith(`${locale}/`)).map((e) => ({ params: { locale, slug: localeSlug(e) } })),
+  );
+}
+
+const { locale, slug } = Astro.params as { locale: Locale; slug: string };
+---
+
+<JournalArticlePage locale={locale} slug={slug} />

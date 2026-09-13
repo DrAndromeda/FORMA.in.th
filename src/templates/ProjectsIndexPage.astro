@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/layout/Breadcrumbs.astro';
+import DirectAnswer from '../components/blocks/DirectAnswer.astro';
+import CTABanner from '../components/blocks/CTABanner.astro';
+import { Image } from 'astro:assets';
+import { getImage } from '../lib/images';
+import { getDictionary } from '../i18n/dictionary';
+import { localizePath, LOCALES, type Locale } from '../lib/i18n';
+import { projects, projectHrefSmart, translatedProjectSlugs } from '../content/projects';
+import { getLocation } from '../content/locations';
+import type { ProjectTag } from '../lib/types';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const availableLocales = LOCALES.filter((l) => l === 'en' || translatedProjectSlugs(l).length > 0);
+
+const ALL_TAGS: ProjectTag[] = ['Architecture', 'Villa', 'Interior', 'Renovation', 'Construction', 'Landscape', 'Hospitality'];
+const usedTags = ALL_TAGS.filter((tag) => projects.some((p) => p.tags.includes(tag)));
+
+const title = `${t.nav.projects} | FORMA — Villa & Architecture Portfolio, Koh Phangan`;
+const description =
+  'A portfolio of villa, interior, renovation and construction concept studies by FORMA, spanning Koh Phangan and the surrounding islands.';
+---
+
+<BaseLayout locale={locale} path="/projects/" title={title} description={description} availableLocales={availableLocales}>
+  <Breadcrumbs locale={locale} items={[{ name: t.nav.projects, path: '/projects/' }]} />
+  <section class="wrap pb-6 pt-2">
+    <h1 class="max-w-3xl">{t.nav.projects}</h1>
+  </section>
+  <DirectAnswer text={description} />
+
+  <section class="wrap py-8">
+    <p class="mb-4 text-xs font-semibold tracking-wide text-ink-900/50 uppercase">Filter by type</p>
+    <div id="project-filters" class="flex flex-wrap gap-2">
+      <button type="button" data-tag="all" data-active="true" class="filter-btn rounded-full border border-ink-900/20 px-4 py-2 text-sm">
+        All
+      </button>
+      {
+        usedTags.map((tag) => (
+          <button type="button" data-tag={tag} data-active="false" class="filter-btn rounded-full border border-ink-900/20 px-4 py-2 text-sm">
+            {tag}
+          </button>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="wrap pb-20">
+    <div id="project-cards" class="content-grid">
+      {
+        projects.map((p) => {
+          const tr = p.translations[locale];
+          const location = getLocation(p.locationSlug);
+          return (
+            <a
+              href={projectHrefSmart(locale, p.slug)}
+              data-tags={p.tags.join(',')}
+              class="project-card group col-span-4 md:col-span-4 lg:col-span-4 overflow-hidden rounded-2xl"
+            >
+              <div class="aspect-[4/5] overflow-hidden rounded-2xl">
+                <Image
+                  src={getImage(p.images[0])}
+                  alt={tr.name}
+                  width={640}
+                  height={800}
+                  widths={[360, 480, 640]}
+                  sizes="(min-width: 1024px) 33vw, 50vw"
+                  format="avif"
+                  loading="lazy"
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div class="pt-3">
+                <p class="text-xs font-medium tracking-wide text-ink-900/50 uppercase">
+                  {location?.translations[locale].name} · {p.tags.join(', ')}
+                </p>
+                <h2 class="mt-1 text-lg">{tr.name}</h2>
+                <p class="body-m mt-1 text-ink-900/70 line-clamp-2">{tr.summary}</p>
+              </div>
+            </a>
+          );
+        })
+      }
+    </div>
+  </section>
+
+  <CTABanner
+    heading={t.home.finalCtaHeading}
+    body={t.home.finalCtaBody}
+    cta={{ label: t.cta.startProject, href: localizePath(locale, '/contact/') }}
+  />
+</BaseLayout>
+
+<script>
+  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('.filter-btn'));
+  const cards = Array.from(document.querySelectorAll<HTMLAnchorElement>('.project-card'));
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      buttons.forEach((b) => b.setAttribute('data-active', 'false'));
+      btn.setAttribute('data-active', 'true');
+      const tag = btn.dataset.tag;
+      cards.forEach((card) => {
+        const tags = card.dataset.tags?.split(',') ?? [];
+        const show = tag === 'all' || tags.includes(tag ?? '');
+        card.hidden = !show;
+      });
+    });
+  });
+</script>
+
+<style>
+  .filter-btn[data-active='true'] {
+    background: var(--color-ink-900);
+    color: var(--color-stone-50);
+    border-color: var(--color-ink-900);
+  }
+</style>

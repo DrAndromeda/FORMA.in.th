@@ -1,0 +1,26 @@
+---
+interface Item {
+  title: string;
+  body: string;
+}
+interface Props {
+  heading: string;
+  items: Item[];
+}
+const { heading, items } = Astro.props;
+---
+
+<section class="wrap py-14 sm:py-20">
+  <h2 class="max-w-xl">{heading}</h2>
+  <div class="content-grid mt-10">
+    {
+      items.map((item) => (
+        <div class="col-span-4 md:col-span-4 lg:col-span-4">
+          <div class="h-px w-10 bg-terracotta-500" />
+          <h3 class="mt-4 text-xl">{item.title}</h3>
+          <p class="body-m mt-2 text-ink-900/70">{item.body}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>

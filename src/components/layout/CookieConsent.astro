@@ -1,0 +1,154 @@
+---
+import type { Locale } from '../../lib/i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const copy: Record<Locale, { intro: string; accept: string; reject: string; settings: string; save: string; analytics: string; marketing: string; essential: string }> = {
+  en: {
+    intro: 'We use cookies to run this site and, with your consent, to understand how it is used.',
+    accept: 'Accept all',
+    reject: 'Reject non-essential',
+    settings: 'Settings',
+    save: 'Save preferences',
+    analytics: 'Analytics',
+    marketing: 'Marketing',
+    essential: 'Essential (always on)',
+  },
+  ru: {
+    intro: 'Мы используем cookie для работы сайта и, с вашего согласия, для анализа использования сайта.',
+    accept: 'Принять все',
+    reject: 'Отклонить необязательные',
+    settings: 'Настройки',
+    save: 'Сохранить настройки',
+    analytics: 'Аналитика',
+    marketing: 'Маркетинг',
+    essential: 'Обязательные (всегда включены)',
+  },
+  th: {
+    intro: 'เราใช้คุกกี้เพื่อให้เว็บไซต์ทำงานได้ และเพื่อวิเคราะห์การใช้งานเมื่อได้รับความยินยอมจากคุณ',
+    accept: 'ยอมรับทั้งหมด',
+    reject: 'ปฏิเสธที่ไม่จำเป็น',
+    settings: 'ตั้งค่า',
+    save: 'บันทึกการตั้งค่า',
+    analytics: 'การวิเคราะห์',
+    marketing: 'การตลาด',
+    essential: 'จำเป็น (เปิดใช้งานเสมอ)',
+  },
+  he: {
+    intro: 'אנו משתמשים בעוגיות להפעלת האתר, ובהסכמתכם, כדי להבין כיצד הוא בשימוש.',
+    accept: 'קבלו הכל',
+    reject: 'דחו לא חיוני',
+    settings: 'הגדרות',
+    save: 'שמרו העדפות',
+    analytics: 'אנליטיקס',
+    marketing: 'שיווק',
+    essential: 'חיוני (תמיד פעיל)',
+  },
+};
+const c = copy[locale];
+---
+
+<div id="cookie-consent" hidden class="fixed inset-x-0 bottom-0 z-[70] border-t border-ink-900/10 bg-stone-50 p-5 shadow-2xl sm:p-6">
+  <div class="wrap flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <p class="body-m max-w-xl text-ink-900/80">{c.intro}</p>
+    <div class="flex flex-wrap gap-3">
+      <button type="button" id="cookie-settings-toggle" class="rounded-full border border-ink-900/20 px-5 py-2.5 text-sm font-medium hover:bg-stone-100">{c.settings}</button>
+      <button type="button" id="cookie-reject" class="rounded-full border border-ink-900/20 px-5 py-2.5 text-sm font-medium hover:bg-stone-100">{c.reject}</button>
+      <button type="button" id="cookie-accept" class="rounded-full bg-ink-900 px-5 py-2.5 text-sm font-medium text-stone-50 hover:bg-olive-700">{c.accept}</button>
+    </div>
+  </div>
+
+  <div id="cookie-settings-panel" hidden class="wrap mt-5 border-t border-ink-900/10 pt-5">
+    <div class="grid gap-4 sm:grid-cols-3">
+      <label class="flex items-center gap-2 text-sm">
+        <input type="checkbox" checked disabled />
+        {c.essential}
+      </label>
+      <label class="flex items-center gap-2 text-sm">
+        <input type="checkbox" id="cookie-analytics" />
+        {c.analytics}
+      </label>
+      <label class="flex items-center gap-2 text-sm">
+        <input type="checkbox" id="cookie-marketing" />
+        {c.marketing}
+      </label>
+    </div>
+    <button type="button" id="cookie-save" class="mt-4 rounded-full bg-ink-900 px-5 py-2.5 text-sm font-medium text-stone-50 hover:bg-olive-700">{c.save}</button>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'formaCookieConsent';
+  const banner = document.getElementById('cookie-consent');
+  const panel = document.getElementById('cookie-settings-panel');
+  const analyticsBox = document.getElementById('cookie-analytics');
+  const marketingBox = document.getElementById('cookie-marketing');
+
+  type Consent = { essential: true; analytics: boolean; marketing: boolean; timestamp: string };
+
+  function readConsent(): Consent | null {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? (JSON.parse(raw) as Consent) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function writeConsent(consent: Consent) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(consent));
+    } catch {
+      // localStorage unavailable (private mode, etc.) — consent simply won't persist across visits.
+    }
+    document.dispatchEvent(new CustomEvent('forma:consent', { detail: consent }));
+  }
+
+  function hideBanner() {
+    banner?.setAttribute('hidden', '');
+  }
+
+  function showBanner() {
+    banner?.removeAttribute('hidden');
+  }
+
+  if (!readConsent()) {
+    showBanner();
+  }
+
+  document.getElementById('cookie-accept')?.addEventListener('click', () => {
+    writeConsent({ essential: true, analytics: true, marketing: true, timestamp: new Date().toISOString() });
+    hideBanner();
+  });
+
+  document.getElementById('cookie-reject')?.addEventListener('click', () => {
+    writeConsent({ essential: true, analytics: false, marketing: false, timestamp: new Date().toISOString() });
+    hideBanner();
+  });
+
+  document.getElementById('cookie-settings-toggle')?.addEventListener('click', () => {
+    panel?.toggleAttribute('hidden');
+  });
+
+  document.getElementById('cookie-save')?.addEventListener('click', () => {
+    writeConsent({
+      essential: true,
+      analytics: analyticsBox instanceof HTMLInputElement ? analyticsBox.checked : false,
+      marketing: marketingBox instanceof HTMLInputElement ? marketingBox.checked : false,
+      timestamp: new Date().toISOString(),
+    });
+    hideBanner();
+  });
+
+  // Exposed so the /cookies/ page can let visitors reopen and change their choice anytime.
+  (window as unknown as { formaOpenCookieSettings?: () => void }).formaOpenCookieSettings = () => {
+    const existing = readConsent();
+    if (analyticsBox instanceof HTMLInputElement) analyticsBox.checked = existing?.analytics ?? false;
+    if (marketingBox instanceof HTMLInputElement) marketingBox.checked = existing?.marketing ?? false;
+    showBanner();
+    panel?.removeAttribute('hidden');
+  };
+</script>

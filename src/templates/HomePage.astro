@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/blocks/Hero.astro';
+import DirectAnswer from '../components/blocks/DirectAnswer.astro';
+import EditorialIntro from '../components/blocks/EditorialIntro.astro';
+import ServiceGrid from '../components/blocks/ServiceGrid.astro';
+import ProjectSlider from '../components/blocks/ProjectSlider.astro';
+import ProcessTimeline from '../components/blocks/ProcessTimeline.astro';
+import WhyUs from '../components/blocks/WhyUs.astro';
+import LocationBlock from '../components/blocks/LocationBlock.astro';
+import JournalCards from '../components/blocks/JournalCards.astro';
+import CTABanner from '../components/blocks/CTABanner.astro';
+import { getDictionary } from '../i18n/dictionary';
+import { localizePath, type Locale } from '../lib/i18n';
+import { getPriorityServices, translatedServiceSlugs } from '../content/services';
+import { projects, translatedProjectSlugs } from '../content/projects';
+import { primaryLocations, translatedLocationSlugs } from '../content/locations';
+import { getHomeContent } from '../content/home';
+import { getJournalArticles } from '../lib/journal';
+import { getImage } from '../lib/images';
+import { getImage as astroGetImage } from 'astro:assets';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const home = getHomeContent(locale);
+
+const hasServices = translatedServiceSlugs(locale).length > 0;
+const hasProjects = translatedProjectSlugs(locale).length > 0;
+const hasLocations = translatedLocationSlugs(locale).length > 0 || locale === 'en';
+const locationsHref = hasLocations ? localizePath(locale, '/locations/') : '/locations/';
+const projectsHref = hasProjects ? localizePath(locale, '/projects/') : '/projects/';
+const priorityServices = hasServices ? getPriorityServices() : [];
+const featuredProjects = hasProjects ? projects.slice(0, 6) : [];
+const articles = await getJournalArticles(locale);
+// Matches the Hero component's first-slide <Image> params exactly, so the browser preloads
+// the same file it will actually request for the LCP element.
+const heroPreload = await astroGetImage({
+  src: getImage('hero-villa'),
+  width: 1920,
+  height: 1200,
+  widths: [640, 960, 1280, 1920],
+  format: 'avif',
+  quality: 78,
+});
+---
+
+<BaseLayout
+  locale={locale}
+  path="/"
+  title={`FORMA — ${t.home.heroTitle}`}
+  description={t.home.directAnswer}
+  preloadImage={heroPreload.src}
+  preloadImageSrcset={heroPreload.srcSet.attribute}
+  preloadImageSizes="100vw"
+>
+  <Hero
+    title={t.home.heroTitle}
+    subtitle={t.home.heroSubtitle}
+    cta1={{ label: t.home.heroCta1, href: projectsHref }}
+    cta2={{ label: t.home.heroCta2, href: localizePath(locale, '/contact/') }}
+    slides={[
+      { image: 'hero-villa', alt: 'Villa terrace overlooking the sea on Koh Phangan' },
+      { image: 'architecture', alt: 'Concrete villa architecture with deep shading overhangs' },
+      { image: 'pool-villa', alt: 'Infinity pool integrated with tropical landscape design' },
+      { image: 'interior', alt: 'Warm minimalist villa interior with natural materials' },
+    ]}
+  />
+
+  <DirectAnswer text={t.home.directAnswer} />
+
+  <EditorialIntro heading={t.home.introHeading} body={t.home.intro} />
+
+  {hasServices && (
+    <ServiceGrid
+      locale={locale}
+      services={priorityServices}
+      heading={t.home.servicesHeading}
+      intro={t.home.servicesIntro}
+      viewAllHref={localizePath(locale, '/')}
+    />
+  )}
+
+  {hasProjects && (
+    <ProjectSlider
+      locale={locale}
+      projects={featuredProjects}
+      heading={t.home.projectsHeading}
+      intro={t.home.projectsIntro}
+      viewAllHref={localizePath(locale, '/projects/')}
+    />
+  )}
+
+  <ProcessTimeline heading={t.home.processHeading} intro={t.home.processIntro} steps={home.processSteps} />
+
+  <WhyUs heading={t.home.whyUsHeading} items={home.whyUsItems} />
+
+  <LocationBlock
+    locale={locale}
+    t={t}
+    locations={primaryLocations()}
+    heading={t.home.locationsHeading}
+    intro={t.home.locationsIntro}
+    viewAllHref={locationsHref}
+  />
+
+  {articles.length > 0 && <JournalCards locale={locale} t={t} articles={articles.slice(0, 3)} heading={t.home.journalHeading} />}
+
+  <CTABanner
+    heading={t.home.finalCtaHeading}
+    body={t.home.finalCtaBody}
+    cta={{ label: t.cta.startProject, href: localizePath(locale, '/contact/') }}
+  />
+</BaseLayout>

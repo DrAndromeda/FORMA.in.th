@@ -1,0 +1,53 @@
+---
+import { LOCALES, LOCALE_HTML_LANG, localizePath, type Locale } from '../../lib/i18n';
+import { SITE_URL, SITE_NAME } from '../../lib/site';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  /** Locale-agnostic root-relative path, e.g. "/services/villa-design/" */
+  path: string;
+  image?: string;
+  noindex?: boolean;
+  /** Locales that actually have this page — hreflang must never point at a URL that doesn't exist. Defaults to all locales. */
+  availableLocales?: readonly Locale[];
+}
+
+const { locale, title, description, path, image, noindex = false, availableLocales = LOCALES } = Astro.props;
+
+const canonicalPath = localizePath(locale, path);
+const canonicalUrl = new URL(canonicalPath, SITE_URL).toString();
+const ogImage = new URL(image ?? '/images/og-default.jpg', SITE_URL).toString();
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+{
+  availableLocales.map((l) => (
+    <link rel="alternate" hreflang={LOCALE_HTML_LANG[l]} href={new URL(localizePath(l, path), SITE_URL).toString()} />
+  ))
+}
+{availableLocales.includes('en') && (
+  <link rel="alternate" hreflang="x-default" href={new URL(localizePath('en', path), SITE_URL).toString()} />
+)}
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:locale" content={LOCALE_HTML_LANG[locale]} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<meta name="theme-color" content="#f7f4ef" />

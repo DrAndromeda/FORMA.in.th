@@ -1,0 +1,46 @@
+---
+import { LOCALES, LOCALE_LABEL, localizePath, type Locale } from '../../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  /** Locale-agnostic root-relative path of the current page, e.g. "/services/villa-design/" */
+  path: string;
+  class?: string;
+  /** Locales that actually have this exact page — never link to one that would 404. Defaults to all locales. */
+  availableLocales?: readonly Locale[];
+}
+
+const { locale, path, class: className = '', availableLocales = LOCALES } = Astro.props;
+---
+
+<div class={`relative inline-block ${className}`}>
+  <details class="group">
+    <summary
+      class="flex cursor-pointer list-none items-center gap-1.5 rounded-full border border-ink-900/15 px-3.5 py-2 text-sm font-medium tracking-wide uppercase [&::-webkit-details-marker]:hidden"
+      aria-label="Change language"
+    >
+      {locale.toUpperCase()}
+      <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true" class="transition-transform group-open:rotate-180">
+        <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+      </svg>
+    </summary>
+    <ul
+      class="absolute end-0 z-40 mt-2 min-w-[9rem] rounded-xl border border-ink-900/10 bg-stone-50 py-2 shadow-lg"
+    >
+      {
+        availableLocales.map((l) => (
+          <li>
+            <a
+              href={localizePath(l, path)}
+              hreflang={l}
+              aria-current={l === locale ? 'true' : undefined}
+              class={`block px-4 py-2 text-sm hover:bg-stone-100 ${l === locale ? 'font-semibold text-olive-700' : ''}`}
+            >
+              {LOCALE_LABEL[l]}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </details>
+</div>

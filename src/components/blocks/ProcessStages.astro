@@ -1,0 +1,43 @@
+---
+interface Stage {
+  title: string;
+  purpose: string;
+  clientInput: string;
+  outputs: string;
+  nextStep: string;
+}
+interface Props {
+  stages: Stage[];
+}
+const { stages } = Astro.props;
+---
+
+<section class="wrap py-14 sm:py-20">
+  <ol class="space-y-10">
+    {
+      stages.map((stage, i) => (
+        <li class="grid gap-6 border-t border-ink-900/15 pt-8 lg:grid-cols-12">
+          <div class="lg:col-span-4">
+            <span class="font-display text-3xl text-olive-600">{String(i + 1).padStart(2, '0')}</span>
+            <h2 class="mt-2 text-2xl">{stage.title}</h2>
+            <p class="body-m mt-2 text-ink-900/70">{stage.purpose}</p>
+          </div>
+          <div class="grid gap-6 sm:grid-cols-3 lg:col-span-8">
+            <div>
+              <p class="text-xs font-semibold tracking-wide text-ink-900/50 uppercase">Your input</p>
+              <p class="body-m mt-2 text-ink-900/70">{stage.clientInput}</p>
+            </div>
+            <div>
+              <p class="text-xs font-semibold tracking-wide text-ink-900/50 uppercase">Outputs</p>
+              <p class="body-m mt-2 text-ink-900/70">{stage.outputs}</p>
+            </div>
+            <div>
+              <p class="text-xs font-semibold tracking-wide text-ink-900/50 uppercase">Next step</p>
+              <p class="body-m mt-2 text-ink-900/70">{stage.nextStep}</p>
+            </div>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>

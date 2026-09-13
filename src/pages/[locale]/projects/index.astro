@@ -1,0 +1,16 @@
+---
+import ProjectsIndexPage from '../../../templates/ProjectsIndexPage.astro';
+import { translatedProjectSlugs } from '../../../content/projects';
+import type { Locale } from '../../../lib/i18n';
+
+export function getStaticPaths() {
+  const translatedLocales: Locale[] = ['ru', 'th', 'he'];
+  return translatedLocales.filter((locale) => translatedProjectSlugs(locale).length > 0).map((locale) => ({
+    params: { locale },
+  }));
+}
+
+const { locale } = Astro.params as { locale: Locale };
+---
+
+<ProjectsIndexPage locale={locale} />

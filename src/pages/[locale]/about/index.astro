@@ -1,0 +1,14 @@
+---
+import AboutPage from '../../../templates/AboutPage.astro';
+import { isAboutTranslated } from '../../../content/about';
+import type { Locale } from '../../../lib/i18n';
+
+export function getStaticPaths() {
+  const translatedLocales: Locale[] = ['ru', 'th', 'he'];
+  return translatedLocales.filter((locale) => isAboutTranslated(locale)).map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params as { locale: Locale };
+---
+
+<AboutPage locale={locale} />

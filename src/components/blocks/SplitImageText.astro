@@ -1,0 +1,41 @@
+---
+import { Image } from 'astro:assets';
+import { getImage } from '../../lib/images';
+
+interface Props {
+  image: string;
+  alt: string;
+  heading: string;
+  body: string;
+  reverse?: boolean;
+  cta?: { label: string; href: string };
+}
+const { image, alt, heading, body, reverse = false, cta } = Astro.props;
+---
+
+<section class="wrap py-14 sm:py-20">
+  <div class={`grid items-center gap-10 lg:grid-cols-2 lg:gap-16 ${reverse ? '[&>*:first-child]:lg:order-2' : ''}`}>
+    <div class="overflow-hidden rounded-2xl">
+      <Image
+        src={getImage(image)}
+        alt={alt}
+        width={960}
+        height={1080}
+        widths={[480, 720, 960]}
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        format="avif"
+        loading="lazy"
+        class="h-full w-full object-cover"
+      />
+    </div>
+    <div>
+      <h2>{heading}</h2>
+      <p class="body-l mt-5 text-ink-900/80">{body}</p>
+      {cta && (
+        <a href={cta.href} class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-olive-700 hover:text-olive-600">
+          {cta.label} →
+        </a>
+      )}
+    </div>
+  </div>
+</section>

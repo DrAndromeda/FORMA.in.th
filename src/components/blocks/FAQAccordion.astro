@@ -1,0 +1,35 @@
+---
+import type { FaqItem } from '../../lib/types';
+import type { Locale } from '../../lib/i18n';
+import { getDictionary } from '../../i18n/dictionary';
+import JsonLd from '../seo/JsonLd.astro';
+import { faqSchema, graph } from '../../lib/schema';
+
+interface Props {
+  locale: Locale;
+  faqs: FaqItem[];
+  heading?: string;
+}
+const { locale, faqs, heading } = Astro.props;
+const t = getDictionary(locale);
+---
+
+<section class="wrap py-14 sm:py-20">
+  <h2 class="mb-8">{heading ?? t.common.faqHeading}</h2>
+  <div class="divide-y divide-ink-900/10 border-t border-b border-ink-900/10">
+    {
+      faqs.map((faq) => (
+        <details class="group py-2">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-lg font-medium [&::-webkit-details-marker]:hidden">
+            {faq.q}
+            <svg width="14" height="8" viewBox="0 0 10 6" fill="none" aria-hidden="true" class="shrink-0 transition-transform duration-200 group-open:rotate-180">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+          </summary>
+          <p class="body-m pb-5 pe-10 text-ink-900/70">{faq.a}</p>
+        </details>
+      ))
+    }
+  </div>
+</section>
+<JsonLd data={graph([faqSchema(faqs)])} />

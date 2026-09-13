@@ -1,0 +1,32 @@
+---
+interface Step {
+  title: string;
+  body: string;
+}
+interface Props {
+  heading?: string;
+  intro?: string;
+  steps: Step[];
+}
+const { heading, intro, steps } = Astro.props;
+---
+
+<section class="wrap py-14 sm:py-20">
+  {heading && (
+    <div class="mb-10 max-w-xl">
+      <h2>{heading}</h2>
+      {intro && <p class="body-l mt-3 text-ink-900/70">{intro}</p>}
+    </div>
+  )}
+  <ol class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-10">
+    {
+      steps.map((step, i) => (
+        <li class="relative border-t border-ink-900/15 pt-6">
+          <span class="font-display text-3xl text-olive-600">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="mt-3 text-xl">{step.title}</h3>
+          <p class="body-m mt-2 text-ink-900/70">{step.body}</p>
+        </li>
+      ))
+    }
+  </ol>
+</section>

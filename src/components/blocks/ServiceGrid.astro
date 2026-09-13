@@ -1,0 +1,65 @@
+---
+import { Image } from 'astro:assets';
+import { getImage } from '../../lib/images';
+import { serviceHrefSmart } from '../../content/services';
+import type { Service } from '../../lib/types';
+import type { Locale } from '../../lib/i18n';
+import { getDictionary } from '../../i18n/dictionary';
+
+interface Props {
+  locale: Locale;
+  services: Service[];
+  heading?: string;
+  intro?: string;
+  viewAllHref?: string;
+}
+const { locale, services, heading, intro, viewAllHref } = Astro.props;
+const t = getDictionary(locale);
+---
+
+<section class="wrap py-14 sm:py-20">
+  {
+    (heading || intro) && (
+      <div class="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          {heading && <h2>{heading}</h2>}
+          {intro && <p class="body-l mt-3 max-w-xl text-ink-900/70">{intro}</p>}
+        </div>
+        {viewAllHref && (
+          <a href={viewAllHref} class="text-sm font-medium text-olive-700 hover:text-olive-600 whitespace-nowrap">
+            {t.nav.viewAllServices} →
+          </a>
+        )}
+      </div>
+    )
+  }
+  <div class="content-grid">
+    {
+      services.map((s) => {
+        const tr = s.translations[locale];
+        return (
+          <a href={serviceHrefSmart(locale, s.slug)} class="group col-span-4 md:col-span-4 lg:col-span-4 flex flex-col overflow-hidden rounded-2xl border border-ink-900/10 bg-stone-50 transition-shadow hover:shadow-lg">
+            <div class="aspect-[4/3] overflow-hidden">
+              <Image
+                src={getImage(s.image)}
+                alt={tr.h1}
+                width={640}
+                height={480}
+                widths={[320, 480, 640]}
+                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                format="avif"
+                loading="lazy"
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+            <div class="flex flex-1 flex-col p-5">
+              <h3 class="text-lg">{tr.navLabel}</h3>
+              <p class="mt-2 flex-1 text-sm text-ink-900/70">{tr.cardSummary}</p>
+              <span class="mt-4 text-sm font-medium text-olive-700">{t.common.viewService} →</span>
+            </div>
+          </a>
+        );
+      })
+    }
+  </div>
+</section>

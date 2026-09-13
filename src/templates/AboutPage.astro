@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/layout/Breadcrumbs.astro';
+import DirectAnswer from '../components/blocks/DirectAnswer.astro';
+import EditorialIntro from '../components/blocks/EditorialIntro.astro';
+import SplitImageText from '../components/blocks/SplitImageText.astro';
+import WhyUs from '../components/blocks/WhyUs.astro';
+import FAQAccordion from '../components/blocks/FAQAccordion.astro';
+import CTABanner from '../components/blocks/CTABanner.astro';
+import { getDictionary } from '../i18n/dictionary';
+import { localizePath, LOCALES, type Locale } from '../lib/i18n';
+import { getAboutContent, isAboutTranslated } from '../content/about';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const a = getAboutContent(locale);
+const availableLocales = LOCALES.filter((l) => l === 'en' || isAboutTranslated(l));
+---
+
+<BaseLayout locale={locale} path="/about/" title={a.seo.title} description={a.seo.description} availableLocales={availableLocales}>
+  <Breadcrumbs locale={locale} items={[{ name: t.nav.about, path: '/about/' }]} />
+  <section class="wrap pb-6 pt-2">
+    <h1 class="max-w-3xl">{a.h1}</h1>
+  </section>
+  <DirectAnswer text={a.directAnswer} />
+  <EditorialIntro heading={a.storyHeading} body={a.story} />
+  <SplitImageText image="architecture" alt={a.h1} heading={a.philosophyHeading} body={a.philosophy} />
+  <SplitImageText image="hero-villa" alt={a.h1} heading={a.localKnowledgeHeading} body={a.localKnowledge} reverse />
+  <WhyUs heading={a.principlesHeading} items={a.principles} />
+  <FAQAccordion locale={locale} faqs={a.faqs} />
+  <CTABanner heading={a.ctaHeading} body={a.ctaBody} cta={{ label: t.cta.startProject, href: localizePath(locale, '/contact/') }} />
+</BaseLayout>

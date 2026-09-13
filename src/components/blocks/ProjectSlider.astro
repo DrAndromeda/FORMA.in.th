@@ -1,0 +1,101 @@
+---
+import { Image } from 'astro:assets';
+import { getImage } from '../../lib/images';
+import { projectHrefSmart } from '../../content/projects';
+import { getLocation } from '../../content/locations';
+import type { Project } from '../../lib/types';
+import type { Locale } from '../../lib/i18n';
+import { getDictionary } from '../../i18n/dictionary';
+
+interface Props {
+  locale: Locale;
+  projects: Project[];
+  heading?: string;
+  intro?: string;
+  viewAllHref?: string;
+}
+const { locale, projects, heading, intro, viewAllHref } = Astro.props;
+const t = getDictionary(locale);
+const sliderId = `project-slider-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<section class="py-14 sm:py-20">
+  <div class="wrap mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      {heading && <h2>{heading}</h2>}
+      {intro && <p class="body-l mt-3 max-w-xl text-ink-900/70">{intro}</p>}
+    </div>
+    <div class="flex items-center gap-3">
+      {viewAllHref && (
+        <a href={viewAllHref} class="text-sm font-medium text-olive-700 hover:text-olive-600 whitespace-nowrap">
+          {t.cta.exploreProjects} →
+        </a>
+      )}
+      <div class="hidden sm:flex gap-2">
+        <button type="button" data-slider-prev={sliderId} aria-label="Previous project" class="flex h-10 w-10 items-center justify-center rounded-full border border-ink-900/20 hover:bg-stone-100">
+          <svg width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true"><path d="M7 1L1 7L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <button type="button" data-slider-next={sliderId} aria-label="Next project" class="flex h-10 w-10 items-center justify-center rounded-full border border-ink-900/20 hover:bg-stone-100">
+          <svg width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true"><path d="M1 1L7 7L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id={sliderId} class="scrollbar-none flex snap-x snap-mandatory gap-5 overflow-x-auto ps-[max(1.25rem,calc((100vw-90rem)/2+1.25rem))] pe-5 pb-2">
+    {
+      projects.map((p) => {
+        const tr = p.translations[locale];
+        const location = getLocation(p.locationSlug);
+        return (
+          <a href={projectHrefSmart(locale, p.slug)} class="group w-[78vw] shrink-0 snap-start sm:w-[26rem]">
+            <div class="aspect-[4/5] overflow-hidden rounded-2xl">
+              <Image
+                src={getImage(p.images[0])}
+                alt={tr.name}
+                width={640}
+                height={800}
+                widths={[400, 540, 640]}
+                sizes="(min-width: 640px) 26rem, 78vw"
+                format="avif"
+                loading="lazy"
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+            <div class="pt-3">
+              <p class="text-xs font-medium tracking-wide text-ink-900/50 uppercase">{location?.translations[locale].name} · {p.tags.join(', ')}</p>
+              <h3 class="mt-1 text-lg">{tr.name}</h3>
+              <p class="body-m mt-1 text-ink-900/70 line-clamp-2">{tr.summary}</p>
+            </div>
+          </a>
+        );
+      })
+    }
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-slider-prev]').forEach((btn) => {
+    const id = btn.dataset.sliderPrev;
+    btn.addEventListener('click', () => {
+      const el = id ? document.getElementById(id) : null;
+      if (el) el.scrollBy({ left: -el.clientWidth * 0.8, behavior: 'smooth' });
+    });
+  });
+  document.querySelectorAll<HTMLButtonElement>('[data-slider-next]').forEach((btn) => {
+    const id = btn.dataset.sliderNext;
+    btn.addEventListener('click', () => {
+      const el = id ? document.getElementById(id) : null;
+      if (el) el.scrollBy({ left: el.clientWidth * 0.8, behavior: 'smooth' });
+    });
+  });
+</script>
+
+<style>
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+</style>

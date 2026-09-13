@@ -1,0 +1,199 @@
+---
+import type { Locale } from '../../lib/i18n';
+import { getDictionary } from '../../i18n/dictionary';
+import { services, serviceHrefSmart } from '../../content/services';
+import { primaryLocations, secondaryLocations, locationHrefSmart, translatedLocationSlugs } from '../../content/locations';
+import { translatedProjectSlugs } from '../../content/projects';
+import { isAboutTranslated } from '../../content/about';
+import { isProcessTranslated } from '../../content/process';
+import { getLocalesWithAnyArticles } from '../../lib/journal';
+import { localizePath } from '../../lib/i18n';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+
+interface Props {
+  locale: Locale;
+  path: string;
+  availableLocales?: readonly Locale[];
+}
+
+const { locale, path, availableLocales } = Astro.props;
+const t = getDictionary(locale);
+const home = localizePath(locale, '/');
+const primary = primaryLocations();
+
+// Nav items beyond the homepage/services/contact are only translated for a subset of
+// locales so far — link to the English page instead of a locale-prefixed 404 until translated.
+const journalLocales = await getLocalesWithAnyArticles();
+const locationsHref = translatedLocationSlugs(locale).length > 0 || locale === 'en' ? localizePath(locale, '/locations/') : '/locations/';
+const projectsHref = translatedProjectSlugs(locale).length > 0 || locale === 'en' ? localizePath(locale, '/projects/') : '/projects/';
+const aboutHref = isAboutTranslated(locale) || locale === 'en' ? localizePath(locale, '/about/') : '/about/';
+const processHref = isProcessTranslated(locale) || locale === 'en' ? localizePath(locale, '/process/') : '/process/';
+const journalHrefTop = journalLocales.includes(locale) || locale === 'en' ? localizePath(locale, '/journal/') : '/journal/';
+const phanganSecondary = secondaryLocations('koh-phangan');
+---
+
+<header class="sticky top-0 z-50 border-b border-ink-900/10 bg-stone-50/90 backdrop-blur-sm">
+  <div class="wrap flex h-18 items-center justify-between gap-4 py-3">
+    <a href={home} class="font-display text-xl font-medium tracking-tight shrink-0">
+      FORMA
+    </a>
+
+    <nav aria-label="Primary" class="hidden lg:flex items-center gap-1">
+      <div class="group relative">
+        <a href={home} class="flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-medium hover:bg-stone-100">
+          {t.nav.services}
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </a>
+        <div class="invisible absolute start-0 top-full z-40 w-[36rem] rounded-2xl border border-ink-900/10 bg-stone-50 p-6 opacity-0 shadow-xl transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+          <div class="grid grid-cols-2 gap-x-8 gap-y-1">
+            {services.map((s) => (
+              <a href={serviceHrefSmart(locale, s.slug)} class="rounded-lg px-3 py-2 text-sm hover:bg-stone-100">
+                {s.translations[locale].navLabel}
+              </a>
+            ))}
+          </div>
+          <a href={home} class="mt-3 inline-block border-t border-ink-900/10 pt-3 text-sm font-medium text-olive-700">
+            {t.nav.viewAllServices} →
+          </a>
+        </div>
+      </div>
+
+      <div class="group relative">
+        <a href={locationsHref} class="flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-medium hover:bg-stone-100">
+          {t.nav.locations}
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </a>
+        <div class="invisible absolute start-0 top-full z-40 w-96 rounded-2xl border border-ink-900/10 bg-stone-50 p-6 opacity-0 shadow-xl transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+          <p class="mb-1 text-xs font-semibold tracking-wide text-ink-900/50 uppercase">Islands</p>
+          <div class="mb-3 grid grid-cols-2 gap-1">
+            {primary.map((l) => (
+              <a href={locationHrefSmart(locale, l.slug)} class="rounded-lg px-3 py-2 text-sm hover:bg-stone-100">
+                {l.translations[locale].name}
+              </a>
+            ))}
+          </div>
+          <p class="mb-1 text-xs font-semibold tracking-wide text-ink-900/50 uppercase">Koh Phangan areas</p>
+          <div class="grid grid-cols-2 gap-1">
+            {phanganSecondary.map((l) => (
+              <a href={locationHrefSmart(locale, l.slug)} class="rounded-lg px-3 py-2 text-sm hover:bg-stone-100">
+                {l.translations[locale].name}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <a href={projectsHref} class="rounded-full px-3.5 py-2 text-sm font-medium hover:bg-stone-100">{t.nav.projects}</a>
+      <a href={aboutHref} class="rounded-full px-3.5 py-2 text-sm font-medium hover:bg-stone-100">{t.nav.about}</a>
+      <a href={processHref} class="rounded-full px-3.5 py-2 text-sm font-medium hover:bg-stone-100">{t.nav.process}</a>
+      <a href={journalHrefTop} class="rounded-full px-3.5 py-2 text-sm font-medium hover:bg-stone-100">{t.nav.journal}</a>
+      <a href={localizePath(locale, '/contact/')} class="rounded-full px-3.5 py-2 text-sm font-medium hover:bg-stone-100">{t.nav.contact}</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <LanguageSwitcher locale={locale} path={path} availableLocales={availableLocales} class="hidden sm:inline-block" />
+      <a
+        href={localizePath(locale, '/contact/')}
+        class="hidden sm:inline-flex items-center rounded-full bg-ink-900 px-4 py-2 text-sm font-medium text-stone-50 transition-colors hover:bg-olive-700"
+      >
+        {t.nav.startProject}
+      </a>
+      <button
+        type="button"
+        id="menu-toggle"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        class="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-stone-100"
+      >
+        <span class="sr-only">{t.nav.menu}</span>
+        <svg width="20" height="14" viewBox="0 0 20 14" fill="none" aria-hidden="true">
+          <path d="M0 1H20M0 7H20M0 13H20" stroke="currentColor" stroke-width="1.5" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div
+    id="mobile-menu"
+    class="fixed inset-0 z-[60] hidden flex-col overflow-y-auto bg-stone-50"
+    role="dialog"
+    aria-modal="true"
+    aria-label={t.nav.menu}
+  >
+    <div class="wrap flex items-center justify-between py-4">
+      <a href={home} class="font-display text-xl font-medium">FORMA</a>
+      <button type="button" id="menu-close" class="inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-stone-100">
+        <span class="sr-only">{t.nav.close}</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M1 1L15 15M15 1L1 15" stroke="currentColor" stroke-width="1.5" />
+        </svg>
+      </button>
+    </div>
+    <nav aria-label="Mobile" class="wrap flex flex-1 flex-col gap-1 pb-10">
+      <details class="border-b border-ink-900/10 py-3">
+        <summary class="flex cursor-pointer list-none items-center justify-between text-lg font-medium">
+          {t.nav.services}
+          <svg width="12" height="7" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </summary>
+        <div class="flex flex-col gap-1 py-2 ps-2">
+          {services.map((s) => (
+            <a href={serviceHrefSmart(locale, s.slug)} class="rounded-lg px-2 py-2 text-base text-ink-900/80">{s.translations[locale].navLabel}</a>
+          ))}
+        </div>
+      </details>
+      <details class="border-b border-ink-900/10 py-3">
+        <summary class="flex cursor-pointer list-none items-center justify-between text-lg font-medium">
+          {t.nav.locations}
+          <svg width="12" height="7" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </summary>
+        <div class="flex flex-col gap-1 py-2 ps-2">
+          {[...primary, ...phanganSecondary].map((l) => (
+            <a href={locationHrefSmart(locale, l.slug)} class="rounded-lg px-2 py-2 text-base text-ink-900/80">{l.translations[locale].name}</a>
+          ))}
+        </div>
+      </details>
+      <a href={projectsHref} class="border-b border-ink-900/10 py-3 text-lg font-medium">{t.nav.projects}</a>
+      <a href={aboutHref} class="border-b border-ink-900/10 py-3 text-lg font-medium">{t.nav.about}</a>
+      <a href={processHref} class="border-b border-ink-900/10 py-3 text-lg font-medium">{t.nav.process}</a>
+      <a href={journalHrefTop} class="border-b border-ink-900/10 py-3 text-lg font-medium">{t.nav.journal}</a>
+      <a href={localizePath(locale, '/contact/')} class="border-b border-ink-900/10 py-3 text-lg font-medium">{t.nav.contact}</a>
+
+      <div class="mt-4 flex items-center justify-between">
+        <LanguageSwitcher locale={locale} path={path} availableLocales={availableLocales} />
+        <a href={localizePath(locale, '/contact/')} class="inline-flex items-center rounded-full bg-ink-900 px-5 py-2.5 text-sm font-medium text-stone-50">
+          {t.nav.startProject}
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const close = document.getElementById('menu-close');
+  const menu = document.getElementById('mobile-menu');
+
+  function openMenu() {
+    if (!menu || !toggle) return;
+    menu.classList.remove('hidden');
+    menu.classList.add('flex');
+    toggle.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+    close?.focus();
+  }
+
+  function closeMenu() {
+    if (!menu || !toggle) return;
+    menu.classList.add('hidden');
+    menu.classList.remove('flex');
+    toggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    toggle.focus();
+  }
+
+  toggle?.addEventListener('click', openMenu);
+  close?.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu && !menu.classList.contains('hidden')) closeMenu();
+  });
+</script>

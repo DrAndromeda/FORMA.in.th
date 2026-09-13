@@ -1,0 +1,170 @@
+---
+import type { Locale } from '../../lib/i18n';
+import { getDictionary } from '../../i18n/dictionary';
+import { services } from '../../content/services';
+import { locations } from '../../content/locations';
+
+interface Props {
+  locale: Locale;
+  presetService?: string;
+  presetLocation?: string;
+}
+const { locale, presetService, presetLocation } = Astro.props;
+const t = getDictionary(locale);
+---
+
+<div id="contact-form-root" data-locale={locale}>
+  <form id="lead-form" action="/api/lead" method="post" class="grid grid-cols-1 gap-5 sm:grid-cols-2" novalidate>
+    <input type="hidden" name="locale" value={locale} />
+    <input type="hidden" name="sourceUrl" id="source-url" value="" />
+
+    <p class="hidden" aria-hidden="true">
+      <label>
+        Company
+        <input type="text" name="company" tabindex="-1" autocomplete="off" />
+      </label>
+    </p>
+
+    <div class="sm:col-span-1">
+      <label for="name" class="text-sm font-medium">{t.form.name} <span class="text-terracotta-500">*</span></label>
+      <input id="name" name="name" type="text" required maxlength="120" class="mt-1.5 w-full rounded-lg border border-ink-900/20 bg-stone-50 px-4 py-3 text-sm focus-visible:border-terracotta-500" />
+    </div>
+
+    <div class="sm:col-span-1">
+      <label for="email" class="text-sm font-medium">{t.form.email} <span class="text-terracotta-500">*</span></label>
+      <input id="email" name="email" type="email" required maxlength="180" class="mt-1.5 w-full rounded-lg border border-ink-900/20 bg-stone-50 px-4 py-3 text-sm focus-visible:border-terracotta-500" />
+    </div>
+
+    <div class="sm:col-span-1">
+      <label for="whatsapp" class="text-sm font-medium">{t.form.whatsapp}</label>
+      <input id="whatsapp" name="whatsapp" type="tel" maxlength="40" class="mt-1.5 w-full rounded-lg border border-ink-900/20 bg-stone-50 px-4 py-3 text-sm focus-visible:border-terracotta-500" />
+    </div>
+
+    <div class="sm:col-span-1">
+      <label for="projectType" class="text-sm font-medium">{t.form.projectType} <span class="text-terracotta-500">*</span></label>
+      <select id="projectType" name="projectType" required class="mt-1.5 w-full rounded-lg border border-ink-900/20 bg-stone-50 px-4 py-3 text-sm focus-visible:border-terracotta-500">
+        {t.form.projectTypeOptions.map((opt) => <option value={opt}>{opt}</option>)}
+      </select>
+    </div>
+
+    <div class="sm:col-span-1">
+      <label for="service" class="text-sm font-medium">{t.nav.services}</label>
+      <select id="service" name="service" class="mt-1.5 w-full rounded-lg border border-ink-900/20 bg-stone-50 px-4 py-3 text-sm focus-visible:border-terracotta-500">
+        <option value="">—</option>
+        {services.map((s) => (
+          <option value={s.slug} selected={s.slug === presetService}>{s.translations[locale].navLabel}</option>
+        ))}
+      </select>
+    </div>
+
+    <div class="sm:col-span-1">
+      <label for="location" class="text-sm font-medium">{t.form.location}</label>
+      <select id="location" name="location" class="mt-1.5 w-full rounded-lg border border-ink-900/20 bg-stone-50 px-4 py-3 text-sm focus-visible:border-terracotta-500">
+        <option value="">—</option>
+        {locations.map((l) => (
+          <option value={l.slug} selected={l.slug === presetLocation}>{l.translations[locale].name}</option>
+        ))}
+      </select>
+    </div>
+
+    <div class="sm:col-span-1">
+      <label for="budget" class="text-sm font-medium">{t.form.budget}</label>
+      <input id="budget" name="budget" type="text" maxlength="80" placeholder={t.form.budgetOptional} class="mt-1.5 w-full rounded-lg border border-ink-900/20 bg-stone-50 px-4 py-3 text-sm focus-visible:border-terracotta-500" />
+    </div>
+
+    <div class="sm:col-span-1">
+      <label for="preferredContact" class="text-sm font-medium">{t.form.preferredContact}</label>
+      <select id="preferredContact" name="preferredContact" class="mt-1.5 w-full rounded-lg border border-ink-900/20 bg-stone-50 px-4 py-3 text-sm focus-visible:border-terracotta-500">
+        {t.form.contactMethodOptions.map((opt) => <option value={opt}>{opt}</option>)}
+      </select>
+    </div>
+
+    <div class="sm:col-span-2">
+      <label for="message" class="text-sm font-medium">{t.form.message} <span class="text-terracotta-500">*</span></label>
+      <textarea id="message" name="message" required minlength="10" maxlength="4000" rows="5" class="mt-1.5 w-full rounded-lg border border-ink-900/20 bg-stone-50 px-4 py-3 text-sm focus-visible:border-terracotta-500"></textarea>
+    </div>
+
+    <div class="sm:col-span-2">
+      <button type="submit" id="lead-submit" class="inline-flex items-center justify-center rounded-full bg-ink-900 px-7 py-3.5 text-sm font-medium text-stone-50 transition-colors hover:bg-olive-700 disabled:opacity-60">
+        {t.form.submit}
+      </button>
+      <p class="body-m mt-4 text-ink-900/60">{t.form.privacyNotice}</p>
+    </div>
+
+    <div id="lead-success" role="status" class="hidden sm:col-span-2 rounded-xl bg-olive-600/10 p-5">
+      <p class="font-medium text-olive-700">{t.form.successTitle}</p>
+      <p class="body-m mt-1 text-ink-900/70">{t.form.successBody}</p>
+    </div>
+    <div id="lead-error" role="alert" class="hidden sm:col-span-2 rounded-xl bg-terracotta-500/10 p-5">
+      <p class="font-medium text-terracotta-600">{t.form.errorTitle}</p>
+      <p class="body-m mt-1 text-ink-900/70">{t.form.errorBody}</p>
+    </div>
+  </form>
+</div>
+
+<script define:vars={{ submitLabel: t.form.submit, sendingLabel: t.form.submitting }}>
+  const form = document.getElementById('lead-form');
+  const submitBtn = document.getElementById('lead-submit');
+  const successBox = document.getElementById('lead-success');
+  const errorBox = document.getElementById('lead-error');
+  const sourceUrlInput = document.getElementById('source-url');
+
+  if (sourceUrlInput) sourceUrlInput.value = window.location.href;
+
+  const params = new URLSearchParams(window.location.search);
+  const utmFields = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+  utmFields.forEach((key) => {
+    const value = params.get(key);
+    if (value && form) {
+      const hidden = document.createElement('input');
+      hidden.type = 'hidden';
+      hidden.name = key;
+      hidden.value = value;
+      form.appendChild(hidden);
+    }
+  });
+
+  // Contextual preselect from a service/location page CTA (?service=slug / ?location=slug).
+  // Read client-side since this is a statically generated page with no server request context.
+  const presetService = params.get('service');
+  const presetLocation = params.get('location');
+  const serviceSelect = document.getElementById('service');
+  const locationSelect = document.getElementById('location');
+  if (presetService && serviceSelect instanceof HTMLSelectElement) serviceSelect.value = presetService;
+  if (presetLocation && locationSelect instanceof HTMLSelectElement) locationSelect.value = presetLocation;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!(form instanceof HTMLFormElement)) return;
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    successBox?.classList.add('hidden');
+    errorBox?.classList.add('hidden');
+    if (submitBtn instanceof HTMLButtonElement) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = sendingLabel;
+    }
+
+    try {
+      const formData = new FormData(form);
+      const res = await fetch(form.action, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: formData,
+      });
+      if (!res.ok) throw new Error('Request failed');
+      form.reset();
+      successBox?.classList.remove('hidden');
+      successBox?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } catch {
+      errorBox?.classList.remove('hidden');
+    } finally {
+      if (submitBtn instanceof HTMLButtonElement) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = submitLabel;
+      }
+    }
+  });
+</script>

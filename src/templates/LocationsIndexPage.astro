@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/layout/Breadcrumbs.astro';
+import DirectAnswer from '../components/blocks/DirectAnswer.astro';
+import LocationBlock from '../components/blocks/LocationBlock.astro';
+import CTABanner from '../components/blocks/CTABanner.astro';
+import { getDictionary } from '../i18n/dictionary';
+import { localizePath, LOCALES, type Locale } from '../lib/i18n';
+import { primaryLocations, secondaryLocations, locationHrefSmart, translatedLocationSlugs } from '../content/locations';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const primary = primaryLocations();
+const phanganAreas = secondaryLocations('koh-phangan');
+const availableLocales = LOCALES.filter((l) => l === 'en' || translatedLocationSlugs(l).length > 0);
+
+const title = `${t.nav.locations} | FORMA — Koh Phangan, Koh Samui, Koh Tao & Bali`;
+const description =
+  'FORMA designs and builds villas across Koh Phangan, Koh Samui, Koh Tao and Bali, with deep local knowledge of each island\'s terrain, logistics and building conditions.';
+---
+
+<BaseLayout locale={locale} path="/locations/" title={title} description={description} availableLocales={availableLocales}>
+  <Breadcrumbs locale={locale} items={[{ name: t.nav.locations, path: '/locations/' }]} />
+  <section class="wrap pb-8 pt-2">
+    <h1 class="max-w-3xl">{t.nav.locations}</h1>
+  </section>
+  <DirectAnswer text={description} />
+
+  <LocationBlock
+    locale={locale}
+    t={t}
+    locations={primary}
+    heading="Islands we work on"
+    intro="Based on Koh Phangan and working across the wider region."
+    viewAllHref={locationHrefSmart(locale, 'koh-phangan')}
+  />
+
+  <section class="wrap py-14 sm:py-20">
+    <h2 class="mb-8">Koh Phangan areas</h2>
+    <div class="content-grid">
+      {
+        phanganAreas.map((a) => (
+          <a href={locationHrefSmart(locale, a.slug)} class="col-span-4 md:col-span-4 lg:col-span-3 rounded-xl border border-ink-900/10 p-5 hover:bg-stone-100">
+            <span class="font-medium">{a.translations[locale].name}</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <CTABanner
+    heading={t.home.finalCtaHeading}
+    body={t.home.finalCtaBody}
+    cta={{ label: t.cta.startProject, href: localizePath(locale, '/contact/') }}
+  />
+</BaseLayout>

@@ -1,0 +1,125 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/layout/Breadcrumbs.astro';
+import DirectAnswer from '../components/blocks/DirectAnswer.astro';
+import EditorialIntro from '../components/blocks/EditorialIntro.astro';
+import ProcessTimeline from '../components/blocks/ProcessTimeline.astro';
+import MaterialsBlock from '../components/blocks/MaterialsBlock.astro';
+import BudgetGuidance from '../components/blocks/BudgetGuidance.astro';
+import FAQAccordion from '../components/blocks/FAQAccordion.astro';
+import ServiceGrid from '../components/blocks/ServiceGrid.astro';
+import ProjectMosaic from '../components/blocks/ProjectMosaic.astro';
+import CTABanner from '../components/blocks/CTABanner.astro';
+import JsonLd from '../components/seo/JsonLd.astro';
+import { getDictionary } from '../i18n/dictionary';
+import { localizePath, LOCALES, type Locale } from '../lib/i18n';
+import { getService, services as allServices, hasServiceTranslation } from '../content/services';
+import { projectsForService } from '../content/projects';
+import { serviceSchema, graph } from '../lib/schema';
+import { SITE_URL } from '../lib/site';
+import { getImage } from '../lib/images';
+import { getImage as astroGetImage } from 'astro:assets';
+
+interface Props {
+  locale: Locale;
+  slug: string;
+}
+const { locale, slug } = Astro.props;
+const t = getDictionary(locale);
+const service = getService(slug);
+
+if (!service) {
+  throw new Error(`Unknown service slug: ${slug}`);
+}
+
+const tr = service.translations[locale];
+const path = `/services/${slug}/`;
+const related = service.relatedSlugs.map((s) => allServices.find((svc) => svc.slug === s)).filter((s): s is NonNullable<typeof s> => Boolean(s));
+const relatedProjects = projectsForService(slug).slice(0, 3);
+const optimizedOg = await astroGetImage({ src: getImage(service.image), width: 1200, height: 630 });
+const availableLocales = LOCALES.filter((l) => hasServiceTranslation(l, slug));
+---
+
+<BaseLayout locale={locale} path={path} title={tr.seo.title} description={tr.seo.description} image={optimizedOg.src} availableLocales={availableLocales}>
+  <Breadcrumbs locale={locale} items={[{ name: t.nav.services, path: '/' }, { name: tr.navLabel, path }]} />
+
+  <section class="wrap pb-8 pt-2">
+    <p class="text-xs font-semibold tracking-wide text-olive-700 uppercase">{tr.tagline}</p>
+    <h1 class="mt-3 max-w-3xl">{tr.h1}</h1>
+  </section>
+
+  <DirectAnswer text={tr.directAnswer} />
+
+  <EditorialIntro heading={tr.introHeading} body={tr.intro} />
+
+  <section class="wrap py-14 sm:py-20">
+    <h2 class="mb-8">Scope of work</h2>
+    <div class="content-grid">
+      {
+        tr.scope.map((item) => (
+          <div class="col-span-4 md:col-span-4 lg:col-span-6">
+            <h3 class="text-xl">{item.title}</h3>
+            <p class="body-m mt-2 text-ink-900/70">{item.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <MaterialsBlock image={service.image} alt={tr.h1} heading={tr.materialsHeading} body={tr.materials} />
+
+  <ProcessTimeline heading="Process" steps={tr.process} />
+
+  <section class="wrap py-14 sm:py-20">
+    <h2 class="mb-8">Deliverables</h2>
+    <ul class="content-grid">
+      {
+        tr.deliverables.map((d) => (
+          <li class="col-span-4 md:col-span-4 lg:col-span-6 flex gap-3 rounded-xl border border-ink-900/10 p-5">
+            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-olive-600" />
+            <span class="body-m text-ink-900/80">{d}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <BudgetGuidance
+    heading={tr.budgetHeading}
+    intro={tr.budgetIntro}
+    factors={tr.budgetFactors}
+    cta={{ label: t.cta.requestConsultation, href: localizePath(locale, '/contact/') }}
+  />
+
+  {relatedProjects.length > 0 && (
+    <section class="wrap py-14 sm:py-20">
+      <h2 class="mb-8">{t.common.relatedProjects}</h2>
+      <ProjectMosaic locale={locale} projects={relatedProjects} />
+    </section>
+  )}
+
+  <FAQAccordion locale={locale} faqs={tr.faqs} />
+
+  {related.length > 0 && (
+    <section class="wrap py-14 sm:py-20">
+      <h2 class="mb-8">{t.common.relatedServices}</h2>
+      <ServiceGrid locale={locale} services={related} />
+    </section>
+  )}
+
+  <CTABanner
+    heading={tr.ctaHeading}
+    body={tr.ctaBody}
+    cta={{ label: tr.ctaLabel, href: `${localizePath(locale, '/contact/')}?service=${slug}` }}
+  />
+
+  <JsonLd
+    data={graph([
+      serviceSchema({
+        name: tr.h1,
+        description: tr.seo.description,
+        url: new URL(localizePath(locale, path), SITE_URL).toString(),
+      }),
+    ])}
+  />
+</BaseLayout>

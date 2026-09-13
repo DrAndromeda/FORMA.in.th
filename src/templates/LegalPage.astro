@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/layout/Breadcrumbs.astro';
+
+// Legal pages are English-only for now (pending professional translation + legal review — see NOTES.md),
+// so hreflang/language-switcher must never claim a ru/th/he version exists.
+const ENGLISH_ONLY = ['en'] as const;
+
+interface Section {
+  heading: string;
+  text: string;
+}
+interface Props {
+  path: string;
+  navLabel: string;
+  title: string;
+  description: string;
+  h1: string;
+  updated?: string;
+  intro?: string;
+  sections?: Section[];
+  body?: string;
+}
+const { path, navLabel, title, description, h1, updated, intro, sections, body } = Astro.props;
+---
+
+<BaseLayout locale="en" path={path} title={title} description={description} availableLocales={ENGLISH_ONLY}>
+  <Breadcrumbs locale="en" items={[{ name: navLabel, path }]} />
+  <section class="wrap py-14 sm:py-20">
+    <div class="prose-article">
+      <h1 class="mb-2">{h1}</h1>
+      {updated && <p class="text-sm text-ink-900/50">{updated}</p>}
+      {intro && <p class="mt-6">{intro}</p>}
+      {body && <p class="mt-6">{body}</p>}
+      {sections && sections.map((s) => (
+        <div class="mt-8">
+          <h2>{s.heading}</h2>
+          <p>{s.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

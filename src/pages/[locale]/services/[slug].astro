@@ -1,0 +1,16 @@
+---
+import ServicePage from '../../../templates/ServicePage.astro';
+import { translatedServiceSlugs } from '../../../content/services';
+import type { Locale } from '../../../lib/i18n';
+
+export function getStaticPaths() {
+  const translatedLocales: Locale[] = ['ru', 'th', 'he'];
+  return translatedLocales.flatMap((locale) =>
+    translatedServiceSlugs(locale).map((slug) => ({ params: { locale, slug } })),
+  );
+}
+
+const { locale, slug } = Astro.params as { locale: Locale; slug: string };
+---
+
+<ServicePage locale={locale} slug={slug} />

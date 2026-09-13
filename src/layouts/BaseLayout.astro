@@ -1,0 +1,75 @@
+---
+import '../styles/global.css';
+import { dirOf, LOCALES, type Locale } from '../lib/i18n';
+import { LOCALE_HTML_LANG } from '../lib/i18n';
+import BaseHead from '../components/seo/BaseHead.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import CookieConsent from '../components/layout/CookieConsent.astro';
+import JsonLd from '../components/seo/JsonLd.astro';
+import { organizationSchema, websiteSchema, webPageSchema, graph } from '../lib/schema';
+import { getDictionary } from '../i18n/dictionary';
+import { SITE_URL } from '../lib/site';
+
+interface Props {
+  locale: Locale;
+  path: string;
+  title: string;
+  description: string;
+  image?: string;
+  noindex?: boolean;
+  bodyClass?: string;
+  /** Locales that actually have this page. Defaults to all locales — pass the real subset for partially translated content. */
+  availableLocales?: readonly Locale[];
+  /** URL of the page's single LCP image, to preload — proposal.md "Hero standard": only the LCP image may be critically preloaded. */
+  preloadImage?: string;
+  /** Matching responsive srcset/sizes so the preload actually resolves to what the <img> requests at each viewport. */
+  preloadImageSrcset?: string;
+  preloadImageSizes?: string;
+}
+
+const {
+  locale,
+  path,
+  title,
+  description,
+  image,
+  noindex,
+  bodyClass = '',
+  availableLocales = LOCALES,
+  preloadImage,
+  preloadImageSrcset,
+  preloadImageSizes,
+} = Astro.props;
+const t = getDictionary(locale);
+const dir = dirOf(locale);
+const url = new URL(path, SITE_URL).toString();
+---
+
+<html lang={LOCALE_HTML_LANG[locale]} dir={dir}>
+  <head>
+    <BaseHead locale={locale} title={title} description={description} path={path} image={image} noindex={noindex} availableLocales={availableLocales} />
+    {preloadImage && (
+      <link
+        rel="preload"
+        as="image"
+        href={preloadImage}
+        imagesrcset={preloadImageSrcset}
+        imagesizes={preloadImageSizes}
+        fetchpriority="high"
+      />
+    )}
+    <JsonLd data={graph([organizationSchema(), websiteSchema(locale), webPageSchema(url, title, description, locale)])} />
+  </head>
+  <body class={`atmosphere min-h-screen ${bodyClass}`}>
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:start-2 focus:z-[100] focus:rounded-full focus:bg-ink-900 focus:px-4 focus:py-2 focus:text-stone-50">
+      {t.common.skipToContent}
+    </a>
+    <Header locale={locale} path={path} availableLocales={availableLocales} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer locale={locale} />
+    <CookieConsent locale={locale} />
+  </body>
+</html>

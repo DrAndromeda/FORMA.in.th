@@ -1,0 +1,33 @@
+---
+/**
+ * Testimonial / credential proof block. Not populated with content yet — proposal.md
+ * requires real, verified testimonials, completed projects and credentials only
+ * (never fabricated). Wire this in once verified client or partner data exists.
+ * See NOTES.md "Trust & proof content".
+ */
+interface ProofItem {
+  quote: string;
+  attribution: string;
+}
+interface Props {
+  heading: string;
+  items: ProofItem[];
+}
+const { heading, items } = Astro.props;
+---
+
+{
+  items.length > 0 && (
+    <section class="wrap py-14 sm:py-20">
+      <h2 class="mb-8">{heading}</h2>
+      <div class="content-grid">
+        {items.map((item) => (
+          <figure class="col-span-4 md:col-span-4 lg:col-span-4 rounded-2xl border border-ink-900/10 p-6">
+            <blockquote class="body-m text-ink-900/80">"{item.quote}"</blockquote>
+            <figcaption class="mt-4 text-sm font-medium text-ink-900/60">{item.attribution}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  )
+}

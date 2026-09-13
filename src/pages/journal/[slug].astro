@@ -1,0 +1,14 @@
+---
+import JournalArticlePage from '../../templates/JournalArticlePage.astro';
+import { getCollection } from 'astro:content';
+import { localeSlug } from '../../lib/journal';
+
+export async function getStaticPaths() {
+  const all = await getCollection('journal');
+  return all.filter((e) => e.id.startsWith('en/')).map((e) => ({ params: { slug: localeSlug(e) } }));
+}
+
+const { slug } = Astro.params;
+---
+
+<JournalArticlePage locale="en" slug={slug} />

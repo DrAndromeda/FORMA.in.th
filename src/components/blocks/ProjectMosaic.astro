@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets';
+import { getImage } from '../../lib/images';
+import { projectHrefSmart } from '../../content/projects';
+import { getLocation } from '../../content/locations';
+import type { Project } from '../../lib/types';
+import type { Locale } from '../../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  projects: Project[];
+}
+const { locale, projects } = Astro.props;
+---
+
+<div class="content-grid">
+  {
+    projects.map((p, i) => {
+      const tr = p.translations[locale];
+      const location = getLocation(p.locationSlug);
+      const wide = i % 5 === 0;
+      return (
+        <a
+          href={projectHrefSmart(locale, p.slug)}
+          class={`group col-span-4 overflow-hidden rounded-2xl ${wide ? 'md:col-span-8 lg:col-span-8' : 'md:col-span-4 lg:col-span-4'}`}
+        >
+          <div class={`overflow-hidden ${wide ? 'aspect-[16/9]' : 'aspect-[4/5]'}`}>
+            <Image
+              src={getImage(p.images[0])}
+              alt={tr.name}
+              width={wide ? 1280 : 720}
+              height={wide ? 720 : 900}
+              widths={wide ? [640, 960, 1280] : [360, 540, 720]}
+              sizes={wide ? '(min-width: 1024px) 66vw, 100vw' : '(min-width: 1024px) 33vw, 50vw'}
+              format="avif"
+              loading="lazy"
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+          <div class="pt-3">
+            <p class="text-xs font-medium tracking-wide text-ink-900/50 uppercase">
+              {location?.translations[locale].name} · {p.tags[0]}
+            </p>
+            <h3 class="mt-1 text-lg">{tr.name}</h3>
+          </div>
+        </a>
+      );
+    })
+  }
+</div>

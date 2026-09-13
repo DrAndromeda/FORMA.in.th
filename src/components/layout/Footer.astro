@@ -1,0 +1,87 @@
+---
+import type { Locale } from '../../lib/i18n';
+import { getDictionary } from '../../i18n/dictionary';
+import { localizePath } from '../../lib/i18n';
+import { services, serviceHrefSmart } from '../../content/services';
+import { primaryLocations, locationHrefSmart } from '../../content/locations';
+import { translatedProjectSlugs } from '../../content/projects';
+import { isAboutTranslated } from '../../content/about';
+import { isProcessTranslated } from '../../content/process';
+import { getLocalesWithAnyArticles } from '../../lib/journal';
+import { CONTACT } from '../../lib/site';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const primary = primaryLocations();
+const year = new Date().getFullYear();
+
+const journalLocales = await getLocalesWithAnyArticles();
+const aboutHref = isAboutTranslated(locale) || locale === 'en' ? localizePath(locale, '/about/') : '/about/';
+const processHref = isProcessTranslated(locale) || locale === 'en' ? localizePath(locale, '/process/') : '/process/';
+const projectsHref = translatedProjectSlugs(locale).length > 0 || locale === 'en' ? localizePath(locale, '/projects/') : '/projects/';
+const journalHref = journalLocales.includes(locale) || locale === 'en' ? localizePath(locale, '/journal/') : '/journal/';
+---
+
+<footer class="border-t border-ink-900/10 bg-stone-100">
+  <div class="wrap py-14">
+    <div class="content-grid">
+      <div class="col-span-4 md:col-span-8 lg:col-span-4">
+        <a href={localizePath(locale, '/')} class="font-display text-xl font-medium">FORMA</a>
+        <p class="body-m mt-4 max-w-xs text-ink-900/70">{t.footer.tagline}</p>
+      </div>
+
+      <div class="col-span-2 md:col-span-2 lg:col-span-2">
+        <h3 class="text-xs font-semibold tracking-wide text-ink-900/50 uppercase">{t.footer.servicesHeading}</h3>
+        <ul class="mt-4 space-y-2">
+          {services.slice(0, 8).map((s) => (
+            <li><a href={serviceHrefSmart(locale, s.slug)} class="text-sm text-ink-900/80 hover:text-ink-900">{s.translations[locale].navLabel}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="col-span-2 md:col-span-2 lg:col-span-2">
+        <h3 class="text-xs font-semibold tracking-wide text-ink-900/50 uppercase">{t.footer.locationsHeading}</h3>
+        <ul class="mt-4 space-y-2">
+          {primary.map((l) => (
+            <li><a href={locationHrefSmart(locale, l.slug)} class="text-sm text-ink-900/80 hover:text-ink-900">{l.translations[locale].name}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="col-span-2 md:col-span-2 lg:col-span-2">
+        <h3 class="text-xs font-semibold tracking-wide text-ink-900/50 uppercase">{t.footer.companyHeading}</h3>
+        <ul class="mt-4 space-y-2">
+          <li><a href={aboutHref} class="text-sm text-ink-900/80 hover:text-ink-900">{t.nav.about}</a></li>
+          <li><a href={processHref} class="text-sm text-ink-900/80 hover:text-ink-900">{t.nav.process}</a></li>
+          <li><a href={projectsHref} class="text-sm text-ink-900/80 hover:text-ink-900">{t.nav.projects}</a></li>
+          <li><a href={journalHref} class="text-sm text-ink-900/80 hover:text-ink-900">{t.nav.journal}</a></li>
+        </ul>
+      </div>
+
+      <div class="col-span-4 md:col-span-4 lg:col-span-2">
+        <h3 class="text-xs font-semibold tracking-wide text-ink-900/50 uppercase">{t.footer.contactHeading}</h3>
+        <ul class="mt-4 space-y-2 text-sm text-ink-900/80">
+          <li><a href={`mailto:${CONTACT.email}`} class="hover:text-ink-900"><bdi>{CONTACT.email}</bdi></a></li>
+          <li><a href={`https://wa.me/${CONTACT.whatsapp.replace(/[^\d]/g, '')}`} class="hover:text-ink-900">WhatsApp</a></li>
+          <li><a href={CONTACT.telegram} class="hover:text-ink-900">Telegram</a></li>
+          <li>{CONTACT.addressLocality}, {CONTACT.addressRegion}, Thailand</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-col gap-4 border-t border-ink-900/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
+      <p class="text-sm text-ink-900/60">© {year} FORMA. {t.footer.rights}</p>
+      <ul class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink-900/60">
+        {/* Legal pages are English-only for now (pending translation + legal review — see NOTES.md), so these always link to the canonical English URL rather than a locale-prefixed page that does not exist. */}
+        <li><a href="/privacy/" class="hover:text-ink-900">{t.footer.privacy}</a></li>
+        <li><a href="/terms/" class="hover:text-ink-900">{t.footer.terms}</a></li>
+        <li><a href="/cookies/" class="hover:text-ink-900">{t.footer.cookies}</a></li>
+        <li><a href="/accessibility/" class="hover:text-ink-900">{t.footer.accessibility}</a></li>
+        <li><a href="/editorial-policy/" class="hover:text-ink-900">{t.footer.editorialPolicy}</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>

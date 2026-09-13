@@ -1,0 +1,120 @@
+---
+import { Image } from 'astro:assets';
+import { getImage } from '../../lib/images';
+
+interface Slide {
+  image: string;
+  alt: string;
+}
+
+interface Props {
+  title: string;
+  subtitle: string;
+  cta1: { label: string; href: string };
+  cta2: { label: string; href: string };
+  slides: Slide[];
+}
+
+const { title, subtitle, cta1, cta2, slides } = Astro.props;
+---
+
+<section class="relative h-[92svh] min-h-[34rem] w-full overflow-hidden bg-ink-900" aria-roledescription="carousel" aria-label={title}>
+  <div id="hero-slider" class="absolute inset-0">
+    {
+      slides.map((slide, i) => (
+        <div
+          class="hero-slide absolute inset-0 transition-opacity duration-1000"
+          data-index={i}
+          aria-hidden={i === 0 ? 'false' : 'true'}
+          style={`opacity:${i === 0 ? 1 : 0}`}
+        >
+          <Image
+            src={getImage(slide.image)}
+            alt={slide.alt}
+            width={1920}
+            height={1200}
+            widths={[640, 960, 1280, 1920]}
+            sizes="100vw"
+            format="avif"
+            quality={i === 0 ? 78 : 68}
+            loading={i === 0 ? 'eager' : 'lazy'}
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+            class="h-full w-full object-cover"
+          />
+        </div>
+      ))
+    }
+    <div class="absolute inset-0 bg-gradient-to-t from-ink-900/70 via-ink-900/10 to-transparent" aria-hidden="true"></div>
+  </div>
+
+  <div class="wrap absolute inset-x-0 bottom-0 pb-12 sm:pb-16">
+    <h1 class="max-w-3xl text-stone-50">{title}</h1>
+    <p class="body-l mt-5 max-w-xl text-stone-50/90">{subtitle}</p>
+    <div class="mt-8 flex flex-wrap gap-4">
+      <a href={cta1.href} class="inline-flex items-center justify-center rounded-full bg-stone-50 px-6 py-3.5 text-sm font-medium tracking-wide text-ink-900 transition-colors hover:bg-stone-200">{cta1.label}</a>
+      <a href={cta2.href} class="inline-flex items-center justify-center rounded-full border border-stone-50/50 px-6 py-3.5 text-sm font-medium tracking-wide text-stone-50 transition-colors hover:bg-stone-50/10">{cta2.label}</a>
+    </div>
+
+    {
+      slides.length > 1 && (
+        <div class="mt-10 flex items-center gap-3">
+          {slides.map((_, i) => (
+            <button
+              type="button"
+              class="hero-dot h-1.5 rounded-full bg-stone-50/40 transition-all duration-300 data-[active=true]:w-8 data-[active=true]:bg-stone-50 w-3"
+              data-index={i}
+              data-active={i === 0 ? 'true' : 'false'}
+              aria-label={`Go to slide ${i + 1} of ${slides.length}`}
+            />
+          ))}
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<script>
+  const root = document.getElementById('hero-slider');
+  if (root) {
+    const slides = Array.from(root.querySelectorAll<HTMLElement>('.hero-slide'));
+    const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('.hero-dot'));
+    let current = 0;
+    let timer: ReturnType<typeof setInterval> | undefined;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function show(index: number) {
+      slides.forEach((s, i) => {
+        s.style.opacity = i === index ? '1' : '0';
+        s.setAttribute('aria-hidden', i === index ? 'false' : 'true');
+      });
+      dots.forEach((d, i) => d.setAttribute('data-active', i === index ? 'true' : 'false'));
+      current = index;
+    }
+
+    function next() {
+      show((current + 1) % slides.length);
+    }
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        const idx = Number(dot.dataset.index);
+        show(idx);
+        restart();
+      });
+    });
+
+    function restart() {
+      if (reduceMotion || slides.length < 2) return;
+      clearInterval(timer);
+      timer = setInterval(next, 6500);
+    }
+
+    const section = root.closest('section');
+    section?.addEventListener('mouseenter', () => clearInterval(timer));
+    section?.addEventListener('mouseleave', restart);
+    section?.addEventListener('focusin', () => clearInterval(timer));
+    section?.addEventListener('focusout', restart);
+
+    restart();
+  }
+</script>

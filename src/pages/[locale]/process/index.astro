@@ -1,0 +1,14 @@
+---
+import ProcessPage from '../../../templates/ProcessPage.astro';
+import { isProcessTranslated } from '../../../content/process';
+import type { Locale } from '../../../lib/i18n';
+
+export function getStaticPaths() {
+  const translatedLocales: Locale[] = ['ru', 'th', 'he'];
+  return translatedLocales.filter((locale) => isProcessTranslated(locale)).map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params as { locale: Locale };
+---
+
+<ProcessPage locale={locale} />

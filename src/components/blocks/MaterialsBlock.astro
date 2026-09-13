@@ -1,0 +1,34 @@
+---
+import { Image } from 'astro:assets';
+import { getImage } from '../../lib/images';
+
+interface Props {
+  heading: string;
+  body: string;
+  image: string;
+  alt: string;
+}
+const { heading, body, image, alt } = Astro.props;
+---
+
+<section class="wrap py-14 sm:py-20">
+  <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+    <div>
+      <h2>{heading}</h2>
+      <p class="body-l mt-5 text-ink-900/80">{body}</p>
+    </div>
+    <div class="overflow-hidden rounded-2xl">
+      <Image
+        src={getImage(image)}
+        alt={alt}
+        width={960}
+        height={720}
+        widths={[480, 720, 960]}
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        format="avif"
+        loading="lazy"
+        class="h-full w-full object-cover"
+      />
+    </div>
+  </div>
+</section>

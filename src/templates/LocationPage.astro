@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/layout/Breadcrumbs.astro';
+import DirectAnswer from '../components/blocks/DirectAnswer.astro';
+import EditorialIntro from '../components/blocks/EditorialIntro.astro';
+import SplitImageText from '../components/blocks/SplitImageText.astro';
+import ServiceGrid from '../components/blocks/ServiceGrid.astro';
+import ProjectMosaic from '../components/blocks/ProjectMosaic.astro';
+import FAQAccordion from '../components/blocks/FAQAccordion.astro';
+import CTABanner from '../components/blocks/CTABanner.astro';
+import { getDictionary } from '../i18n/dictionary';
+import { localizePath, LOCALES, type Locale } from '../lib/i18n';
+import { getLocation, locationHrefSmart, secondaryLocations, hasLocationTranslation } from '../content/locations';
+import { services as allServices } from '../content/services';
+import { projectsForLocation } from '../content/projects';
+import { getImage } from '../lib/images';
+import { getImage as astroGetImage } from 'astro:assets';
+
+interface Props {
+  locale: Locale;
+  slug: string;
+}
+const { locale, slug } = Astro.props;
+const t = getDictionary(locale);
+const location = getLocation(slug);
+if (!location) throw new Error(`Unknown location slug: ${slug}`);
+const tr = location.translations[locale];
+const path = `/locations/${slug}/`;
+const featured = location.featuredServiceSlugs.map((s) => allServices.find((svc) => svc.slug === s)).filter((s): s is NonNullable<typeof s> => Boolean(s));
+const relatedProjects = projectsForLocation(slug).slice(0, 3);
+const areas = location.tier === 'primary' ? secondaryLocations(slug) : [];
+const optimizedOg = await astroGetImage({ src: getImage(location.image), width: 1200, height: 630 });
+const availableLocales = LOCALES.filter((l) => hasLocationTranslation(l, slug));
+---
+
+<BaseLayout locale={locale} path={path} title={tr.seo.title} description={tr.seo.description} image={optimizedOg.src} availableLocales={availableLocales}>
+  <Breadcrumbs
+    locale={locale}
+    items={
+      location.parentSlug
+        ? [
+            { name: t.nav.locations, path: '/locations/' },
+            { name: getLocation(location.parentSlug)?.translations[locale].name ?? '', path: `/locations/${location.parentSlug}/` },
+            { name: tr.name, path },
+          ]
+        : [{ name: t.nav.locations, path: '/locations/' }, { name: tr.name, path }]
+    }
+  />
+
+  <section class="wrap pb-8 pt-2">
+    <h1 class="max-w-3xl">{tr.h1}</h1>
+  </section>
+
+  <DirectAnswer text={tr.directAnswer} />
+  <EditorialIntro heading={tr.name} body={tr.intro} />
+  <SplitImageText image={location.image} alt={tr.name} heading="Local context" body={tr.context} reverse />
+
+  <section class="wrap py-14 sm:py-20">
+    <h2 class="mb-4">Getting materials and equipment here</h2>
+    <p class="body-l max-w-3xl text-ink-900/80">{tr.logistics}</p>
+  </section>
+
+  {areas.length > 0 && (
+    <section class="wrap py-14 sm:py-20">
+      <h2 class="mb-8">Areas within {tr.name}</h2>
+      <div class="content-grid">
+        {areas.map((a) => (
+          <a href={locationHrefSmart(locale, a.slug)} class="col-span-4 md:col-span-4 lg:col-span-3 rounded-xl border border-ink-900/10 p-5 hover:bg-stone-100">
+            <span class="font-medium">{a.translations[locale].name}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {featured.length > 0 && (
+    <section class="wrap py-14 sm:py-20">
+      <h2 class="mb-8">{t.common.relatedServices}</h2>
+      <ServiceGrid locale={locale} services={featured} />
+    </section>
+  )}
+
+  {relatedProjects.length > 0 && (
+    <section class="wrap py-14 sm:py-20">
+      <h2 class="mb-8">{t.common.relatedProjects}</h2>
+      <ProjectMosaic locale={locale} projects={relatedProjects} />
+    </section>
+  )}
+
+  <FAQAccordion locale={locale} faqs={tr.faqs} />
+
+  <CTABanner
+    heading={tr.ctaHeading}
+    body={tr.ctaBody}
+    cta={{ label: t.cta.discussSite, href: `${localizePath(locale, '/contact/')}?location=${slug}` }}
+  />
+</BaseLayout>

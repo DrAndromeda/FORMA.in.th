@@ -1,0 +1,106 @@
+---
+import { render } from 'astro:content';
+import { Image, getImage as astroGetImage } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/layout/Breadcrumbs.astro';
+import CTABanner from '../components/blocks/CTABanner.astro';
+import JsonLd from '../components/seo/JsonLd.astro';
+import { getDictionary } from '../i18n/dictionary';
+import { localizePath, type Locale } from '../lib/i18n';
+import { getJournalArticle, localeSlug, getAvailableLocalesForArticle, type JournalEntry } from '../lib/journal';
+import { getImage } from '../lib/images';
+import { articleSchema, graph } from '../lib/schema';
+import { SITE_URL } from '../lib/site';
+import { services, serviceHrefSmart } from '../content/services';
+import { locations, locationHrefSmart } from '../content/locations';
+
+interface Props {
+  locale: Locale;
+  slug: string;
+}
+const { locale, slug } = Astro.props;
+const t = getDictionary(locale);
+const entry = (await getJournalArticle(locale, slug)) as JournalEntry | undefined;
+if (!entry) throw new Error(`Unknown journal slug: ${slug} for locale ${locale}`);
+
+const { Content } = await render(entry);
+const path = `/journal/${localeSlug(entry)}/`;
+const optimizedOg = await astroGetImage({ src: getImage(entry.data.image), width: 1200, height: 630 });
+const availableLocales = await getAvailableLocalesForArticle(localeSlug(entry));
+
+const relatedServices = entry.data.relatedServiceSlugs
+  .map((s: string) => services.find((svc) => svc.slug === s))
+  .filter((s: (typeof services)[number] | undefined): s is (typeof services)[number] => Boolean(s));
+const relatedLocations = entry.data.relatedLocationSlugs
+  .map((s: string) => locations.find((loc) => loc.slug === s))
+  .filter((s: (typeof locations)[number] | undefined): s is (typeof locations)[number] => Boolean(s));
+---
+
+<BaseLayout locale={locale} path={path} title={`${entry.data.title} | FORMA Journal`} description={entry.data.description} image={optimizedOg.src} availableLocales={availableLocales}>
+  <Breadcrumbs locale={locale} items={[{ name: t.nav.journal, path: '/journal/' }, { name: entry.data.title, path }]} />
+
+  <article class="wrap pb-20 pt-2">
+    <header class="max-w-2xl">
+      <p class="text-xs font-semibold tracking-wide text-olive-700 uppercase">
+        {entry.data.readingMinutes} {t.common.minRead}
+      </p>
+      <h1 class="mt-3">{entry.data.title}</h1>
+      <p class="body-l mt-4 text-ink-900/70">{entry.data.description}</p>
+    </header>
+
+    <div class="mt-10 aspect-[16/9] max-w-4xl overflow-hidden rounded-2xl">
+      <Image
+        src={getImage(entry.data.image)}
+        alt={entry.data.title}
+        width={1400}
+        height={788}
+        widths={[640, 960, 1280, 1400]}
+        sizes="(min-width: 1024px) 60vw, 100vw"
+        format="avif"
+        loading="eager"
+        class="h-full w-full object-cover"
+      />
+    </div>
+
+    <div class="prose-article mt-10">
+      <Content />
+    </div>
+
+    {(relatedServices.length > 0 || relatedLocations.length > 0) && (
+      <div class="mt-14 max-w-2xl border-t border-ink-900/10 pt-8">
+        <p class="text-xs font-semibold tracking-wide text-ink-900/50 uppercase">{t.common.relatedReading}</p>
+        <div class="mt-4 flex flex-wrap gap-3">
+          {relatedServices.map((s) => (
+            <a href={serviceHrefSmart(locale, s.slug)} class="rounded-full border border-ink-900/15 px-4 py-2 text-sm hover:bg-stone-100">
+              {s.translations[locale].navLabel}
+            </a>
+          ))}
+          {relatedLocations.map((l) => (
+            <a href={locationHrefSmart(locale, l.slug)} class="rounded-full border border-ink-900/15 px-4 py-2 text-sm hover:bg-stone-100">
+              {l.translations[locale].name}
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+  </article>
+
+  <CTABanner
+    heading={t.home.finalCtaHeading}
+    body={t.home.finalCtaBody}
+    cta={{ label: t.cta.startProject, href: localizePath(locale, '/contact/') }}
+  />
+
+  <JsonLd
+    data={graph([
+      articleSchema({
+        headline: entry.data.title,
+        description: entry.data.description,
+        url: new URL(localizePath(locale, path), SITE_URL).toString(),
+        image: optimizedOg.src,
+        datePublished: entry.data.publishDate.toISOString(),
+        dateModified: (entry.data.updatedDate ?? entry.data.publishDate).toISOString(),
+      }),
+    ])}
+  />
+</BaseLayout>
