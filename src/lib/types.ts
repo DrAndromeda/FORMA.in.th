@@ -20,6 +20,12 @@ export interface ScopeItem {
   body: string;
 }
 
+export interface PricingRow {
+  item: string;
+  range: string;
+  note: string;
+}
+
 export interface ServiceTranslation {
   seo: Seo;
   navLabel: string;
@@ -36,6 +42,14 @@ export interface ServiceTranslation {
   budgetHeading: string;
   budgetIntro: string;
   budgetFactors: string[];
+  /**
+   * Optional indicative price-range table (proposal.md's merged Part 2
+   * pricing-table requirement). Omit rather than invent a range when no
+   * real client-provided figure applies to this service — several
+   * services (e.g. Construction/Technical Supervision, Permits & Planning)
+   * genuinely have none yet. Never guess a number here.
+   */
+  pricingRows?: PricingRow[];
   faqs: FaqItem[];
   ctaHeading: string;
   ctaBody: string;

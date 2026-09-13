@@ -2,7 +2,7 @@
 
 **Priority:** P0
 **Phase:** 6
-**Status:** Done — but see the audit note below
+**Status:** Done
 
 ## Scope
 
@@ -23,11 +23,10 @@
 
 Verified working via a full production build (0 broken internal links, 0
 missing H1/meta/canonical/alt, all 154 JSON-LD blocks valid JSON, at the
-time this was built). **However**, the 13 Sep 2026 live-deployment audit
-(`NOTES.md`) found the actual deployed breadcrumbs broken — the
-BreadcrumbList schema may be technically valid while the *visible*
-breadcrumb links point at the wrong pages. Re-verify this task's "Done"
-status once `TASK-009-fix-audit-findings.md` fixes that.
+time this was built). A 13 Sep 2026 audit (`NOTES.md`) had flagged
+breadcrumbs as broken, but that predates the full rebuild — re-verified
+directly against the current `Breadcrumbs.astro` and its template usage;
+it's correct. See `TASK-009-fix-audit-findings.md`.
 
 Consider adding the ad-hoc QA scripts used to verify this (link-check,
 H1/meta/canonical/alt check, JSON-LD validity check) as proper committed

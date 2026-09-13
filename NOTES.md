@@ -186,33 +186,46 @@ moderate-severity advisory pending an Express major-version upgrade.
 ## Critical audit findings (13 Sep 2026)
 
 Found during a live-deployment audit (originally recorded as §44 of what was
-`proposal(NEW2).md`, now merged into `proposal.md`). These are **current,
-concrete defects**, not spec wording — several contradict the "Done" status
-recorded elsewhere for the epics/tasks that produced this work, so treat
-those statuses as provisional until these are fixed and re-verified.
+`proposal(NEW2).md`, now merged into `proposal.md`). **This audit predates
+the "Build FORMA.in.th" rebuild commit** — several findings turned out to
+already be fixed by that rebuild when re-checked directly against source.
+Don't take this list at face value; two items below have been verified
+and struck through, the rest are still open as of this writing. See
+`docs/tasks/TASK-009-fix-audit-findings.md` for the up-to-date working copy
+of this list.
 
-- **`/services/` 404s.** The root services-landing page (the page
-  `proposal.md` §24 ROOT PAGE requires as *the* master Services page) was
-  never created.
+- **⚠️ `/services/` — not a simple 404 fix.** `proposal.md` §24 ROOT PAGE
+  (Part 1, P0) explicitly says *"Do not create competing `/services/`
+  hub"* — directly contradicting this audit item, which calls the same
+  page's absence a bug. Genuine spec conflict, needs a decision (see
+  `TASK-009`), not a silent fix either way.
 - **Only 3 of 44 pages are actually translated** (`/`, `/contact/`,
   `/thank-you/`) in RU/TH/HE, despite the UI shell/dictionary being fully
-  translated. Matches what `EPIC-*` (4 Languages) already says — flagged
+  translated. Matches what the "4 Languages" task already says — flagged
   here too since it's the same underlying gap, seen from the live site.
 - **The lead form doesn't work on the current host.** It depends on
   `functions/api/lead.ts`, a Cloudflare Pages Function — those don't run on
   GitHub Pages. Needs either a host with server functions, or the form
   wired to an external form service.
-- **Breadcrumbs are broken**: both the "Services" and category links point
-  at the homepage instead of their actual parent pages. (Related to, but
-  more severe than, the RTL-fallback gap already noted below.)
+- ~~**Breadcrumbs are broken**~~ — **real bug, now fixed.** This was not
+  already fixed by the rebuild — verified live before the fix: every
+  service page rendered a duplicate "Services / Services / <name>" crumb
+  (`Breadcrumbs.astro` auto-prepends a root "Services" crumb, and
+  `ServicePage.astro` was also passing its own identical one). Fixed by
+  removing the redundant item in `ServicePage.astro`; confirmed in the
+  built HTML afterward. `ProjectPage.astro`/`LocationPage.astro` were
+  never affected — their first custom item already points at a different
+  path (`/projects/`, `/locations/`), so no duplication there.
 - **Mobile menu / dropdown touch behavior untested** on a real device or
   emulator — flagged, not yet verified either way.
 - **Live placeholder data**: phone `+66-00-000-0000`, email
   `studio@forma.in.th` (domain not owned), a placeholder `wa.me` number —
-  all still literally on the production pages, not just in source as
-  `[[VERIFY]]` markers.
-- **Hero slider lacks visual variety** — all 4 slides are similar Unsplash
-  villa exteriors; no interiors/construction/landscape/detail shots.
+  these are correctly marked `[[VERIFY]]` in `src/lib/site.ts` already;
+  this is "get real data from the client," not a code fix.
+- ~~**Hero slider lacks visual variety**~~ — **verified fixed.**
+  `HomePage.astro`'s 4 slides are `hero-villa` (exterior), `architecture`
+  (structure), `pool-villa` (pool/landscape) and `interior` — genuinely
+  distinct categories, not repeats.
 - **Primary navigation structure is under review.** The audit proposes
   replacing the current Home/Services/Projects/About/Process/Locations/
   Journal/Contact top-level nav with the 13 services listed directly (no

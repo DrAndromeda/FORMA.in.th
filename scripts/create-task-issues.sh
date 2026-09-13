@@ -33,7 +33,12 @@ require_gh
 NUM="$(require_project_number)"
 
 if [[ -z "$EPIC" ]]; then
-  mapfile -t epic_issues < <(gh issue list --state open --label "type: epic" --json number --jq '.[].number')
+  # `while read` rather than `mapfile` — this repo's target `bash` may be the
+  # system-default 3.2 on macOS (mapfile/readarray need bash 4+).
+  epic_issues=()
+  while IFS= read -r n; do
+    [[ -n "$n" ]] && epic_issues+=("$n")
+  done < <(gh issue list --state open --label "type: epic" --json number --jq '.[].number')
   if [[ ${#epic_issues[@]} -eq 0 ]]; then
     err "No open 'type: epic' issue found. Run 'make board-epics' first, or pass --epic <n>."
     exit 1

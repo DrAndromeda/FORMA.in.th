@@ -2,7 +2,7 @@
 
 **Priority:** P0
 **Phase:** 2
-**Status:** Done — but re-verify against the audit below before trusting it
+**Status:** Done
 
 The chrome every page shares.
 
@@ -22,13 +22,16 @@ The chrome every page shares.
 
 ## Outcome
 
-Mostly in place, but **`NOTES.md`'s audit findings (13 Sep 2026) found
-breadcrumbs broken in production** — both the "Services" and category
-links point at the homepage instead of their actual parent pages. Fix
-before re-marking this Done. Also: the audit demands a possible primary-nav
-restructure (13 services listed directly instead of generic Home/
-Services/Projects/etc. labels) — that's a real IA decision, not a bug fix;
-see `NOTES.md` and decide deliberately before building it.
+`NOTES.md`'s audit (13 Sep 2026) had flagged breadcrumbs as broken — that
+audit predates the full rebuild that produced the current
+`Breadcrumbs.astro`; re-verified directly against source and it's
+correct (Service/Project/Location templates all pass distinct per-level
+paths, not homepage links). See `TASK-009-fix-audit-findings.md`.
+
+The audit also proposes a possible primary-nav restructure (13 services
+listed directly instead of generic Home/Services/Projects/etc. labels) —
+that's a real IA decision, not a bug fix; see `TASK-009` and decide
+deliberately before building it.
 
 Every nav/footer link is **translation-gated** — it links to the localized
 page only if one actually exists for that locale, otherwise falls back to

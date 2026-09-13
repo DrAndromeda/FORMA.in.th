@@ -1,69 +1,68 @@
 # Task files
 
-Tasks are how one epic's work actually gets broken up and tracked. Two
-ways a task comes into existence — pick whichever fits:
+With the one-epic-per-proposal model (see `../epics/README.md`), a task file
+is where the actual work breakdown lives — **this is the normal case now,
+not a rarity.** Each task should be **large**: a real work session's worth
+of doing (e.g. "translate all 13 service pages to Russian," not "fix a
+typo"), not a micro-step. If a proposal is big, expect its task list to be
+long; that's fine — that's the point of breaking one epic into many tasks
+instead of many epics.
 
-## A. Pre-written, large tasks (most of this proposal's work)
+## The ad-hoc-task exception
 
-Write `docs/tasks/TASK-XXX-<slug>.md` (a local sequence number, e.g.
-`TASK-001-...`, `TASK-002-...` — **not** a GitHub issue number; the issue
-doesn't exist yet), then run `make board-tasks`
-(`scripts/create-task-issues.sh`) to turn every such file into a real
-issue, linked as a **native sub-issue** of the repo's one epic. Safe to
-re-run — skips any task whose issue title already exists.
+Small, quick, or one-off work doesn't need a committed file at all — use
+`make task-new TITLE="..."` (optionally `EPIC=`/`PRIORITY=`/`PHASE=`/`BODY=`)
+or the GitHub UI "Task" template directly. Reach for a `TASK-*.md` file
+specifically when the work is substantial enough to deserve a written spec
+*before* it exists as an issue — which, given this project's scale, is most
+of the actual work.
 
-**Make these large.** A task here should represent a real work session —
-"Bot integration (Telegram + WhatsApp)", "4 languages (EN/RU/TH/HE)", "Fix
-critical audit findings" — not "add a button" or "fix a typo". If you're
-tempted to write ten tiny task files for one afternoon's work, write one
-task file instead and use its own checklist for the sub-steps. The GitHub
-Issue's checklist (`- [ ] ...` in the body) is for tracking your own
-progress through a task, not for spawning more issues.
-
-Format (same shape as an epic file, see `../epics/README.md`):
+## Format `scripts/create-task-issues.sh` parses
 
 ```markdown
 # Task Title Here
 
 **Priority:** P1
 **Phase:** 7
-**Status:** Partial — homepage and UI strings done, service/location pages pending
+**Status:** Not started
 
-Free-form spec content, acceptance criteria, whatever this task needs —
-as long as it takes.
+Free-form spec content from here down. This is what gets copied into the
+created issue's body, plus a link back to this file and a note of which
+epic it's a sub-issue of.
 ```
 
-- **Line 1** (`# Title`) is required, and is the exact-match key
-  `create-task-issues.sh` uses to avoid duplicating an already-created
-  task (issue title becomes `[TASK] <this title>`).
-- **`**Priority:**`**, **`**Phase:**`** — optional, same rules as epics.
-  `Phase` is worth keeping if the proposal has a numbered roadmap you want
-  reflected on the board; drop it if not.
-- **`**Status:**`** — optional, read by `make board-sync-tasks`
-  (`scripts/sync-task-status.sh`) with the same mapping as epics: "not
-  started" → Backlog, "Done" → Done, anything else → In Progress. Update
-  this line as work progresses and re-run the sync — don't hand-edit the
-  board and the file separately.
+- **Line 1** (`# Title`) is **required** and is the exact-match key used for
+  duplicate detection — `create-task-issues.sh` skips creating an issue if
+  one already exists with the exact title `[TASK] <this title>`. Don't
+  rename a task file's title after its issue exists, or you'll get a
+  duplicate on the next run.
+- **`**Priority:**`** is optional. Must be exactly `P0`, `P1`, or `P2`.
+- **`**Phase:**`** is optional. Unlike epics (which no longer carry a Phase
+  — see `../epics/README.md`), a task can carry one if the proposal has a
+  numbered roadmap worth preserving as a reference (this repo's tasks map
+  to `proposal.md`'s original 10-phase ROADMAP; see `docs/epics/EPIC-*.md`
+  and `NOTES.md`). The first digit sequence found is used.
+- **`**Status:**`** drives both the *initial* board status when
+  `scripts/create-task-issues.sh` first creates the issue, and — if you
+  edit it later — what `make board-sync-tasks` pushes onto the board.
+  Written in plain English, mapped loosely: contains "not started" →
+  Backlog; is (or contains) "Done" → Done; anything else ("Partial", "In
+  progress", ...) → In Progress.
+- Everything else is free-form — write the actual spec.
 
-## B. Ad-hoc tasks (the exception, not the rule)
+## Naming
 
-For something genuinely small and unplanned — a quick fix, a follow-up
-that doesn't deserve its own written spec — skip the file. File the issue
-directly:
+`TASK-<NNN>-<slug>.md`, a sequential 3-digit number assigned when you write
+the file (**before** the issue exists — unlike the ad-hoc-task exception,
+where an issue is created directly with no file). This mirrors the epic
+file convention one level down. There's no requirement to keep numbering
+contiguous forever; if you delete/merge a task, don't renumber the rest.
 
-- **GitHub UI**: Issues → New issue → "Task" template.
-- **CLI**: `make task-new TITLE="..." EPIC=<n> PRIORITY=P1 BODY="..."` —
-  same effect, one command, also creates a native sub-issue link.
+## Turning a task file into an issue is still automatic — writing it isn't
 
-If it turns out to need more spec than fits in the issue body after all,
-write `docs/tasks/TASK-<issue-number>-<slug>.md` at that point (note: issue
-number *first* here, since the issue already exists — opposite order from
-the pre-written large-task files above) and link it from the issue.
-
-## Why the split
-
-Pre-written large task files (A) get the same treatment as epics: written
-once, reviewed, turned into an issue and kept in sync via a script — good
-for the bulk, planned work a proposal actually consists of. Ad-hoc issues
-(B) are the escape hatch for the inevitable small things that don't
-deserve that ceremony. Most of what you file should be (A).
+`scripts/create-task-issues.sh` (`make board-tasks`) turns every
+`TASK-*.md` file in this directory into a GitHub Issue, linked as a native
+sub-issue of the repo's one epic (auto-detected, or pass `--epic <n>`
+explicitly if there's ever more than one open epic). It does not write the
+spec for you or decide how to break the proposal down — that's a human
+judgment call, same as for epics.

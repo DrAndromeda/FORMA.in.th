@@ -1,31 +1,37 @@
 # Proposals
 
-Every brief we've built or are building against. **One proposal = one
-epic** — see [`epics/README.md`](./epics/README.md) for how a proposal
-becomes an epic (and its large tasks).
-
 | Document | Status |
 |---|---|
-| [`proposal.md`](../proposal.md) | In progress — see `EPIC-001` and `NOTES.md` |
+| [`proposal.md`](../proposal.md) (repo root) | Implemented (partially) — see `NOTES.md` for what's done vs. outstanding, and "History" below |
 
-## History note
+## History: why this used to be two files
 
-`proposal.md` used to be split across two files — this one, and a
-`proposal(NEW2).md` that described itself as "Part 2: additional, stricter
-requirements." They've been merged into this single file (Part 2's content
-now lives under its own heading below Part 1's) so there's one
-authoritative document, not two competing ones. A dated audit that had been
-bundled into that second file (concrete bugs found on a live deployment,
-not a spec change) was moved to `NOTES.md` → "Critical audit findings"
-instead, since it's current status, not a requirement.
+For a period, this repo had both `proposal.md` and a second,
+independently-growing `proposal(NEW2).md` — audit findings, a menu
+restructure, pricing-table requirements, and three homepage-variant
+requirements all landed in the second file rather than the first, so
+`docs/epics/`/`docs/tasks/` (built from `proposal.md` alone) never saw them.
 
-**Going forward: don't split a proposal into multiple files.** If a brief
-needs to add to or tighten an already-proposed spec, edit `proposal.md`
-directly (or add a dated addendum section within it) rather than creating
-`proposal-v2.md` / `proposal(NEW).md` / etc. — that's exactly the mistake
-being corrected above.
+Both files have since been merged back into the single `proposal.md`, and
+`proposal(NEW2).md` was deleted. The lesson, applied going forward (see
+`docs/WORKFLOW.md` §1): **one proposal, one file.** If a brief adds to or
+tightens an earlier one, edit `proposal.md` directly, or add a clearly
+dated addendum section inside it — never start a second file for the same
+brief.
+
+`NOTES.md` → "Critical audit findings" documents the concrete, still-open
+items that came out of the merged content (some already fixed — see that
+section's own notes on what's been re-verified since).
 
 ## Adding a new proposal
 
-Put it under `docs/proposals/<slug>.md`, add a row to the table above, and
-write its epic per `docs/epics/README.md`.
+Going forward, put new proposal/brief documents under
+`docs/proposals/<slug>.md` (this directory already exists, currently empty)
+— **don't** move `proposal.md` itself; it stays at the repo root as-is, just
+noted in the table above.
+
+Add a row to the table when you add a file. "Status" is a one-line summary
+you keep updated by hand (`Draft`, `Approved — not started`, `In progress`,
+`Implemented`, `Superseded by ...`) — this table doesn't drive anything
+automated, it's purely for a human scanning what's been proposed and where
+it stands.

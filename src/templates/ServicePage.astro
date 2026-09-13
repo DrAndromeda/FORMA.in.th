@@ -41,7 +41,7 @@ const availableLocales = LOCALES.filter((l) => hasServiceTranslation(l, slug));
 ---
 
 <BaseLayout locale={locale} path={path} title={tr.seo.title} description={tr.seo.description} image={optimizedOg.src} availableLocales={availableLocales}>
-  <Breadcrumbs locale={locale} items={[{ name: t.nav.services, path: '/' }, { name: tr.navLabel, path }]} />
+  <Breadcrumbs locale={locale} items={[{ name: tr.navLabel, path }]} />
 
   <section class="wrap pb-8 pt-2">
     <p class="text-xs font-semibold tracking-wide text-olive-700 uppercase">{tr.tagline}</p>

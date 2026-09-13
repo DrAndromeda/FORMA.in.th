@@ -1,0 +1,39 @@
+---
+import type { PricingRow } from '../../lib/types';
+
+interface Props {
+  heading: string;
+  rows: PricingRow[];
+  disclaimer: string;
+}
+const { heading, rows, disclaimer } = Astro.props;
+---
+
+<section class="wrap py-14 sm:py-20">
+  <div class="rounded-2xl border border-ink-900/10 bg-stone-100 p-8 sm:p-12">
+    <h2 class="mb-6">{heading}</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full min-w-[520px] border-collapse text-left text-sm">
+        <thead>
+          <tr class="border-b border-ink-900/15 text-xs font-semibold tracking-wide text-ink-900/50 uppercase">
+            <th class="py-3 pr-4">Service</th>
+            <th class="py-3 pr-4">Price range (THB)</th>
+            <th class="py-3">Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            rows.map((row) => (
+              <tr class="border-b border-ink-900/10">
+                <td class="py-4 pr-4 font-medium text-ink-900">{row.item}</td>
+                <td class="py-4 pr-4 whitespace-nowrap text-ink-900">{row.range}</td>
+                <td class="py-4 text-ink-900/70">{row.note}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-6 max-w-[70ch] text-sm text-ink-900/60">{disclaimer}</p>
+  </div>
+</section>
