@@ -1378,6 +1378,87 @@ Services → Services → Construction
 
 ---
 
+---
+
+## 50. ТРИ ВАРИАНТА ДИЗАЙНА ГЛАВНОЙ СТРАНИЦЫ И МЕНЮ
+
+> Создать ТРИ разных варианта главной страницы с ТРЕМЯ разными меню и разными визуальными стилями.
+> Варианты — отдельные маршруты: `/v1/`, `/v2/`, `/v3/`.
+> После реализации — выбираем лучший, остальные удаляем.
+
+---
+
+### ВАРИАНТ A — Editorial / Архитектурный журнал
+
+**Визуальный стиль:** Editorial fashion — крупная типографика, full-bleed изображения, белое пространство, минимализм.
+
+**Меню (5 пунктов):**
+```
+FORMA
+├── Projects
+├── Architecture & Design
+├── Construction & Build
+├── Koh Phangan
+├── Journal
+└── [Start a Project]
+```
+
+**Главная:** Full-screen editorial hero → Featured Projects 2×2 → 4 service categories → Locations → Journal → CTA
+
+**Тон:** Тихий, архитектурный, журнальный. Минимум текста, максимум фото.
+
+---
+
+### ВАРИАНТ B — Premium Service / Премиум Landing
+
+**Визуальный стиль:** Тёмный режим, параллакс, анимации, золотые/оливковые акценты.
+
+**Меню (4 пункта + mega menu):**
+```
+FORMA
+├── Projects (с выпадающими превью)
+├── Services (mega menu 13 услуг с иконками)
+├── Locations (4 острова)
+├── Journal
+└── [Start a Project]
+```
+
+**Главная:** Full-screen dark video/parallax → Mega grid 13 услуг → Featured Work → Why FORMA → CTA с формой
+
+**Тон:** Дорогой, уверенный, технический.
+
+---
+
+### ВАРИАНТ C — Local Expert / Гео-ориентированный
+
+**Визуальный стиль:** Светлый, тропический — тёплая палитра, натуральные текстуры (дерево, камень), фото KP.
+
+**Меню (6 пунктов, плоское):**
+```
+FORMA
+├── Villa Design on KP
+├── Build Your Villa
+├── Interior & Landscape
+├── Portfolio — Villas
+├── Why Koh Phangan?
+├── Blog & Guides
+└── [+66 00 000 0000]
+```
+
+**Главная:** Тёплое фото виллы + H1 → Эссе про KP → 6 карточек услуг + цены → Карта KP → Featured Project → FAQ → WhatsApp/Telegram
+
+**Тон:** Тёплый, locally grounded, для владельцев участков.
+
+---
+
+### ИНСТРУКЦИЯ
+- Все 3 варианта — separate pages: `/v1/`, `/v2/`, `/v3/`
+- Каждый — полноценная страница со своим меню, hero, секциями, CTA
+- Используют одни и те же контент-файлы
+- Различия только в layout, компонентах, стилях
+- После выбора → удалить остальные, развивать выбранный
+
+
 # 45. FINAL PRINCIPLE
 
 Do not optimize FORMA for the appearance of completeness.
