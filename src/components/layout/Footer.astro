@@ -34,7 +34,7 @@ const journalHref = journalLocales.includes(locale) || locale === 'en' ? localiz
       </div>
 
       <div class="col-span-2 md:col-span-2 lg:col-span-2">
-        <h3 class="text-xs font-semibold tracking-wide text-ink-900/50 uppercase">{t.footer.servicesHeading}</h3>
+        <h3 class="text-xs font-semibold tracking-wide text-ink-900/60 uppercase">{t.footer.servicesHeading}</h3>
         <ul class="mt-4 space-y-2">
           {services.slice(0, 8).map((s) => (
             <li><a href={serviceHrefSmart(locale, s.slug)} class="text-sm text-ink-900/80 hover:text-ink-900">{s.translations[locale].navLabel}</a></li>
@@ -43,7 +43,7 @@ const journalHref = journalLocales.includes(locale) || locale === 'en' ? localiz
       </div>
 
       <div class="col-span-2 md:col-span-2 lg:col-span-2">
-        <h3 class="text-xs font-semibold tracking-wide text-ink-900/50 uppercase">{t.footer.locationsHeading}</h3>
+        <h3 class="text-xs font-semibold tracking-wide text-ink-900/60 uppercase">{t.footer.locationsHeading}</h3>
         <ul class="mt-4 space-y-2">
           {primary.map((l) => (
             <li><a href={locationHrefSmart(locale, l.slug)} class="text-sm text-ink-900/80 hover:text-ink-900">{l.translations[locale].name}</a></li>
@@ -52,7 +52,7 @@ const journalHref = journalLocales.includes(locale) || locale === 'en' ? localiz
       </div>
 
       <div class="col-span-2 md:col-span-2 lg:col-span-2">
-        <h3 class="text-xs font-semibold tracking-wide text-ink-900/50 uppercase">{t.footer.companyHeading}</h3>
+        <h3 class="text-xs font-semibold tracking-wide text-ink-900/60 uppercase">{t.footer.companyHeading}</h3>
         <ul class="mt-4 space-y-2">
           <li><a href={aboutHref} class="text-sm text-ink-900/80 hover:text-ink-900">{t.nav.about}</a></li>
           <li><a href={processHref} class="text-sm text-ink-900/80 hover:text-ink-900">{t.nav.process}</a></li>
@@ -62,7 +62,7 @@ const journalHref = journalLocales.includes(locale) || locale === 'en' ? localiz
       </div>
 
       <div class="col-span-4 md:col-span-4 lg:col-span-2">
-        <h3 class="text-xs font-semibold tracking-wide text-ink-900/50 uppercase">{t.footer.contactHeading}</h3>
+        <h3 class="text-xs font-semibold tracking-wide text-ink-900/60 uppercase">{t.footer.contactHeading}</h3>
         <ul class="mt-4 space-y-2 text-sm text-ink-900/80">
           <li><a href={`mailto:${CONTACT.email}`} class="hover:text-ink-900"><bdi>{CONTACT.email}</bdi></a></li>
           <li><a href={`https://wa.me/${CONTACT.whatsapp.replace(/[^\d]/g, '')}`} class="hover:text-ink-900">WhatsApp</a></li>

@@ -17,7 +17,7 @@ const { locale, path, class: className = '', availableLocales = LOCALES } = Astr
   <details class="group">
     <summary
       class="flex cursor-pointer list-none items-center gap-1.5 rounded-full border border-ink-900/15 px-3.5 py-2 text-sm font-medium tracking-wide uppercase [&::-webkit-details-marker]:hidden"
-      aria-label="Change language"
+      aria-label={`${locale.toUpperCase()}, change language`}
     >
       {locale.toUpperCase()}
       <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true" class="transition-transform group-open:rotate-180">
