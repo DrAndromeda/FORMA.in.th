@@ -247,12 +247,11 @@ of this list.
   the merged Part 2) requires a per-service "Estimated Investment" table
   with a disclaimer, similar to CreativeLAB's. Not yet added to
   `ServicePage.astro`.
-- **A three-variant homepage/menu exploration is entirely unbuilt**:
-  Editorial, Premium/dark, and Local-Expert variants at `/v1/`, `/v2/`,
-  `/v3/`, to compare and then pick one (deleting the other two). See the
-  merged `proposal.md`'s Part 2 addendum. This is real, sizeable,
-  unstarted work — tracked as its own large task, not a tweak to an
-  existing epic.
+- ~~A three-variant homepage/menu exploration~~ — **rejected (14 Sep
+  2026), not pursued.** This came from the merged Part 2 addendum, not
+  Part 1's actual spec. All 3 variants were built, compared, and deleted;
+  the single homepage already built from Part 1 (`src/templates/HomePage.astro`,
+  live at `/`) was kept as-is. See `docs/tasks/TASK-010-homepage-variants.md`.
 
 ## Decisions resolving the audit's two open questions (14 Sep 2026)
 
