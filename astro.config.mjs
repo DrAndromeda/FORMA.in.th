@@ -6,7 +6,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://forma.in.th',
+  base: '/FORMA.in.th',
+  site: 'https://drandromeda.github.io',
   trailingSlash: 'always',
   i18n: {
     locales: ['en', 'ru', 'th', 'he'],
