@@ -2,16 +2,21 @@
 
 **Priority:** P1
 **Phase:** 7
-**Status:** Partial — UI shell + homepage + contact fully translated; 3 of
-13 services now translated to Russian (14 Sep 2026: architecture,
-villa-design, construction) as full entries, verified in a production
-build. 10 services remain in RU; all 13 remain in TH/HE; locations/about/
-process/projects/journal untouched in any of the three languages.
+**Status:** Done (14 Sep 2026) — every content type (services, locations,
+about, process, projects, journal, homepage, contact, UI shell) now has a
+complete translation in RU/TH/HE. Verified: `npx astro check` clean,
+`npm run build` produces all 182 pages with correct `lang`/`dir` attributes
+(Hebrew renders `dir="rtl"` throughout), full QA suite (link check, JSON-LD
+validation) passes.
 
 `proposal.md` explicitly warns against machine translation ("preserve
-meaning, tone, terminology and search intent per language"), so this is a
-professional human-translation effort, tracked deliberately separately from
-`TASK-004-core-pages.md` (which is "done" for English only).
+meaning, tone, terminology and search intent per language"). This pass was
+done by Claude (the coding assistant), not a hired human translator — it
+aims for natural, idiomatic, domain-appropriate language rather than a
+literal/MT-style pass, but **a native-speaker review before launch is still
+recommended** before presenting it as final professional translation (the
+same posture as the legal pages' "not legal advice" caveat). Tracked
+separately from `TASK-004-core-pages.md` (English-only core pages).
 
 ## Scope / translation backlog, in priority order
 

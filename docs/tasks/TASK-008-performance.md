@@ -2,7 +2,19 @@
 
 **Priority:** P0
 **Phase:** 8
-**Status:** Partial — architecture follows every documented CWV practice; no live measurement yet
+**Status:** Done (local measurement) — Lighthouse run (mobile, simulated
+throttling, local `astro preview` build) against 3 representative pages
+(homepage, a service page, a location page): Performance 96-98,
+Accessibility/Best Practices/SEO 100/100/100, LCP 1.8-2.6s, zero failing
+binary audits. Two real bugs found and fixed this way: the hero slider's
+non-first slides used native `loading="lazy"` (doesn't defer a same-
+viewport `opacity:0` element — fixed via `data-src` + load-time
+hydration), and `text-ink-900/50` (11 files) was below WCAG's 4.5:1
+contrast minimum (fixed to `/60`). See NOTES.md "Known minor gaps" for
+full detail and the render-blocking-CSS tradeoff decision.
+**Not yet done:** re-running Lighthouse against the actual **deployed**
+site once real hosting/CDN is live (cache headers and real-world network
+conditions differ from a local preview build).
 
 ## Scope / what's already in place
 

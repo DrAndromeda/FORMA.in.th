@@ -1,5 +1,7 @@
 # Docs index
 
+- [`../PROGRESS.md`](../PROGRESS.md) — single-page status snapshot: what's
+  done, what's partial, and the open questions blocking launch. Start here.
 - [`WORKFLOW.md`](./WORKFLOW.md) — reference: how Epics/Tasks/Bugs, the
   GitHub Project board, branches, PRs, and CI fit together, and why.
 - [`HowTo.md`](./HowTo.md) — the day-to-day commands, in order, from

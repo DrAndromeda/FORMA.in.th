@@ -4,8 +4,8 @@ Premium architecture and design-build studio website for Koh Phangan, Thailand â
 Astro site covering 13 services, 11 locations, a project portfolio, journal, and a
 multilingual (EN/RU/TH/HE) shell, plus standalone Telegram/WhatsApp project-intake bots.
 
-Built from the brief in `proposal.md`. See `NOTES.md` for what is and isn't finished yet,
-every `[[VERIFY]]` item, and the pre-launch checklist.
+Built from the brief in `proposal.md`. See [`PROGRESS.md`](./PROGRESS.md) for a current
+status snapshot and open questions, and `NOTES.md` for full decision/verification detail.
 
 ## Stack
 
