@@ -14,7 +14,7 @@ const t = getDictionary(locale);
 ---
 
 <div id="contact-form-root" data-locale={locale}>
-  <form id="lead-form" action="/api/lead" method="post" class="grid grid-cols-1 gap-5 sm:grid-cols-2" novalidate>
+  <form id="lead-form" method="post" class="grid grid-cols-1 gap-5 sm:grid-cols-2" novalidate>
     <input type="hidden" name="locale" value={locale} />
     <input type="hidden" name="sourceUrl" id="source-url" value="" />
 
@@ -149,12 +149,39 @@ const t = getDictionary(locale);
 
     try {
       const formData = new FormData(form);
-      const res = await fetch(form.action, {
+      const name = formData.get('name') ?? '';
+      const email = formData.get('email') ?? '';
+      const whatsapp = formData.get('whatsapp') ?? '';
+      const projectType = formData.get('projectType') ?? '';
+      const service = formData.get('service') ?? '';
+      const location = formData.get('location') ?? '';
+      const budget = formData.get('budget') ?? '';
+      const preferredContact = formData.get('preferredContact') ?? '';
+      const message = formData.get('message') ?? '';
+
+      const text = `📦 Новая заявка с FORMA.in.th
+━━━━━━━━━━━━━━━━━━━━━
+👤 Имя: ${name}
+📧 Email: ${email}
+📞 WhatsApp: ${whatsapp || '—'}
+🏗 Проект: ${projectType}
+🔧 Услуга: ${service || '—'}
+📍 Локация: ${location || '—'}
+💰 Бюджет: ${budget || '—'}
+📱 Предпочт. контакт: ${preferredContact || '—'}
+💬 Сообщение: ${message}
+━━━━━━━━━━━━━━━━━━━━━
+🌐 forma.in.th`;
+
+      const TOKEN = '8695287399:AAFuVjVJCqxUybjQHAtKbSWfcXG51hq8VeY';
+      const CHAT_ID = '237228075';
+      const tgRes = await fetch('https://api.telegram.org/bot' + TOKEN + '/sendMessage', {
         method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: formData,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: CHAT_ID, text }),
       });
-      if (!res.ok) throw new Error('Request failed');
+
+      if (!tgRes.ok) throw new Error('Telegram send failed');
       form.reset();
       successBox?.classList.remove('hidden');
       successBox?.scrollIntoView({ behavior: 'smooth', block: 'center' });
