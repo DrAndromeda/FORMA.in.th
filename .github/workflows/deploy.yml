@@ -24,12 +24,11 @@ jobs:
       - name: Add /FORMA.in.th/ prefix to internal links
         run: |
           cd dist
-          # Fix href links in all HTML files
-          find . -name '*.html' -exec sed -i \
-            -E 's|href="/FORMA\.in\.th/|href="/FORMA.in.th/|g; s|href="/([a-z][a-z0-9_-]*(/|$|\?))|href="/FORMA.in.th/\1|g; s|src="/([a-z][a-z0-9_-])|src="/FORMA.in.th/\1|g' {} +
-          # But don't break external URLs, anchors, or protocol links
-          find . -name '*.html' -exec sed -i \
-            -E 's|href="/FORMA\.in\.th/(https?:)|href="/\1|g; s|href="/FORMA\.in\.th/#|href="/#|g' {} +
+          # Use # as sed delimiter (avoids conflict with / and | in patterns)
+          # Only prefix hrefs on lines that don't already have FORMA.in.th
+          # (to avoid double-prefixing already correct asset paths)
+          find . -name '*.html' -exec sed -i -E \
+            '/FORMA\.in\.th/!s#href="/#href="/FORMA.in.th/#g' {} +
           echo "Fixed internal links in HTML files"
 
       - name: Upload Pages artifact
