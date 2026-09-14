@@ -11,8 +11,8 @@ export const SITE_LEGAL_NAME = 'FORMA Design & Build Studio';
  */
 export const CONTACT = {
   email: import.meta.env.PUBLIC_CONTACT_EMAIL || 'karma8chakra@gmail.com',
-  phone: import.meta.env.PUBLIC_CONTACT_PHONE || '+66-00-000-0000',
-  whatsapp: import.meta.env.PUBLIC_CONTACT_WHATSAPP || '+66-00-000-0000',
+  phone: import.meta.env.PUBLIC_CONTACT_PHONE || '+66 80 870 5704',
+  whatsapp: import.meta.env.PUBLIC_CONTACT_WHATSAPP || '+66 80 870 5704',
   telegram: import.meta.env.PUBLIC_CONTACT_TELEGRAM || 'https://t.me/forma_kohphangan',
   addressLocality: import.meta.env.PUBLIC_CONTACT_ADDRESS_LOCALITY || 'Koh Phangan',
   addressRegion: import.meta.env.PUBLIC_CONTACT_ADDRESS_REGION || 'Surat Thani',
