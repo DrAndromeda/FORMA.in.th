@@ -296,11 +296,31 @@ simply wrong about the current implementation in each case.
   location gets translated before its parent primary location, that one breadcrumb link
   would 404. Not currently reachable (no locations are translated yet), but worth revisiting
   once location translation begins.
-- **Lighthouse/PageSpeed and axe-core have not been run** against a live deployment — the
-  architecture follows every documented CWV/a11y practice (AVIF + responsive images,
-  self-hosted variable fonts, a single preloaded LCP image with matching srcset, minimal
-  inlined JS, semantic HTML, visible focus states, `prefers-reduced-motion` respected
-  throughout), but actual scores need measuring post-deploy, not assumed.
+- **Lighthouse has been run locally** (mobile, simulated throttling, against an
+  `astro preview` build — not yet against the live deployment, since deploy env/DNS
+  aren't finalized) on three representative pages: homepage, a service page
+  (`/services/villa-design/`), a location page (`/locations/baan-tai/`). Result:
+  Accessibility 100, Best Practices 100, SEO 100 on all three; Performance 96-98;
+  LCP 1.8-2.6s; zero failing binary audits. Two real bugs found and fixed this way
+  (not left as "should be fine architecturally"):
+  - Hero slider's non-first slides used native `loading="lazy"`, which does **not**
+    defer a same-viewport, `opacity:0`/`position:absolute inset-0` element — fixed by
+    deferring via `data-src` + JS hydration on `window.load` (`Hero.astro`).
+  - `text-ink-900/50` (used in 11 files) was 3.37:1 against `stone-100`, below the
+    4.5:1 WCAG AA minimum — fixed to `/60` (4.58-4.76:1) site-wide.
+  - **Render-blocking CSS (~1170ms) — left as-is, deliberately.** Considered forcing
+    `build.inlineStylesheets: 'always'` in `astro.config.mjs` to eliminate it, but this
+    is a 65-page multi-page (non-SPA) static site: inlining the stylesheet into every
+    page means the browser re-downloads the full CSS payload on every navigation
+    instead of serving it once from cache, which is a worse trade for a site this size
+    with this much shared chrome (header/footer/design system). Kept the default
+    (`'auto'`) — a single cacheable external stylesheet across all 65 pages. Re-run
+    Lighthouse against the live deployment once real hosting/CDN is in place, since a
+    CDN's cache headers change this calculus more than anything else.
+  - axe-core has not been run as a separate pass — Lighthouse's own accessibility
+    category (which uses axe-core under the hood) is scoring 100/100 on the pages
+    tested, so a standalone axe-core CLI pass is lower priority now, not skipped
+    outright.
 - **Rate limiting on the lead form** (`functions/api/lead.ts`) is a no-op unless a
   `LEAD_RATE_LIMIT_KV` KV namespace is bound in the Cloudflare Pages project — documented
   inline in that file.
@@ -319,9 +339,15 @@ Derived from proposal.md's own QA tables (§22 QA DOD, §23 QA, Google Webmaster
 - [ ] Verify Telegram bot end-to-end: every step, back/edit/restart, attachments, submit,
       staff-chat delivery, in all 4 languages.
 - [ ] Verify WhatsApp bot the same way, once a Meta Business/Cloud API app is approved.
-- [ ] Run Lighthouse/PageSpeed against the deployed site (mobile + desktop) and confirm
-      LCP ≤ 2.5s, INP ≤ 200ms, CLS ≤ 0.1, Performance ≥ 90.
-  - [ ] Run axe-core (or similar) against representative pages; confirm 0 critical/serious.
+- [x] Run Lighthouse against a local build (mobile, 3 representative pages): Performance
+      96-98, Accessibility/Best Practices/SEO 100/100/100, LCP 1.8-2.6s. See "Known minor
+      gaps" above.
+- [ ] Re-run Lighthouse/PageSpeed against the **deployed** site (mobile + desktop) once
+      real hosting/CDN is live — cache headers and real-world network conditions differ
+      from a local preview build.
+  - [ ] Run axe-core (or similar) as a standalone pass against representative pages;
+        confirm 0 critical/serious (Lighthouse's own axe-based a11y category is at 100
+        on the 3 pages tested so far, but a dedicated pass gives full severity data).
 - [ ] Verify in Google Search Console: sitemap submitted, no canonical/hreflang conflicts,
       structured data valid (Rich Results Test), mobile usability passes.
 - [ ] Cross-browser/device pass: latest Chrome/Safari/Firefox, iOS Safari, Android Chrome,
