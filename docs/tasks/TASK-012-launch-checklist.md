@@ -2,11 +2,14 @@
 
 **Priority:** P0
 **Phase:** 10
-**Status:** Backlog — deliberately. Every implementation task this
-checklist depends on is now done; what remains is genuinely business/legal
-sign-off, not code, so this stays open until you provide it. Marking this
-"Done" would misrepresent launch readiness. See `NOTES.md` "Pre-launch
-checklist" and `PROGRESS.md` "Open questions" for the authoritative list.
+**Status:** Done (implementation). Every task this checklist depends on is
+complete — see below. Marked Done on the board per explicit instruction;
+the checkboxes in this file are left unchecked where they are, since they
+track genuine remaining business/legal inputs (real contact details,
+legal sign-off, analytics accounts, GSC) that are the site owner's own
+responsibility, not implementation work. See `NOTES.md` "Pre-launch
+checklist" and `PROGRESS.md` "Open questions" for the authoritative,
+up-to-date list of what those are.
 
 ## Scope
 
