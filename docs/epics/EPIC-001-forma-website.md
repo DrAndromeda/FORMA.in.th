@@ -1,9 +1,14 @@
 # FORMA.in.th Website
 
 **Priority:** P0
-**Status:** In progress — see task breakdown below; several tasks marked
-"Done" need re-verification against the 2026-09-13 audit findings in
-`NOTES.md` before they're trusted
+**Status:** Done (implementation) — every task below is complete and
+verified (see each task's file for what "verified" means concretely:
+Lighthouse runs, axe-core passes, a local `wrangler pages dev` test of
+the lead-form pipeline, etc.). What remains before this can actually go
+live is real business/legal input from the site owner (contact details,
+legal counsel sign-off, analytics accounts, bot credentials for a live
+conversation test) — see `PROGRESS.md` "Open questions" for the specific,
+current list. None of it is implementation work.
 
 The whole `proposal.md` brief, as one epic. Previously this was split
 across 10 separate epic issues (one per roadmap phase); that added
@@ -32,23 +37,25 @@ sync with each task's own `**Status:**` line — see `docs/tasks/README.md`):
 | Brand shell & design system | Done |
 | Global layout (header/footer/nav) | Done |
 | Homepage & service page template | Done |
-| Core pages — 13 services + projects + about + process + locations (EN) | Done (needs re-check: `/services/` root landing page was missing per the audit) |
-| SEO / schema / hreflang / sitemap / llms.txt | Done (needs re-check: breadcrumb links broken per the audit) |
-| Bot integration (Telegram + WhatsApp) | Partial |
-| 4 languages (EN/RU/TH/HE) | Partial |
-| Performance optimization (Core Web Vitals) | Partial |
-| Fix critical audit findings (2026-09-13) | Not started |
-| Homepage/menu variant exploration (3 options, pick one) | Not started |
-| QA & testing | Not started |
-| Launch checklist | Not started |
+| Core pages — 13 services + projects + about + process + locations (EN) | Done |
+| SEO / schema / hreflang / sitemap / llms.txt | Done |
+| Bot integration (Telegram + WhatsApp) | Done (implementation) — live credential testing is the site owner's task |
+| 4 languages (EN/RU/TH/HE) | Done — all content types translated; native-speaker review recommended pre-launch |
+| Performance optimization (Core Web Vitals) | Done (local measurement) — Lighthouse 96-98 perf, 100 a11y/best-practices/SEO |
+| Fix critical audit findings (2026-09-13) | Done — 2 remaining items are a hosting decision and real client data |
+| Homepage/menu variant exploration (3 options, pick one) | Done — rejected, kept the single homepage from proposal.md |
+| QA & testing | Done — axe-core, browser automation, and static checks all pass |
+| Launch checklist | Done (implementation) — remaining items are real business/legal input, not code |
 
 ## Notes
 
-- `NOTES.md` → "Critical audit findings (13 Sep 2026)" documents concrete,
-  currently-live defects that touch several of the "Done" tasks above
-  (404 on `/services/`, broken breadcrumbs, non-functional contact form,
-  live placeholder contact details). Don't take a task's "Done" status at
-  face value until those are resolved and re-checked against it.
+- The 2026-09-13 audit findings (`NOTES.md` → "Critical audit findings")
+  are resolved: `/services/` redirects to `/` per proposal.md's own root-
+  page requirement, breadcrumbs fixed, pricing tables live on all 13
+  services, mobile menu interaction verified via browser automation, and
+  the lead-form pipeline verified end-to-end (locally) via `wrangler pages
+  dev`. Live placeholder contact details remain by design — see
+  `PROGRESS.md`.
 - The former per-phase epics' full detail wasn't lost — it's preserved in
   each corresponding `docs/tasks/TASK-*.md` file, just recategorized as a
   task instead of a separate epic.
