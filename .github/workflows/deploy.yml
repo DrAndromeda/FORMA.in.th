@@ -6,8 +6,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 jobs:
   build-and-deploy:
@@ -24,17 +22,14 @@ jobs:
       - name: Add /FORMA.in.th/ prefix to internal links
         run: |
           cd dist
-          # Use # as sed delimiter (avoids conflict with / and | in patterns)
-          # Only prefix hrefs on lines that don't already have FORMA.in.th
-          # (to avoid double-prefixing already correct asset paths)
           find . -name '*.html' -exec sed -i -E \
             '/FORMA\.in\.th/!s#href="/#href="/FORMA.in.th/#g' {} +
           echo "Fixed internal links in HTML files"
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: dist/
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          force_orphan: true
