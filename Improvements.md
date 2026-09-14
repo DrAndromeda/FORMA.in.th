@@ -1,58 +1,60 @@
-# Improvements — FORMA.in.th
+# FORMA.in.th — Open Improvements
 
-Список правок/улучшений, которые нужно реализовать. На основе PROGRESS.md.
+> Технические и контентные задачи, которые ещё не выполнены или требуют проверки.
+> Обновляется по мере работ.
 
-## 🔴 Обязательно перед запуском
+## Статус на 15 Sep 2026
 
-### 1. Контактные данные
-- [ ] **Email** — установить `PUBLIC_CONTACT_EMAIL`
-- [ ] **Телефон** — установить `PUBLIC_CONTACT_PHONE`
-- [ ] **WhatsApp** — установить `PUBLIC_CONTACT_WHATSAPP`
-- [ ] **Адрес** — установить `PUBLIC_ADDRESS_LINE1`, `_LINE2`, `_CITY`, `_POSTCODE`, `_COUNTRY`
-- [ ] **Соцсети** — установить `PUBLIC_SOCIAL_LINKS` (сейчас пусто, аккаунтов нет)
+| Компонент | Статус |
+|-----------|--------|
+| Сайт (gh-pages) | ✅ Деплой успешен, страницы 200 |
+| Ссылки меню | ✅ Починены (все с префиксом `/FORMA.in.th/`) |
+| Контакты | ✅ +66 80 870 5704, @formaisland_bot, WhatsApp, email |
+| CSS | ✅ 200 |
+| Изображения | ✅ 200 |
+| Бот @formaisland_bot | ✅ Запущен (long polling, PID активен) |
 
-### 2. Юридические данные (нужен юрист!)
-- [ ] `PUBLIC_LEGAL_GOVERNING_LAW` — право какой страны
-- [ ] `PUBLIC_LEGAL_RETENTION_PERIOD` — срок хранения данных
-- [ ] `PUBLIC_LEGAL_UPDATED_DATE` — дата последнего обновления
-- [ ] Terms / Privacy / Cookies — заменить `[[VERIFY]]` на реальный текст
+## Открытые задачи
 
-### 3. Боты (Telegram + WhatsApp)
-- [ ] Telegram bot token (получить у @BotFather)
-- [ ] WhatsApp Cloud API аккаунт + webhook
-- [ ] Прогнать `bots/TEST_PLAN.md` вживую
+### 1. Мобильное меню — проверить на телефоне
+- [ ] Открыть `https://drandromeda.github.io/FORMA.in.th/` на мобильном
+- [ ] Проверить бургер-меню, все пункты, закрытие
+- [ ] Проверить сервис-страницы на мобильном
 
-### 4. Реальные проекты
-- [ ] Заменить 6 "concept study" на реальные проекты + фото
-- [ ] Настоящие отзывы клиентов (testimonials)
-- [ ] Настоящая портретная/архитектурная фотография
-- [ ] Hero-слайдер: разнообразить фото (интерьеры, стройка, ландшафт)
+### 2. .env с токеном бота — не в репозитории
+- Файл `/bots/.env` в `.gitignore`, токен только локально на MacBook
+- Бот запущен локально — при перезагрузке машины нужно перезапускать
+- **Варианты решения:**
+  - GitHub Actions secret + CI-бот (требует настройки)
+  - systemd/launchd сервис автозапуска на сервере
+  - VPS/KVM с постоянным аптаймом
 
-### 5. Переводы
-- [ ] Профессиональная вычитка RU/TH/HE носителями языка
-- [ ] Проверить Hebrew RTL отображение с реальным текстом
+### 3. Linktree — не сделан
+- [ ] Создать Linktree для Kim Andromeda
+- [ ] Создать Linktree для FORMA (ссылки на все каналы)
 
-### 6. Аналитика
-- [ ] Подключить GA4 / Yandex Metrica / Meta Pixel
-- [ ] Настроить cookie-consent обработчик (`forma:consent`)
+### 4. Последний коммит — проверить билд
+- Коммит: `c6f7664` (Fix FORMA ContactForm with correct token)
+- Ветка: `main`
+- Проверить что GitHub Actions билд прошёл (последний push на main)
 
-### 7. Хостинг
-- [ ] Выбрать хостинг (Cloudflare Pages / Vercel / др.)
-- [ ] Залить `.env` с реальными значениями
-- [ ] Запустить Lighthouse против live URL
+### 5. AdFoto → CreativeLAB content map
+- Перенести контент из старого архива AdFoto в структуру CreativeLAB
+- Анализ не сделан
 
-## 🟡 Улучшения
+### 6. Деплой — peaceiris/actions-gh-pages
+- ✅ Переход на `peaceiris/actions-gh-pages@v4` вместо `actions/deploy-pages`
+- ✅ force_orphan обходит protection rules GitHub Pages environment
+- Следить, что деплой стабилен при новых коммитах
 
-### 8. QA
-- [ ] axe-core CLI проверка accessibility (кроме Lighthouse)
-- [ ] Кросс-браузерное тестирование
-- [ ] Mobile viewport визуальная проверка
+### 7. CreativeLAB Home — контентная доработка
+- [ ] Создать контент-план для FORMA Home по аналогии с CreativeLAB (H2-структура, SEO-текст)
+- [ ] Добавить ~800–1,100 слов с ключами
 
-### 9. Контент
-- [ ] Обновить страницы услуг — добавить конкретные цены/примеры
-- [ ] Написать реальные статьи в Journal (сейчас 6 placeholders)
+## Как добавлять
 
-### 10. Прочее
-- [ ] Убрать `proposal(NEW2).md` из рабочей директории (оставить только в .git истории)
-- [ ] Проверить, что меню V2 (по этапам проекта) реализовано
-- [ ] Star Project button — перенести из header в footer
+При обнаружении новой проблемы или недоработки дописывать пункт в соответствующий раздел.
+
+---
+
+<!-- project: github.com/DrAndromeda/broservice-site -->

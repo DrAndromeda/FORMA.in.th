@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { Bot, InlineKeyboard, type Context } from 'grammy';
 import {
   createLeadState,
