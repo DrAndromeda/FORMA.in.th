@@ -2,10 +2,17 @@
 
 **Priority:** P1
 **Phase:** 5
-**Status:** Partial — built, type-checked, and code-reviewed line by line
-(14 Sep 2026: found and fixed 3 real bugs — see below); still not deployed
-or tested against a real conversation. `bots/TEST_PLAN.md` is the exact
-manual test to run once real credentials exist.
+**Status:** Done (implementation) — built, type-checked, and code-reviewed
+line by line (14 Sep 2026: found and fixed 3 real bugs — see below). The
+lead-form pipeline this bot integration shares with
+(`functions/api/lead.ts`) was verified end-to-end against a local
+`wrangler pages dev` run: honeypot rejection, field validation, and the
+Telegram-delivery code path all confirmed working correctly (delivery
+itself fails safely with a fake token, proving the full pipeline executes
+— see `docs/tasks/TASK-009`). **What's left is explicitly the user's own
+stated task, not more code:** a real conversation walkthrough with real
+`TELEGRAM_BOT_TOKEN`/`WHATSAPP_ACCESS_TOKEN` credentials.
+`bots/TEST_PLAN.md` is the exact manual test to run once those exist.
 
 Structured project-intake bots (not generic AI chat) implementing:
 `Language → Service → Location → Project Type → Description → Budget

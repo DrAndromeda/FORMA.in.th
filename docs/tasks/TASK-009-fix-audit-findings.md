@@ -1,12 +1,16 @@
 # Fix Critical Audit Findings (2026-09-13)
 
 **Priority:** P0
-**Status:** In progress — breadcrumbs fixed, hero slider verified fine,
-both spec-conflict decisions resolved, pricing table live on all 13
-services. Left: lead-form hosting (a deployment decision, not code), real
-contact details (needs client data), mobile menu device testing — none of
-these three are code-writable without external input (a host choice, the
-client's real data, and a physical device respectively).
+**Status:** Done (implementation) — breadcrumbs fixed, hero slider
+verified fine, both spec-conflict decisions resolved, pricing table live
+on all 13 services, mobile menu interaction verified via real browser
+automation (open/close/accordion/focus-return/Escape, 375-768px — see
+`scripts/qa/browsercheck.cjs`), lead-form pipeline verified end-to-end
+against a local `wrangler pages dev` run (honeypot, validation, and
+Telegram-delivery code path all confirmed correct). **Left, genuinely
+external:** lead-form hosting (a deployment decision — needs a real
+Cloudflare Pages project) and real contact details (needs client data,
+now settable via `PUBLIC_CONTACT_*` env vars per `.env.example`).
 
 New task, added when merging `proposal(NEW2).md`'s §44 (a dated audit of
 an earlier deployment) into `proposal.md`. The audit predates the big
@@ -63,8 +67,10 @@ resolving the audit's two open questions."
       number. These are correctly marked `[[VERIFY]]` in
       `src/lib/site.ts` already — this item is "get real data from the
       client," not a code fix.
-- [ ] Test mobile menu / mega-menu dropdown behavior on a real device or
-      emulator (currently unverified either way).
+- [x] ~~Test mobile menu / mega-menu dropdown behavior~~ — **verified via
+      real browser automation** (`scripts/qa/browsercheck.cjs`): open,
+      services accordion, close button, focus return, and Escape key all
+      confirmed working at 375/430/768px.
 - [x] ~~Primary-nav restructure~~ — **rejected, resolved (14 Sep 2026)**:
       current nav kept as-is. The existing Services mega-menu already
       exposes all 13 services without needing 13 flat top-level items;
