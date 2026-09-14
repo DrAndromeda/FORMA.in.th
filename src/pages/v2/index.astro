@@ -1,0 +1,110 @@
+---
+// Homepage variant 2 — "Premium/dark." Dark mode, gold/olive accents,
+// mega-menu with all 13 services, confident/technical tone.
+// Temporary comparison page — see docs/tasks/TASK-010-homepage-variants.md.
+import { Image, getImage as astroGetImage } from 'astro:assets';
+import BaseHead from '../../components/seo/BaseHead.astro';
+import ServiceGrid from '../../components/blocks/ServiceGrid.astro';
+import ProjectSlider from '../../components/blocks/ProjectSlider.astro';
+import ProcessTimeline from '../../components/blocks/ProcessTimeline.astro';
+import { getImage } from '../../lib/images';
+import { services, getPriorityServices } from '../../content/services';
+import { projects } from '../../content/projects';
+import { getHomeContent } from '../../content/home';
+
+const priorityServices = getPriorityServices();
+const featuredProjects = projects.slice(0, 6);
+const home = getHomeContent('en');
+const heroImage = await astroGetImage({ src: getImage('architecture'), width: 2400, height: 1500, format: 'avif', quality: 82 });
+---
+
+<html lang="en" dir="ltr">
+  <head>
+    <BaseHead locale="en" title="FORMA — Premium/Dark Variant (v2)" description="Homepage variant 2: Premium/dark." path="/v2/" noindex availableLocales={['en']} />
+  </head>
+  <body class="min-h-screen bg-ink-900 text-stone-50">
+    <header class="sticky top-0 z-50 border-b border-stone-50/10 bg-ink-900/95 backdrop-blur">
+      <div class="wrap flex h-20 items-center justify-between">
+        <a href="/v2/" class="font-display text-xl tracking-tight">FORMA</a>
+        <nav aria-label="Primary" class="hidden items-center gap-1 lg:flex">
+          <div class="group relative">
+            <button type="button" class="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium text-stone-50/80 hover:text-stone-50">
+              Services
+              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5"/></svg>
+            </button>
+            <div class="invisible absolute start-0 top-full z-40 w-[38rem] rounded-2xl border border-stone-50/10 bg-ink-700 p-6 opacity-0 shadow-2xl transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+              <div class="grid grid-cols-2 gap-x-8 gap-y-1">
+                {services.map((s) => (
+                  <a href={`/services/${s.slug}/`} class="rounded-lg px-3 py-2 text-sm text-stone-50/80 hover:bg-stone-50/10 hover:text-stone-50">{s.translations.en.navLabel}</a>
+                ))}
+              </div>
+            </div>
+          </div>
+          <a href="/projects/" class="rounded-full px-4 py-2 text-sm font-medium text-stone-50/80 hover:text-stone-50">Projects</a>
+          <a href="/about/" class="rounded-full px-4 py-2 text-sm font-medium text-stone-50/80 hover:text-stone-50">About</a>
+        </nav>
+        <a href="/contact/" class="inline-flex items-center rounded-full bg-terracotta-500 px-5 py-2.5 text-sm font-medium text-ink-900 hover:bg-terracotta-600">Start a Project</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="relative h-[92svh] min-h-[34rem] overflow-hidden">
+        <Image src={heroImage.src} width={2400} height={1500} alt="Concrete villa architecture with dramatic shading" loading="eager" fetchpriority="high" class="h-full w-full object-cover opacity-70" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/40 to-ink-900/10" aria-hidden="true"></div>
+        <div class="wrap absolute inset-x-0 bottom-0 pb-16">
+          <p class="text-xs font-semibold tracking-[0.3em] text-terracotta-500 uppercase">Design-Build · Koh Phangan</p>
+          <h1 class="mt-4 max-w-3xl font-display text-6xl leading-[0.95] sm:text-7xl">
+            Precision architecture for the tropics.
+          </h1>
+          <p class="body-l mt-6 max-w-xl text-stone-50/70">
+            Thirteen disciplines under one accountable studio — engineered for climate,
+            terrain and long-term durability, not just photographed well on day one.
+          </p>
+          <div class="mt-8 flex gap-4">
+            <a href="/projects/" class="rounded-full bg-stone-50 px-6 py-3.5 text-sm font-medium text-ink-900 hover:bg-stone-200">View Projects</a>
+            <a href="/contact/" class="rounded-full border border-stone-50/30 px-6 py-3.5 text-sm font-medium hover:bg-stone-50/10">Start a Project</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="wrap py-20">
+        <div class="grid gap-6 sm:grid-cols-3">
+          {home.whyUsItems.slice(0, 3).map((item) => (
+            <div class="rounded-2xl border border-stone-50/10 p-6">
+              <div class="h-px w-10 bg-terracotta-500" />
+              <h3 class="mt-4 text-lg">{item.title}</h3>
+              <p class="body-m mt-2 text-stone-50/60">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="bg-stone-50 py-20 text-ink-900">
+        <ServiceGrid locale="en" services={priorityServices} heading="Every discipline, one studio" intro="From concept architecture to completed construction." viewAllHref="/" />
+      </section>
+
+      <section class="py-20">
+        <ProjectSlider locale="en" projects={featuredProjects} heading="Selected Work" intro="Concept studies illustrating the design approach." viewAllHref="/projects/" />
+      </section>
+
+      <section class="wrap py-20">
+        <ProcessTimeline heading="How a project unfolds" steps={home.processSteps} />
+      </section>
+
+      <section class="border-t border-stone-50/10 py-24">
+        <div class="wrap flex flex-col items-start gap-6">
+          <h2 class="max-w-2xl font-display text-4xl">Have a project in mind?</h2>
+          <p class="body-l max-w-xl text-stone-50/70">Tell us about your site. We'll tell you honestly what it supports.</p>
+          <a href="/contact/" class="rounded-full bg-terracotta-500 px-7 py-3.5 text-sm font-medium text-ink-900 hover:bg-terracotta-600">Start a Project</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-stone-50/10 py-10">
+      <div class="wrap flex flex-col gap-4 text-sm text-stone-50/50 sm:flex-row sm:items-center sm:justify-between">
+        <p>© {new Date().getFullYear()} FORMA</p>
+        <p>Homepage variant 2 of 3 — Premium/dark. See <a href="/v1/" class="underline">v1</a> / <a href="/v3/" class="underline">v3</a>.</p>
+      </div>
+    </footer>
+  </body>
+</html>

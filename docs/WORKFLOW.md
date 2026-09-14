@@ -72,20 +72,25 @@ One GitHub Project (v2), titled **"FORMA Roadmap"**, with these fields:
   same workflow setup doesn't have a real numbered roadmap to draw from,
   skip the Phase field entirely rather than inventing phase numbers.
 
-### The Status field's one annoying wrinkle
+### The Status field's one annoying wrinkle (now automated)
 
 Every new GitHub Project ships with a **built-in** `Status` field whose
 default options are `Todo` / `In Progress` / `Done`. The GraphQL API refuses
-to delete or recreate it — `gh project field-delete` fails with "Only
-custom fields can be deleted." This is not a bug in `scripts/github-bootstrap.sh`
-to work around; it's a one-time **manual** step:
-
-> Project board → `Status` column header → `⋯` → **Edit field** → rename
-> the three default options and add the two missing ones, so you end up
-> with exactly: `Backlog`, `Ready`, `In Progress`, `In Test`, `Done`.
+to delete or recreate the *field* — `gh project field-delete` fails with
+"Only custom fields can be deleted." Its *options* are a different story:
+`gh project field-create`'s cousin mutation, `updateProjectV2Field`, accepts
+a full replacement `singleSelectOptions` set (confirmed directly against
+the live API) — it just can't rename an option **in place** by ID, only
+replace the whole set at once. `scripts/github-bootstrap.sh` does exactly
+that automatically, renaming Todo/In Progress/Done to
+`Backlog`/`Ready`/`In Progress`/`In Test`/`Done` — **but only when the
+options are still exactly the fresh GitHub default**, since a wholesale
+replacement discards any items' existing Status values. If you've already
+customized Status differently before running `board-setup`, it leaves them
+alone and warns instead of guessing.
 
 `Priority` and `Phase` are ordinary custom fields, and `scripts/github-bootstrap.sh`
-creates both of those for you via `gh project field-create`.
+creates both of those too via `gh project field-create`.
 
 ## 4. Automating In Progress → In Test → Done
 
@@ -148,11 +153,11 @@ one-time repo setting: Repo → Settings → Branches → Branch protection rule
    `gh auth refresh -s project,read:project` — the `project` scope isn't
    granted by default and the board scripts need it. (This repo's token
    already has it — see `gh auth status`.)
-2. `make board-setup` — labels, the Project board, and its Priority/Phase
-   fields (`scripts/github-bootstrap.sh`).
-3. Do the three manual steps `board-setup` prints at the end: rename the
-   Status field's options, wire up board automation (§4 above), turn on
-   branch protection (§7 above).
+2. `make board-setup` — labels, the Project board, its Priority/Phase
+   fields, and the Status field's options renamed to Backlog/Ready/In
+   Progress/In Test/Done (`scripts/github-bootstrap.sh`).
+3. Do the two manual steps `board-setup` prints at the end: wire up board
+   automation (§4 above), turn on branch protection (§7 above).
 4. Write the one `docs/epics/EPIC-*.md` file for the proposal (see
    `docs/epics/README.md`), then `make board-epics`
    (`scripts/create-epic-issues.sh`), then `make board-sync-status` to

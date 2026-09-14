@@ -21,7 +21,17 @@ export interface ScopeItem {
 }
 
 export interface PricingRow {
+  /** Project scope tier, e.g. "Compact villa (studio-2BR)" */
   item: string;
+  /**
+   * Relative indicative range, NOT an absolute currency figure — this
+   * studio has no real pricing data to draw from, and inventing specific
+   * THB numbers would fail the truth rule as badly as a fabricated
+   * testimonial would. Use relative bands ("$" / "$$" / "$$$", or "Base" /
+   * "1.5-2.5x base") instead, always paired with the disclaimer prop on
+   * PricingTable.astro directing to a real consultation for an actual
+   * quote.
+   */
   range: string;
   note: string;
 }

@@ -2,7 +2,10 @@
 
 **Priority:** P1
 **Phase:** 5
-**Status:** Partial — built and type-checked, not deployed or tested against real accounts
+**Status:** Partial — built, type-checked, and code-reviewed line by line
+(14 Sep 2026: found and fixed 3 real bugs — see below); still not deployed
+or tested against a real conversation. `bots/TEST_PLAN.md` is the exact
+manual test to run once real credentials exist.
 
 Structured project-intake bots (not generic AI chat) implementing:
 `Language → Service → Location → Project Type → Description → Budget
@@ -25,15 +28,42 @@ Submit → Human handoff` — see `proposal.md` §15 BOT.
 
 ## Outcome / what's left
 
-Built, `tsc --noEmit` clean (`bots/npm run typecheck`). **Not yet done**:
+Built, `tsc --noEmit` clean (`bots/npm run typecheck`).
 
-- Real `TELEGRAM_BOT_TOKEN`/`WHATSAPP_ACCESS_TOKEN` credentials and
-  end-to-end testing of every step, in all 4 languages, including
-  back/edit/restart and attachments.
+### Bugs found and fixed in this review (14 Sep 2026)
+
+- **Telegram**: typing plain text instead of tapping a button during a
+  choice step (service/location/projectType/contactMethod) fell through
+  to a `default` case that always re-showed the *language* prompt —
+  confusing, and silently discarded the user's place in the flow. Now
+  re-shows the actual pending question.
+- **WhatsApp**: the service-selection list had 13 rows across 4 sections
+  — WhatsApp's interactive list messages cap at **10 rows total**, a real
+  Cloud API constraint, not a soft UI limit. This would have been
+  rejected outright by the Graph API in production. Restructured into a
+  category-picker (4 rows) → services-within-category (≤5 rows) two-step
+  selection, and added a guard in `sendList()` that now throws immediately
+  if this class of bug reoccurs, instead of failing silently against the
+  live API later.
+- **Telegram**: the deep-link contextual preselect
+  (`?start=service_villa-design`) set `state.service` but nothing
+  consumed it — the bot asked for a service anyway. Added
+  `advanceFromLanguage()` to skip any already-filled step.
+
+None of these three were caught by `tsc` — all found by reading the actual
+conversation logic, not just type-checking it.
+
+### Still not done — needs real credentials/testing, not more code review
+
+- Real `TELEGRAM_BOT_TOKEN`/`WHATSAPP_ACCESS_TOKEN` and a real live
+  conversation through every step, in all 4 languages — **`bots/TEST_PLAN.md`
+  is the exact checklist to run**, written during this review so the next
+  person with real credentials doesn't have to reconstruct it.
 - Persistent session storage (currently an in-memory `Map` — fine for one
   process, documented swap point for Redis/KV in `bots/README.md`).
 - WhatsApp has no deep-link equivalent to Telegram's `?start=service_...`
-  contextual preselect yet.
+  contextual preselect at all yet (a different, larger feature — parsing
+  a `wa.me` pre-filled text template — not a bug fix).
 - `express`'s transitive `qs` dependency has an open moderate-severity
   advisory pending an Express major-version upgrade.
 

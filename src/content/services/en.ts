@@ -159,6 +159,11 @@ export const servicesEnContent: Record<string, Service['translations']['en']> = 
       'Coordination required with structural, landscape and MEP consultants',
       'Whether the commission is design-only or extends into construction supervision',
     ],
+    pricingRows: [
+      { item: 'Compact villa (studio-2BR), straightforward site', range: 'Base', note: 'Reference point — flat or gently sloped site, standard construction systems' },
+      { item: 'Mid-size villa (3-4BR) or a sloped/constrained site', range: '1.5-2.5x base', note: 'More levels, structural complexity, or site-specific earthworks and retaining' },
+      { item: 'Large or multi-structure project', range: '3x+ base', note: 'Multiple pavilions, extensive custom detailing, or heavy consultant coordination' },
+    ],
     faqs: [
       {
         q: 'Do you design for existing land we already own on Koh Phangan?',
@@ -258,6 +263,11 @@ export const servicesEnContent: Record<string, Service['translations']['en']> = 
       'Pool size, positioning and structural integration with the villa',
       'Specification level for stone, timber, joinery and glazing systems',
       'Site access for materials and machinery, particularly on steeper plots',
+    ],
+    pricingRows: [
+      { item: 'Compact villa (studio-2BR)', range: 'Base', note: 'Reference point — single pavilion, standard specification' },
+      { item: 'Mid-size family villa (3-4BR)', range: '1.6-2.5x base', note: 'Larger footprint, pool integration, higher finish specification' },
+      { item: 'Large villa or hospitality-scale property', range: '3x+ base', note: 'Multiple pavilions, extensive glazing, bespoke joinery throughout' },
     ],
     faqs: [
       {
@@ -359,6 +369,11 @@ export const servicesEnContent: Record<string, Service['translations']['en']> = 
       'Whether furniture is sourced locally, regionally or internationally',
       'Styling and installation scope required at handover',
     ],
+    pricingRows: [
+      { item: 'Single room or suite refresh', range: 'Base', note: 'Reference point — specified finishes, minimal custom joinery' },
+      { item: 'Full villa interior, standard joinery', range: '2-3.5x base', note: 'All principal rooms, kitchens and bathrooms, moderate custom joinery' },
+      { item: 'Full villa with extensive custom joinery', range: '4x+ base', note: 'Bespoke cabinetry throughout, imported materials, full styling package' },
+    ],
     faqs: [
       {
         q: 'Do you design interiors for villas you did not architect?',
@@ -458,6 +473,11 @@ export const servicesEnContent: Record<string, Service['translations']['en']> = 
       'Specification level for finishes, joinery and fixtures',
       'Import requirements for specific materials or equipment',
       'Weather-driven scheduling during the monsoon season',
+    ],
+    pricingRows: [
+      { item: 'Compact villa build, standard systems', range: 'Base', note: 'Reference point — conventional structure, standard finishes' },
+      { item: 'Mid-size villa, moderate complexity', range: '1.5-2.5x base', note: 'Pool integration, more structural complexity, higher-spec finishes' },
+      { item: 'Large or multi-structure build', range: '3x+ base', note: 'Multiple structures, complex structural systems, extensive imported materials' },
     ],
     faqs: [
       {
@@ -559,6 +579,11 @@ export const servicesEnContent: Record<string, Service['translations']['en']> = 
       'Age and condition of existing services (electrical, plumbing, drainage)',
       'Specification level for new finishes and fixtures',
     ],
+    pricingRows: [
+      { item: 'Cosmetic refresh', range: 'Base', note: 'Finishes, fixtures and surface-level updates; structure untouched' },
+      { item: 'Partial renovation with layout change', range: '2-3.5x base', note: 'Reconfigured rooms, upgraded services, moderate structural work' },
+      { item: 'Full structural renovation', range: '4x+ base', note: 'Major structural remediation, full-layout change, complete systems overhaul' },
+    ],
     faqs: [
       {
         q: 'Can you renovate a villa while we continue living in it?',
@@ -658,6 +683,11 @@ export const servicesEnContent: Record<string, Service['translations']['en']> = 
       'Whether the project is managed remotely, on-site, or both',
       'Complexity of procurement, including imported items',
       'Reporting frequency and detail required by the client',
+    ],
+    pricingRows: [
+      { item: 'Single-contractor project', range: 'Base', note: 'Reference point — one main contractor, straightforward procurement' },
+      { item: 'Multi-trade project', range: '1.5-2.5x base', note: 'Several specialist trades and consultants to coordinate directly' },
+      { item: 'Multi-structure or hospitality development', range: '3x+ base', note: 'Multiple buildings, larger team, more complex reporting needs' },
     ],
     faqs: [
       {
@@ -759,6 +789,11 @@ export const servicesEnContent: Record<string, Service['translations']['en']> = 
       'Whether reporting needs to support remote or overseas clients',
       'Level of detail required in written reporting',
     ],
+    pricingRows: [
+      { item: 'Periodic visits (monthly)', range: 'Base', note: 'Reference point — straightforward build, infrequent critical stages' },
+      { item: 'Regular visits (biweekly)', range: '1.5-2x base', note: 'More construction stages requiring verification, moderate complexity' },
+      { item: 'Intensive visits (weekly or more)', range: '2.5x+ base', note: 'Complex or fast-moving build requiring close, frequent oversight' },
+    ],
     faqs: [
       {
         q: 'Can you supervise a project designed and built entirely by others?',
@@ -858,6 +893,11 @@ export const servicesEnContent: Record<string, Service['translations']['en']> = 
       'Number of specialist consultants requiring coordination',
       'Extent of waterproofing and envelope detailing involved',
       'Whether commissioning and systems testing are included in scope',
+    ],
+    pricingRows: [
+      { item: 'Single structural system verification', range: 'Base', note: 'Reference point — standard structural frame, straightforward MEP' },
+      { item: 'Structural + MEP coordination', range: '1.5-2.5x base', note: 'Multiple consultants to coordinate, more complex systems' },
+      { item: 'Full technical programme (structural + MEP + envelope)', range: '3x+ base', note: 'Comprehensive verification across all technical systems' },
     ],
     faqs: [
       {
@@ -959,6 +999,11 @@ export const servicesEnContent: Record<string, Service['translations']['en']> = 
       'Drainage complexity, particularly on steeper plots',
       'Irrigation system requirements for establishment and long-term care',
     ],
+    pricingRows: [
+      { item: 'Compact garden or pool surrounds', range: 'Base', note: 'Reference point — modest site area, standard planting and hardscape' },
+      { item: 'Mid-size landscape with pool integration', range: '1.5-2.5x base', note: 'Larger site, more extensive hardscape and planting density' },
+      { item: 'Large estate landscape', range: '3x+ base', note: 'Extensive site area, significant retaining/drainage work, mature specimen planting' },
+    ],
     faqs: [
       {
         q: 'Can landscape design be added to an existing villa?',
@@ -1057,6 +1102,11 @@ export const servicesEnContent: Record<string, Service['translations']['en']> = 
       'Completeness and quality of the submitted documentation',
       'Authority workload and processing times, which vary and are outside our control',
       'Whether the site has any existing compliance history to resolve first',
+    ],
+    pricingRows: [
+      { item: 'Straightforward single-dwelling application', range: 'Base', note: 'Reference point — standard zoning, no variances required' },
+      { item: 'Standard application with variances', range: '1.5-2x base', note: 'Site-specific conditions requiring additional documentation or review' },
+      { item: 'Complex application (multi-unit or commercial)', range: '2.5x+ base', note: 'Larger scope, more extensive supporting reports and coordination' },
     ],
     faqs: [
       {
@@ -1158,6 +1208,11 @@ export const servicesEnContent: Record<string, Service['translations']['en']> = 
       'Timeline requirements and any schedule compression requested',
       'Extent of custom joinery, imported materials and bespoke detailing',
     ],
+    pricingRows: [
+      { item: 'Compact villa turnkey', range: 'Base', note: 'Reference point — single pavilion, standard specification throughout' },
+      { item: 'Mid-size villa turnkey', range: '1.6-2.5x base', note: 'Larger footprint, higher finish specification, more custom detailing' },
+      { item: 'Large or multi-structure turnkey', range: '3x+ base', note: 'Multiple structures, extensive bespoke joinery, imported materials' },
+    ],
     faqs: [
       {
         q: 'What exactly is included in a turnkey project?',
@@ -1258,6 +1313,11 @@ export const servicesEnContent: Record<string, Service['translations']['en']> = 
       'Level of building performance monitoring or certification pursued',
       'Complexity of integrating passive and active systems together',
     ],
+    pricingRows: [
+      { item: 'Passive design integration only', range: 'Base', note: 'Reference point — orientation, shading and ventilation strategy, no added systems' },
+      { item: 'Passive design + renewable energy', range: '1.3-1.8x base', note: 'Solar or other renewable systems sized against passive-reduced demand' },
+      { item: 'Full eco programme (passive + energy + water)', range: '2x+ base', note: 'Comprehensive integration across passive design, energy and water systems' },
+    ],
     faqs: [
       {
         q: 'Does eco construction cost significantly more than standard building?',
@@ -1357,6 +1417,11 @@ export const servicesEnContent: Record<string, Service['translations']['en']> = 
       'Site access for concrete delivery and pumping equipment',
       'Formwork complexity for curved, board-formed or textured finishes',
       'Exposure condition and durability specification required',
+    ],
+    pricingRows: [
+      { item: 'Standard structural frame', range: 'Base', note: 'Reference point — conventional spans, covered/finished concrete' },
+      { item: 'Complex or exposed-finish structure', range: '1.5-2.5x base', note: 'Board-formed or textured architectural finish, tighter tolerances' },
+      { item: 'Large-span or multi-structure concrete works', range: '3x+ base', note: 'Extended spans, complex geometry, or multiple structures' },
     ],
     faqs: [
       {

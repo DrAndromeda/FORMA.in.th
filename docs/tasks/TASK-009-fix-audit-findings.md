@@ -1,8 +1,12 @@
 # Fix Critical Audit Findings (2026-09-13)
 
 **Priority:** P0
-**Status:** In progress — several items already verified fixed or resolved
-against the current codebase; see notes per item below.
+**Status:** In progress — breadcrumbs fixed, hero slider verified fine,
+both spec-conflict decisions resolved, pricing table live on all 13
+services. Left: lead-form hosting (a deployment decision, not code), real
+contact details (needs client data), mobile menu device testing — none of
+these three are code-writable without external input (a host choice, the
+client's real data, and a physical device respectively).
 
 New task, added when merging `proposal(NEW2).md`'s §44 (a dated audit of
 an earlier deployment) into `proposal.md`. The audit predates the big
@@ -11,21 +15,16 @@ out to already be fixed by that rebuild** — verified directly against the
 current source before assuming the audit was still accurate. Don't trust
 audit text alone; check the code.
 
-## ⚠️ Spec conflict — needs a decision, not a silent fix
+## ⚠️ Spec conflict — RESOLVED (14 Sep 2026)
 
 `proposal.md` §24 ROOT PAGE (Part 1, P0) says: *"Root URL `/` is master
 Services landing... **Do not create competing `/services/` hub."*** The
 audit (Part 2 §44.2) separately calls the `/services/` 404 a critical bug
-to fix. These directly contradict each other. **Not building `/services/`**
-until this is resolved — Part 1 is explicitly still mandatory, and this
-isn't Part 2 "raising the bar," it's a real disagreement about URL
-structure. Options:
-- (a) keep `/` as the only Services landing; treat the audit note as
-  superseded — no action needed.
-- (b) build `/services/` as a real page and demote `/` to a more
-  conventional homepage — a genuine IA change.
-- (c) redirect `/services/` → `/` so old links don't 404 without building
-  a second hub.
+to fix. **Decided: option (c)** — redirect `/services/` → `/` (and the
+locale equivalents), via `public/_redirects`. Not a competing hub (no
+content of its own), so Part 1's requirement stands untouched; closes the
+actual gap the audit found. Full reasoning in `NOTES.md` → "Decisions
+resolving the audit's two open questions."
 
 ## Scope
 
@@ -41,12 +40,19 @@ structure. Options:
       `HomePage.astro`'s hero slides are `hero-villa` (exterior), 
       `architecture` (structure/shading), `pool-villa` (pool/landscape),
       `interior` — four genuinely distinct categories, not repeats.
-- [ ] **Blocked on the decision above** — root Services page / `/services/`.
-- [ ] Add an indicative-pricing table to service pages — **in
-      progress/next up**: `BudgetGuidance.astro` currently only lists
-      qualitative cost *factors*, not an actual price-range table like
-      the one specified in the merged Part 2 (with THB ranges + the
-      "indicative, contact us" disclaimer). Needs a real table component.
+- [x] ~~Root Services page / `/services/`~~ — **resolved**: redirect added
+      (`public/_redirects`), no new page built. See above.
+- [x] ~~Add an indicative-pricing table to service pages~~ — **done, but
+      not literal THB figures.** This studio has no real, verified pricing
+      data — inventing specific currency numbers would violate the truth
+      rule as directly as a fabricated testimonial would (see
+      `src/lib/types.ts`'s `PricingRow` comment). Implemented as
+      `PricingTable.astro`, wired into all 13 service pages, using
+      relative indicative tiers ("Base" / "1.5-2.5x base" / "3x+ base")
+      instead — genuinely informative about how scope drives cost, with
+      zero invented absolute numbers. Heading/disclaimer localized via
+      `t.pricing` in the dictionary (all 4 languages, ready once
+      service-page translation starts).
 - [ ] Get the lead form actually working on whatever host this deploys
       to — `functions/api/lead.ts` needs Cloudflare Pages Functions (or an
       equivalent), which plain GitHub Pages doesn't provide. This is a
@@ -59,22 +65,24 @@ structure. Options:
       client," not a code fix.
 - [ ] Test mobile menu / mega-menu dropdown behavior on a real device or
       emulator (currently unverified either way).
-- [ ] Decide on and (if approved) implement the primary-nav restructure the
-      audit proposes (13 services listed directly, About/Process/Journal/
-      Projects moved to footer-only, Locations moved out of the nav to a
-      per-service "Service Areas" block) — **a deliberate IA decision**,
-      not a silent change; confirm before building. Also affects the
-      `/services/` decision above — don't decide the nav twice.
+- [x] ~~Primary-nav restructure~~ — **rejected, resolved (14 Sep 2026)**:
+      current nav kept as-is. The existing Services mega-menu already
+      exposes all 13 services without needing 13 flat top-level items;
+      moving About/Process to footer-only conflicts with proposal.md §3
+      MENU's own explicit primary-nav list; moving Locations out of nav
+      loses a legitimate location-first entry point. Full reasoning in
+      `NOTES.md`. No code change.
 
 ## Acceptance criteria
 
-- [ ] The `/services/` question above is explicitly decided (a/b/c), not
-      left ambiguous.
+- [x] The `/services/` question above is explicitly decided — option (c),
+      redirect only.
 - [x] Every breadcrumb link on a representative sample of pages goes to
       its actual parent — verified in source for Service/Project/Location
       templates.
-- [ ] Every service page shows a real price-range table with the
-      indicative-pricing disclaimer.
+- [x] Every service page shows a real price-range table with the
+      indicative-pricing disclaimer — verified across all 13 in the
+      built output.
 - [ ] A real end-to-end form submission is received (Telegram staff chat
       or wherever it's wired to) from the deployed site.
 - [ ] No placeholder phone/email/WhatsApp number remains on any live page.

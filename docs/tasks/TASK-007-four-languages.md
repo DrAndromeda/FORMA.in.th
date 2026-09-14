@@ -2,7 +2,11 @@
 
 **Priority:** P1
 **Phase:** 7
-**Status:** Partial — UI shell + homepage + contact fully translated; long-form content pages still English-only (confirmed by the 13 Sep 2026 audit: 3 of 44 pages)
+**Status:** Partial — UI shell + homepage + contact fully translated; 3 of
+13 services now translated to Russian (14 Sep 2026: architecture,
+villa-design, construction) as full entries, verified in a production
+build. 10 services remain in RU; all 13 remain in TH/HE; locations/about/
+process/projects/journal untouched in any of the three languages.
 
 `proposal.md` explicitly warns against machine translation ("preserve
 meaning, tone, terminology and search intent per language"), so this is a

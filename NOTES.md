@@ -163,9 +163,18 @@ file (services, locations, projects) or a new file (about, process) or a new `.m
 (journal, under `src/content/journal/<locale>/`) — see README.md "Content model" for the
 exact mechanism and why partial-page translations aren't supported.
 
+**Progress (14 Sep 2026): 3 of 13 services translated to Russian** —
+`architecture`, `villa-design`, `construction` (`src/content/services/ru.ts`).
+Full entries, not summaries — every field of `ServiceTranslation` including
+`pricingRows`, verified in a production build (`/ru/services/architecture/`
+etc. all render correctly, nav/footer correctly fall back to the English
+page for the other 10 untranslated services rather than mixing languages).
+TH/HE and the remaining 10 services are unstarted.
+
 Recommended order, by SEO/commercial value:
 
 1. **Services (13 pages × 3 languages)** — highest commercial value, primary landing pages.
+   RU: 3/13 done (architecture, villa-design, construction) — 10 remain, plus all 13 in TH/HE.
 2. **Primary locations (4 × 3)** — Koh Phangan, Koh Samui, Koh Tao, Bali.
 3. **About, Process (1 × 3 each)** — referenced from every page's footer/nav.
 4. **Secondary locations (7 × 3), Projects (6 × 3), Journal (6 × 3).**
@@ -244,6 +253,38 @@ of this list.
   merged `proposal.md`'s Part 2 addendum. This is real, sizeable,
   unstarted work — tracked as its own large task, not a tweak to an
   existing epic.
+
+## Decisions resolving the audit's two open questions (14 Sep 2026)
+
+Both of these were explicitly flagged above as "needs a decision, not a
+silent fix." Decided from the architecture, not by splitting the
+difference — proposal.md and the audit disagreed, and one of them was
+simply wrong about the current implementation in each case.
+
+- **`/services/` — redirect only, no new page.** proposal.md §24 (P0) is
+  explicit: root `/` is the *only* Services landing page, and building a
+  competing `/services/` hub is expressly forbidden. A redirect isn't a
+  competing hub — it's an alias with no content of its own — so it
+  resolves the audit's real complaint (an old link, a direct URL guess, or
+  a crawler's own convention-guessing 404ing on the term the primary nav
+  itself uses) without violating the P0 requirement's intent. Implemented
+  as `public/_redirects` (`/services/ → /`, and the three locale
+  equivalents), a static edge-redirect file Cloudflare Pages (and Netlify)
+  read directly — no new Astro route, no new content.
+- **Nav restructure — rejected, current nav kept.** The audit's proposal
+  (flatten to 13 top-level service links, move About/Process/Journal/
+  Projects to footer-only, move Locations out of nav) solves a problem
+  `Header.astro` already solves differently and, on balance, better: the
+  existing Services mega-menu already exposes all 13 services (satisfying
+  proposal.md's own "expose all 13 services" requirement) without needing
+  13 flat top-level items, which would hurt mobile/header scannability.
+  Footer-only About/Process also directly conflicts with proposal.md §3
+  MENU's own explicit primary-nav list. Moving Locations out of nav would
+  remove a legitimate location-first entry point onto the 11 location
+  pages already built. The audit's proposal appears to have been written
+  without accounting for the mega-menu solution actually in place. No code
+  change; `docs/tasks/TASK-009` updated to reflect this as resolved, not
+  outstanding.
 
 ## Known minor gaps
 

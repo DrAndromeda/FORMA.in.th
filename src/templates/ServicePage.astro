@@ -6,6 +6,7 @@ import EditorialIntro from '../components/blocks/EditorialIntro.astro';
 import ProcessTimeline from '../components/blocks/ProcessTimeline.astro';
 import MaterialsBlock from '../components/blocks/MaterialsBlock.astro';
 import BudgetGuidance from '../components/blocks/BudgetGuidance.astro';
+import PricingTable from '../components/blocks/PricingTable.astro';
 import FAQAccordion from '../components/blocks/FAQAccordion.astro';
 import ServiceGrid from '../components/blocks/ServiceGrid.astro';
 import ProjectMosaic from '../components/blocks/ProjectMosaic.astro';
@@ -90,6 +91,10 @@ const availableLocales = LOCALES.filter((l) => hasServiceTranslation(l, slug));
     factors={tr.budgetFactors}
     cta={{ label: t.cta.requestConsultation, href: localizePath(locale, '/contact/') }}
   />
+
+  {tr.pricingRows && tr.pricingRows.length > 0 && (
+    <PricingTable heading={t.pricing.heading} rows={tr.pricingRows} disclaimer={t.pricing.disclaimer} />
+  )}
 
   {relatedProjects.length > 0 && (
     <section class="wrap py-14 sm:py-20">

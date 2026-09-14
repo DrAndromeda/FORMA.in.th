@@ -93,12 +93,22 @@ Service and location pages on the site link to the bot with a contextual presele
 
 - **Telegram**: a deep link `https://t.me/<bot_username>?start=service_villa-design` (or
   `start=location_koh-phangan`) is parsed in `bot.command('start', ...)` via
-  `applyStartPayload()`.
+  `applyStartPayload()`, and `advanceFromLanguage()` (called right after language
+  selection) skips straight past whichever step is already filled in — so a
+  service-preselected link goes straight to the location prompt, not back through
+  service selection.
 - **WhatsApp**: WhatsApp has no equivalent deep-link start-parameter mechanism from a plain
   link — instead, the "Start a Project" CTA on service/location pages should launch a
   `wa.me` link with a pre-filled text template (e.g. `wa.me/<number>?text=Villa%20Design`)
   and `handleMessage()` can be extended to parse a recognized opening phrase the same way.
   This is not yet wired up — see NOTES.md.
+
+## Testing
+
+**`TEST_PLAN.md`** is the step-by-step manual test — everything below is
+still unverified against a real Telegram/WhatsApp conversation until
+someone actually runs through it (no live credentials exist in the
+environment that built this).
 
 ## Known gaps before launch
 

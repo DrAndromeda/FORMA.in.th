@@ -30,7 +30,7 @@ done
 
 log "Labels done."
 
-log "Looking for an existing \"$PROJECT_TITLE\" project for $PROJECT_OWNER…"
+log "Looking for an existing \"$PROJECT_TITLE\" project for ${PROJECT_OWNER}…"
 NUM="$(project_number)"
 
 if [[ -z "$NUM" ]]; then
@@ -48,7 +48,7 @@ else
   warn "Link failed or already linked — continuing."
 fi
 
-log "Checking existing custom fields on project #$NUM…"
+log "Checking existing custom fields on project #${NUM}…"
 EXISTING_FIELDS="$(gh project field-list "$NUM" --owner "$PROJECT_OWNER" --format json --jq '.fields[].name' || true)"
 
 if grep -qx "Priority" <<<"$EXISTING_FIELDS"; then
@@ -68,22 +68,57 @@ else
     --data-type SINGLE_SELECT --single-select-options "$PHASE_OPTIONS" >/dev/null
 fi
 
-# Deliberately NOT attempting to delete/recreate the built-in "Status" field —
+# The built-in "Status" field itself can't be deleted/recreated —
 # `gh project field-delete` refuses with "Only custom fields can be deleted."
-# Its default options (Todo/In Progress/Done) must be renamed by hand, once.
+# Its OPTIONS can be replaced via the API, though (confirmed against the live
+# API: `updateProjectV2Field`'s `singleSelectOptions` takes a full replacement
+# set of {name, color, description} — it does NOT accept updating an existing
+# option by its `optionId` to rename it in place, only wholesale replacement).
+# That replacement discards any items' existing Status values, so this only
+# runs automatically when the options are still exactly GitHub's fresh
+# default (Todo/In Progress/Done) — i.e. provably nothing has been assigned
+# to them yet. Anything else is left alone with a warning.
+TARGET_STATUS_OPTIONS="Backlog,Ready,In Progress,In Test,Done"
+DEFAULT_STATUS_OPTIONS="Todo,In Progress,Done"
+STATUS_FIELD_ID="$(gh project field-list "$NUM" --owner "$PROJECT_OWNER" --format json --jq '.fields[] | select(.name=="Status") | .id')"
+STATUS_OPTIONS="$(gh project field-list "$NUM" --owner "$PROJECT_OWNER" --format json --jq '[.fields[] | select(.name=="Status") | .options[].name] | join(",")')"
+
+if [[ "$STATUS_OPTIONS" == "$TARGET_STATUS_OPTIONS" ]]; then
+  log "Status field options already match (Backlog/Ready/In Progress/In Test/Done) — skipping."
+elif [[ "$STATUS_OPTIONS" == "$DEFAULT_STATUS_OPTIONS" ]]; then
+  log "Replacing Status field's default options with Backlog/Ready/In Progress/In Test/Done…"
+  if gh api graphql -f query="
+    mutation {
+      updateProjectV2Field(input: {
+        fieldId: \"$STATUS_FIELD_ID\"
+        singleSelectOptions: [
+          {name: \"Backlog\", color: GRAY, description: \"\"},
+          {name: \"Ready\", color: BLUE, description: \"\"},
+          {name: \"In Progress\", color: YELLOW, description: \"\"},
+          {name: \"In Test\", color: ORANGE, description: \"\"},
+          {name: \"Done\", color: GREEN, description: \"\"}
+        ]
+      }) {
+        projectV2Field { ... on ProjectV2SingleSelectField { id } }
+      }
+    }" >/dev/null; then
+    log "Status field options updated."
+  else
+    warn "Could not update Status field options automatically — rename them by hand (Project → Status column → ⋯ → Edit field): Backlog, Ready, In Progress, In Test, Done."
+  fi
+else
+  warn "Status field options are neither the GitHub default nor the target set (found: $STATUS_OPTIONS) — leaving as-is rather than risk discarding existing item assignments. Rename by hand if you want: Backlog, Ready, In Progress, In Test, Done."
+fi
 
 cat >&2 <<EOF
 
 ──────────────────────────────────────────────────────────────────────────
-Bootstrap done. Project #$NUM ("$PROJECT_TITLE") is set up with labels and
-the Priority/Phase fields. Three things only a human can do, one time, in
-the GitHub UI:
+Bootstrap done. Project #$NUM ("$PROJECT_TITLE") is set up with labels,
+the Priority/Phase fields, and Status renamed to Backlog/Ready/In
+Progress/In Test/Done. Two things only a human can do, one time, in the
+GitHub UI:
 
-  1. Rename the built-in "Status" field's options to match docs/WORKFLOW.md:
-     Backlog, Ready, In Progress, In Test, Done.
-     (Project board → Status column header → ⋯ → Edit field)
-
-  2. Set up board automation, ideally via the Project's own Workflows tab
+  1. Set up board automation, ideally via the Project's own Workflows tab
      first (Project → ⋯ → Workflows): "Item added → Backlog",
      "Pull request opened, linked → In Test", "Issue closed / PR merged →
      Done". If this repo's Projects UI doesn't offer a "Pull request
@@ -94,7 +129,7 @@ the GitHub UI:
      Projects v2). Add it under Repo → Settings → Secrets and variables →
      Actions.
 
-  3. Turn on branch protection requiring the CI workflow to pass before
+  2. Turn on branch protection requiring the CI workflow to pass before
      merge (Repo → Settings → Branches → Branch protection rules).
 
 See docs/WORKFLOW.md for the full reference and docs/HowTo.md for the

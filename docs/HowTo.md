@@ -8,12 +8,11 @@ the way it does. This is *what to actually type*, in order.
 ```bash
 gh auth login                                  # if not already logged in
 gh auth refresh -s project,read:project        # if `gh auth status` doesn't already list `project`
-make board-setup                               # labels + board + Priority/Phase fields
+make board-setup                               # labels + board + Priority/Phase fields + Status renamed
 ```
 
-Then do the three manual steps `board-setup` prints (rename Status's
-options, wire up board automation, turn on branch protection) — see
-`docs/WORKFLOW.md` §3–4 and §7.
+Then do the two manual steps `board-setup` prints (wire up board
+automation, turn on branch protection) — see `docs/WORKFLOW.md` §4 and §7.
 
 ## Turning a proposal into one epic + its tasks
 

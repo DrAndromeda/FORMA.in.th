@@ -27,7 +27,7 @@ if [[ ${#files[@]} -eq 0 ]]; then
 fi
 
 for file in "${files[@]}"; do
-  title="$(head -n1 "$file" | sed -E 's/^#+\s*//')"
+  title="$(head -n1 "$file" | sed -E 's/^#+[[:space:]]*//')"
   [[ -z "$title" ]] && { warn "Skipping $file — no '# Title' first line found."; continue; }
 
   status_line="$(grep -oE '\*\*Status:\*\*.*' "$file" | head -n1 || true)"

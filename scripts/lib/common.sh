@@ -20,6 +20,15 @@ require_gh() {
     err "Not authenticated. Run: gh auth login"
     exit 1
   fi
+  # `gh project ...` subcommands accept --owner @me almost everywhere, but
+  # `gh project link` fails a literal string comparison between --owner and
+  # the resolved --repo's owner when --owner is left as the literal string
+  # "@me" (confirmed: "'stoianov46/Forma' has different owner from '@me'").
+  # Resolve it to the real login once, here, so every script/command below
+  # uses a concrete owner consistently instead of hitting that quirk.
+  if [[ "$PROJECT_OWNER" == "@me" ]]; then
+    PROJECT_OWNER="$(gh api user --jq '.login')"
+  fi
 }
 
 # Prints the board's project number (an integer), or nothing if no project with
@@ -50,19 +59,28 @@ require_project_number() {
 # succeed at creating the issue itself.
 set_field_value() {
   local project_num="$1" item_url="$2" field_name="$3" field_value="$4"
-  if gh project item-edit "$project_num" --owner "$PROJECT_OWNER" \
-      --url "$item_url" --field "$field_name" --value "$field_value" >/dev/null 2>&1; then
+  # Wrapped in retry_gh (defined below) with a small fixed pause after every
+  # call — confirmed in practice that a run of ~15 back-to-back item-edit
+  # calls (one epic + 12 tasks, twice over via create + sync) reliably trips
+  # GitHub's GraphQL secondary rate limit ("API rate limit exceeded"),
+  # distinct from and much more aggressive than the hourly quota.
+  if retry_gh gh project item-edit "$project_num" --owner "$PROJECT_OWNER" \
+      --url "$item_url" --field "$field_name" --value "$field_value" >/dev/null; then
     log "  set $field_name = $field_value"
   else
-    warn "  could not set $field_name = \"$field_value\" (field/option may not exist yet — see docs/WORKFLOW.md)"
+    warn "  could not set $field_name = \"$field_value\" (field/option may not exist yet, or rate-limited — see docs/WORKFLOW.md)"
   fi
+  sleep 0.5
 }
 
-# Retries a gh invocation up to 3 times with increasing backoff when the
-# output looks like a GraphQL secondary rate-limit error (not the hourly
-# quota — a burst limit that shows up after rapid sequential item-edit calls).
+# Retries a gh invocation with increasing backoff when the output looks like
+# a GraphQL secondary rate-limit error (not the hourly quota — a burst limit
+# that shows up after rapid sequential item-edit calls). Confirmed in
+# practice that GitHub's secondary limit does NOT reliably clear within 15s
+# of a single trigger — starting at 15s and doubling (15/30/60, ~105s total
+# across 4 attempts) is deliberately generous rather than optimistic.
 retry_gh() {
-  local attempt=1 max=3 delay=2
+  local attempt=1 max=4 delay=15
   local output status
   while true; do
     if output=$("$@" 2>&1); then

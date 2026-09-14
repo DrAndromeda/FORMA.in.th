@@ -115,6 +115,29 @@ async function askReview(ctx: Context, state: LeadState) {
   await ctx.reply(reviewSummary(state));
 }
 
+/**
+ * Fast-forwards past any step already filled in by a deep-link contextual
+ * preselect (`applyStartPayload`) — otherwise the preselect is captured but
+ * has no visible effect, which defeats the point of a service/location
+ * page's "Start a Project" CTA promising to preselect it. Only skips
+ * forward from the start of the flow (service, then location) — it can't
+ * skip a required step that hasn't been filled yet.
+ */
+async function advanceFromLanguage(ctx: Context, state: LeadState) {
+  if (!state.service) {
+    state.step = 'service';
+    await askService(ctx, state);
+    return;
+  }
+  if (!state.location) {
+    state.step = 'location';
+    await askLocation(ctx, state);
+    return;
+  }
+  state.step = 'projectType';
+  await askProjectType(ctx, state);
+}
+
 /** Parses an optional /start deep-link payload like "service_villa-design" or "location_koh-phangan" — set by a service/location page's contextual "Start a Project" CTA. */
 function applyStartPayload(state: LeadState, payload?: string) {
   if (!payload) return;
@@ -159,8 +182,7 @@ bot.on('callback_query:data', async (ctx) => {
 
   if (kind === 'lang') {
     state.locale = value as BotLocale;
-    state.step = 'service';
-    await askService(ctx, state);
+    await advanceFromLanguage(ctx, state);
     return;
   }
 
@@ -273,7 +295,32 @@ bot.on('message:text', async (ctx) => {
       await ctx.reply(s.invalidChoice);
       return;
 
+    case 'service':
+      // User typed instead of tapping an inline button — re-show the same
+      // choice rather than confusingly resetting to language selection.
+      await askService(ctx, state);
+      return;
+
+    case 'location':
+      await askLocation(ctx, state);
+      return;
+
+    case 'projectType':
+      await askProjectType(ctx, state);
+      return;
+
+    case 'contactMethod':
+      await askContactMethod(ctx, state);
+      return;
+
+    case 'done':
+      // A message after a completed submission starts a fresh enquiry.
+      sessions.delete(chatId);
+      await ctx.reply(LANGUAGE_PROMPT, { reply_markup: languageKeyboard() });
+      return;
+
     default:
+      // step === 'language' — no /start seen yet for this chat.
       await ctx.reply(LANGUAGE_PROMPT, { reply_markup: languageKeyboard() });
   }
 });

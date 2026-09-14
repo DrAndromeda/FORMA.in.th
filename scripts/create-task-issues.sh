@@ -60,7 +60,7 @@ if [[ ${#files[@]} -eq 0 ]]; then
 fi
 
 for file in "${files[@]}"; do
-  title="$(head -n1 "$file" | sed -E 's/^#+\s*//')"
+  title="$(head -n1 "$file" | sed -E 's/^#+[[:space:]]*//')"
   if [[ -z "$title" ]]; then
     warn "Skipping $file — no '# Title' first line found."
     continue

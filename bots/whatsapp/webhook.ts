@@ -62,13 +62,37 @@ async function askLanguage(waId: string) {
   );
 }
 
+const SERVICE_CATEGORIES_ORDER = ['design', 'build', 'management', 'specialist'] as const;
+
+/**
+ * WhatsApp interactive list messages cap at 10 rows TOTAL across all
+ * sections (a real Cloud API constraint, not a UI nicety) — our 13
+ * services in one list would be rejected by the Graph API outright. Ask
+ * for a category first (4 rows, well within the limit), then the services
+ * within it (at most 5 in the largest category) — an extra tap, but the
+ * only correct way to offer 13 choices through this message type. This
+ * stays inside the shared `service` step (see handleMessage below) rather
+ * than adding a WhatsApp-only step to the cross-channel state machine.
+ */
 async function askService(waId: string, state: LeadState) {
   const s = t(state);
-  const sections: ListSection[] = (['design', 'build', 'management', 'specialist'] as const).map((cat) => ({
-    title: SERVICE_CATEGORY_TITLE[cat],
-    rows: SERVICES.filter((slug) => SERVICE_CATEGORIES[slug] === cat).map((slug) => ({ id: `service:${slug}`, title: s.services[slug] })),
-  }));
+  const sections: ListSection[] = [
+    {
+      title: 'Category',
+      rows: SERVICE_CATEGORIES_ORDER.map((cat) => ({ id: `svccat:${cat}`, title: SERVICE_CATEGORY_TITLE[cat] })),
+    },
+  ];
   await sendList(waId, s.prompts.service, 'Choose', sections);
+}
+
+async function askServiceInCategory(waId: string, state: LeadState, category: string) {
+  const s = t(state);
+  const rows = SERVICES.filter((slug) => SERVICE_CATEGORIES[slug] === category).map((slug) => ({
+    id: `service:${slug}`,
+    title: s.services[slug],
+  }));
+  const title = SERVICE_CATEGORY_TITLE[category as keyof typeof SERVICE_CATEGORY_TITLE] ?? 'Service';
+  await sendList(waId, s.prompts.service, 'Choose', [{ title, rows }]);
 }
 
 async function askLocation(waId: string, state: LeadState) {
@@ -159,6 +183,9 @@ async function handleMessage(msg: IncomingMessage) {
   }
 
   if (state.step === 'service') {
+    if (choiceId?.startsWith('svccat:')) {
+      return askServiceInCategory(waId, state, choiceId.split(':')[1]);
+    }
     const slug = choiceId?.startsWith('service:') ? (choiceId.split(':')[1] as ServiceSlug) : undefined;
     if (!slug || !(SERVICES as readonly string[]).includes(slug)) return askService(waId, state);
     state.service = slug;

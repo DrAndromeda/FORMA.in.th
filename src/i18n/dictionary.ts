@@ -53,6 +53,10 @@ export interface Dictionary {
     exploreProjects: string;
     askAboutProject: string;
   };
+  pricing: {
+    heading: string;
+    disclaimer: string;
+  };
   form: {
     heading: string;
     intro: string;
@@ -157,6 +161,11 @@ export const en: Dictionary = {
     requestConsultation: 'Request a Consultation',
     exploreProjects: 'Explore Projects',
     askAboutProject: 'Ask About Your Project',
+  },
+  pricing: {
+    heading: 'Indicative investment',
+    disclaimer:
+      'These are relative bands illustrating how scope affects cost, not quoted prices — we do not have verified pricing data to publish fixed figures, and would rather explain the real drivers than invent a number. Every project is estimated individually once we understand your site and brief.',
   },
   form: {
     heading: 'Start a Project',
@@ -269,6 +278,11 @@ export const ru: Dictionary = {
     exploreProjects: 'Смотреть проекты',
     askAboutProject: 'Спросить о проекте',
   },
+  pricing: {
+    heading: 'Ориентир по инвестициям',
+    disclaimer:
+      'Это относительные диапазоны, показывающие, как масштаб влияет на стоимость, а не фиксированные цены — у нас нет проверенных данных по ценам, чтобы публиковать конкретные цифры, и мы предпочитаем объяснить реальные факторы, а не придумывать число. Каждый проект оценивается индивидуально после знакомства с участком и техническим заданием.',
+  },
   form: {
     heading: 'Начать проект',
     intro: 'Расскажите о вашем участке и идее. Мы отвечаем лично на каждый запрос, обычно в течение одного рабочего дня.',
@@ -377,6 +391,11 @@ export const th: Dictionary = {
     exploreProjects: 'ดูผลงาน',
     askAboutProject: 'สอบถามเกี่ยวกับโปรเจกต์',
   },
+  pricing: {
+    heading: 'แนวทางการลงทุนโดยประมาณ',
+    disclaimer:
+      'ตัวเลขเหล่านี้เป็นช่วงเปรียบเทียบเชิงสัมพัทธ์ที่แสดงว่าขนาดโครงการส่งผลต่อค่าใช้จ่ายอย่างไร ไม่ใช่ราคาที่เสนอจริง เนื่องจากเราไม่มีข้อมูลราคาที่ยืนยันแล้วสำหรับเผยแพร่ตัวเลขที่แน่นอน และเราต้องการอธิบายปัจจัยที่แท้จริงมากกว่าการเดาตัวเลข ทุกโครงการจะได้รับการประเมินเป็นรายกรณีหลังจากที่เราเข้าใจที่ดินและโจทย์ของคุณแล้ว',
+  },
   form: {
     heading: 'เริ่มโปรเจกต์',
     intro: 'เล่าให้เราฟังเกี่ยวกับที่ดินและแนวคิดของคุณ เราจะตอบกลับทุกคำถามด้วยตนเอง โดยปกติภายในหนึ่งวันทำการ',
@@ -482,6 +501,11 @@ export const he: Dictionary = {
     requestConsultation: 'בקשו ייעוץ',
     exploreProjects: 'צפו בפרויקטים',
     askAboutProject: 'שאלו על הפרויקט',
+  },
+  pricing: {
+    heading: 'הערכת השקעה',
+    disclaimer:
+      'אלו טווחים יחסיים הממחישים כיצד היקף הפרויקט משפיע על העלות, לא מחירים מוצעים — אין לנו נתוני תמחור מאומתים כדי לפרסם מספרים קבועים, ואנו מעדיפים להסביר את הגורמים האמיתיים במקום להמציא מספר. כל פרויקט מוערך בנפרד לאחר שנכיר את המגרש והתכנית שלכם.',
   },
   form: {
     heading: 'התחילו פרויקט',

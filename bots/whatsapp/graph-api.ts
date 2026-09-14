@@ -44,6 +44,15 @@ export interface ListSection {
 
 /** Interactive list message — used for choice steps with more than 3 options (service, location, project type). */
 export async function sendList(to: string, bodyText: string, buttonLabel: string, sections: ListSection[]): Promise<void> {
+  const totalRows = sections.reduce((sum, section) => sum + section.rows.length, 0);
+  if (totalRows > 10) {
+    // A real, confirmed Cloud API constraint (not a soft UI limit) — the
+    // Graph API rejects the request outright above 10 rows total across
+    // all sections. Caught this exact bug once already (the 13-service
+    // list in webhook.ts) — this guard is here so it fails loudly and
+    // immediately in development instead of silently 400-ing in production.
+    throw new Error(`WhatsApp list messages support at most 10 rows total across all sections (got ${totalRows}). Split into multiple messages (see askService/askServiceInCategory in webhook.ts for the pattern).`);
+  }
   await post('/messages', {
     messaging_product: 'whatsapp',
     to,
