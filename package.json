@@ -11,7 +11,12 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "check": "astro check"
+    "check": "astro check",
+    "qa:links": "node scripts/qa/linkcheck.cjs",
+    "qa:meta": "node scripts/qa/metacheck.cjs",
+    "qa:jsonld": "node scripts/qa/jsonldcheck.cjs",
+    "qa:static": "npm run qa:links && npm run qa:meta && npm run qa:jsonld",
+    "qa:browser": "node scripts/qa/browsercheck.cjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
@@ -29,6 +34,8 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@cloudflare/workers-types": "^5.20260911.1",
+    "axe-core": "^4.13.0",
+    "puppeteer-core": "^25.11.0",
     "typescript": "^5.9.3"
   }
 }

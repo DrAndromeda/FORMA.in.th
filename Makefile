@@ -15,6 +15,15 @@ check: ## Mirror CI: type check then build (this project has no lint/test script
 	npm run check
 	npm run build
 
+qa-static: ## Static QA: broken links, H1/title/meta/canonical/alt, JSON-LD validity — runs after `make build`
+	npm run qa:static
+
+qa-browser: ## Real-browser QA: mobile menu interaction, horizontal-scroll, axe-core a11y — needs a preview server running (make preview)
+	npm run qa:browser
+
+qa: build qa-static ## Full static QA pass: build then qa-static
+	@echo "Run 'make preview' in another terminal, then 'make qa-browser', for the real-browser pass."
+
 ## ── GitHub Project board ─────────────────────────────────────────────────
 
 board-setup: ## One-time: labels, the Project board, Priority/Phase fields — runs: scripts/github-bootstrap.sh
@@ -50,4 +59,4 @@ task-start: ## Create+checkout a task's branch and move it to In Progress: TASK=
 help: ## Show this help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-.PHONY: dev build preview check board-setup board-epics board-tasks board-sync-status board-sync-tasks board-backfill task-new task-start help
+.PHONY: dev build preview check qa-static qa-browser qa board-setup board-epics board-tasks board-sync-status board-sync-tasks board-backfill task-new task-start help

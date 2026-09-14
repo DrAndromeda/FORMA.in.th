@@ -12,7 +12,7 @@ const { heading, rows, disclaimer } = Astro.props;
 <section class="wrap py-14 sm:py-20">
   <div class="rounded-2xl border border-ink-900/10 bg-stone-100 p-8 sm:p-12">
     <h2 class="mb-6">{heading}</h2>
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto" tabindex="0" role="region" aria-label={heading}>
       <table class="w-full min-w-[520px] border-collapse text-left text-sm">
         <thead>
           <tr class="border-b border-ink-900/15 text-xs font-semibold tracking-wide text-ink-900/60 uppercase">
