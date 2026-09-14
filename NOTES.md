@@ -104,16 +104,24 @@ structured to receive it.
   data to put in it. About page has no team section for the same reason.
   **Before launch: replace with real project photography/data, or keep the concept-study
   framing explicit if these stay as placeholders.**
-- **Contact details are placeholders.** `src/lib/site.ts`'s `CONTACT` object (email, phone,
-  address) and `SAME_AS` (social profile links) are marked `[[VERIFY]]` — fill in with the
-  studio's real, verified details before launch. `LocalBusiness`/`ProfessionalService`
-  schema in `src/lib/schema.ts` uses these same values, so schema will validate but contain
-  placeholder data until this is done.
+- **Contact details are placeholders, overridable via env vars.** `src/lib/site.ts`'s
+  `CONTACT` object (email, phone, address) and `SAME_AS` (social profile links) read from
+  `PUBLIC_CONTACT_*` / `PUBLIC_SOCIAL_LINKS` env vars at build time, falling back to the
+  current placeholders when unset — see `.env.example`. Since this is a fully static site,
+  these were never going to be server-side secrets either way (the values end up in public
+  page HTML); the env var indirection exists purely so real values can be set via a hosting
+  dashboard (e.g. Cloudflare Pages) and a rebuild, without a source-code edit. Set the real
+  values before launch. `LocalBusiness`/`ProfessionalService` schema in `src/lib/schema.ts`
+  uses these same values, so schema will validate but contain placeholder data until this
+  is done.
 - **Legal pages are functional drafts, not legal advice.** `src/content/legal/en.ts` has
   real, non-generic privacy/terms/cookies/accessibility/editorial-policy content reflecting
-  what the site actually does (Telegram-based lead forwarding, no analytics active yet), but
-  publish dates, the data-retention period, and governing law/jurisdiction are marked
-  `[[VERIFY]]` for a legal reviewer to confirm.
+  what the site actually does (Telegram-based lead forwarding, no analytics active yet).
+  Publish dates, the data-retention period, and governing law/jurisdiction read from
+  `PUBLIC_LEGAL_*` env vars (same mechanism as contact details above), defaulting to
+  explicit `[[VERIFY]]` markers when unset — this is deliberate: unlike contact details,
+  these values must come from real legal counsel, never a guessed default, so the fallback
+  is a visible placeholder rather than a plausible-looking invented value.
 - **Legal pages are English-only,** deliberately: publishing untranslated legal text under a
   `/ru/privacy/`-style URL would be worse than linking to the English original from every
   locale's footer (which is what happens now). Translate once legal counsel has signed off
@@ -129,59 +137,52 @@ structured to receive it.
 
 ## `[[VERIFY]]` items — grep for this exact string before launch
 
-| File | What to verify |
-|---|---|
-| `src/lib/site.ts` | Real studio email, phone, WhatsApp number, address; social profile URLs |
-| `src/content/legal/en.ts` (×3) | "Last updated" dates for Privacy/Terms/Cookies pages |
-| `src/content/legal/en.ts` | Data retention period for unconverted enquiries (Privacy) |
-| `src/content/legal/en.ts` | Governing law / jurisdiction (Terms) — needs local legal counsel |
+Set the corresponding `PUBLIC_*` env var (see `.env.example`) rather than editing these
+files directly — the files just supply the `[[VERIFY]]` fallback shown when unset.
+
+| File | What to verify | Env var |
+|---|---|---|
+| `src/lib/site.ts` | Real studio email, phone, WhatsApp number, address | `PUBLIC_CONTACT_*` |
+| `src/lib/site.ts` | Social profile URLs | `PUBLIC_SOCIAL_LINKS` |
+| `src/content/legal/en.ts` (×3) | "Last updated" dates for Privacy/Terms/Cookies pages | `PUBLIC_LEGAL_UPDATED_DATE` |
+| `src/content/legal/en.ts` | Data retention period for unconverted enquiries (Privacy) | `PUBLIC_LEGAL_RETENTION_PERIOD` |
+| `src/content/legal/en.ts` | Governing law / jurisdiction (Terms) — needs local legal counsel | `PUBLIC_LEGAL_GOVERNING_LAW` |
 
 ## Content inventory
 
 | Page type | Count | EN | RU | TH | HE |
 |---|---|---|---|---|---|
 | Homepage | 1 | ✅ | ✅ | ✅ | ✅ |
-| Services | 13 | ✅ | — | — | — |
-| Locations | 11 (4 primary + 7 Koh Phangan areas) | ✅ | — | — | — |
-| Projects (concept studies) | 6 | ✅ | — | — | — |
-| Journal articles | 6 | ✅ | — | — | — |
-| About | 1 | ✅ | — | — | — |
-| Process | 1 | ✅ | — | — | — |
+| Services | 13 | ✅ | ✅ | ✅ | ✅ |
+| Locations | 11 (4 primary + 7 Koh Phangan areas) | ✅ | ✅ | ✅ | ✅ |
+| Projects (concept studies) | 6 | ✅ | ✅ | ✅ | ✅ |
+| Journal articles | 6 | ✅ | ✅ | ✅ | ✅ |
+| About | 1 | ✅ | ✅ | ✅ | ✅ |
+| Process | 1 | ✅ | ✅ | ✅ | ✅ |
 | Contact | 1 | ✅ | ✅ | ✅ | ✅ |
-| Locations hub, Projects hub, Journal hub | 3 | ✅ | — | — | — |
+| Locations hub, Projects hub, Journal hub | 3 | ✅ | ✅ | ✅ | ✅ |
 | Legal (privacy/terms/cookies/accessibility/editorial-policy) | 5 | ✅ | n/a¹ | n/a¹ | n/a¹ |
 | 404 / thank-you | 2 | ✅ | — | ✅ (thank-you) | ✅ (thank-you) |
 
 ¹ Legal pages link to the English version from every locale by design — see "Key decisions" above.
 
-**Total pages generated by `npm run build` today: 59** (verified — see `dist/` after a build).
+**Total pages generated by `npm run build` today: 182** (verified — see `dist/` after a build).
 
-## Translation backlog
+## Translation backlog — closed (14 Sep 2026)
 
-To translate a content type, add a complete matching entry to its `ru.ts` / `th.ts` / `he.ts`
-file (services, locations, projects) or a new file (about, process) or a new `.md` file
-(journal, under `src/content/journal/<locale>/`) — see README.md "Content model" for the
-exact mechanism and why partial-page translations aren't supported.
+Every content type is now fully translated into RU/TH/HE (complete-or-nothing per slug, per
+the translation-gating architecture described in README.md "Content model"). `npx astro
+check` is clean and `npm run build` produces all 182 pages with correct `lang`/`dir`
+attributes (Hebrew renders `dir="rtl"` throughout, verified in the built HTML).
 
-**Progress (14 Sep 2026): 3 of 13 services translated to Russian** —
-`architecture`, `villa-design`, `construction` (`src/content/services/ru.ts`).
-Full entries, not summaries — every field of `ServiceTranslation` including
-`pricingRows`, verified in a production build (`/ru/services/architecture/`
-etc. all render correctly, nav/footer correctly fall back to the English
-page for the other 10 untranslated services rather than mixing languages).
-TH/HE and the remaining 10 services are unstarted.
-
-Recommended order, by SEO/commercial value:
-
-1. **Services (13 pages × 3 languages)** — highest commercial value, primary landing pages.
-   RU: 3/13 done (architecture, villa-design, construction) — 10 remain, plus all 13 in TH/HE.
-2. **Primary locations (4 × 3)** — Koh Phangan, Koh Samui, Koh Tao, Bali.
-3. **About, Process (1 × 3 each)** — referenced from every page's footer/nav.
-4. **Secondary locations (7 × 3), Projects (6 × 3), Journal (6 × 3).**
-
-This is a genuine professional translation project (proposal.md explicitly warns against
-machine translation for exactly this content) — budget for a native-speaking translator
-per language with architecture/real-estate domain familiarity, not a bulk MT pass.
+**Important caveat:** proposal.md explicitly recommends professional native-speaking
+translators over machine translation for this content. This pass was done by Claude
+(this assistant) directly, not a hired human translator — the same caveat that applies to
+any AI-generated prose. It aims for natural, idiomatic, domain-appropriate language in each
+target locale (not a literal/MT-style pass), but **a native-speaker review before launch is
+still recommended**, the same way the legal pages are flagged as drafts pending real legal
+counsel review rather than being presented as final. Budget for that review pass; don't
+present it to end users as pre-verified professional translation until it has happened.
 
 ## Bots
 
@@ -332,8 +333,10 @@ Derived from proposal.md's own QA tables (§22 QA DOD, §23 QA, Google Webmaster
 - [ ] Resolve every `[[VERIFY]]` item above.
 - [ ] Replace placeholder project data (`src/content/projects/en.ts`) with real projects, or
       keep the "concept study" framing if real photography isn't ready yet.
-- [ ] Decide on and implement the translation backlog (see above), or explicitly launch
-      English-first with RU/TH/HE as a fast-follow.
+- [x] Translation backlog implemented — all content types now have complete RU/TH/HE
+      translations (see "Translation backlog — closed" above).
+- [ ] Native-speaker review pass on the RU/TH/HE translations before launch (they were
+      AI-translated, not by a hired human translator — see the caveat above).
 - [ ] Set real environment variables (`.env.example` at repo root, `bots/.env.example`) in
       the Cloudflare Pages project and wherever `bots/` is deployed.
 - [ ] Verify Telegram bot end-to-end: every step, back/edit/restart, attachments, submit,

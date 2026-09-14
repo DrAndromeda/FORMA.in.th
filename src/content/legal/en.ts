@@ -1,9 +1,11 @@
+import { LEGAL } from '../../lib/site';
+
 export const legalEn = {
   privacy: {
     title: 'Privacy Policy | FORMA',
     description: 'How FORMA collects, uses and protects information submitted through this website.',
     h1: 'Privacy Policy',
-    updated: 'Last updated: [[VERIFY: publish date before launch]]',
+    updated: `Last updated: ${LEGAL.updatedDate}`,
     body: [
       {
         heading: 'What we collect',
@@ -27,7 +29,7 @@ export const legalEn = {
       },
       {
         heading: 'Data retention',
-        text: 'Enquiry data that does not proceed to an active project is retained for a limited period [[VERIFY: specific retention period before launch]] and then deleted, unless you ask us to remove it sooner.',
+        text: `Enquiry data that does not proceed to an active project is retained for a limited period (${LEGAL.retentionPeriod}) and then deleted, unless you ask us to remove it sooner.`,
       },
       {
         heading: 'Contact',
@@ -39,7 +41,7 @@ export const legalEn = {
     title: 'Terms of Service | FORMA',
     description: 'Terms governing use of the FORMA website and initial project enquiries.',
     h1: 'Terms of Service',
-    updated: 'Last updated: [[VERIFY: publish date before launch]]',
+    updated: `Last updated: ${LEGAL.updatedDate}`,
     body: [
       {
         heading: 'About this site',
@@ -63,7 +65,7 @@ export const legalEn = {
       },
       {
         heading: 'Governing law',
-        text: '[[VERIFY: governing law and jurisdiction to be confirmed with local legal counsel before launch]].',
+        text: `${LEGAL.governingLaw}.`,
       },
     ],
   },
@@ -71,7 +73,7 @@ export const legalEn = {
     title: 'Cookie Settings | FORMA',
     description: 'How FORMA uses cookies and similar technologies, and how to manage your preferences.',
     h1: 'Cookie Settings',
-    updated: 'Last updated: [[VERIFY: publish date before launch]]',
+    updated: `Last updated: ${LEGAL.updatedDate}`,
     intro:
       'We use a small number of cookies to run this site and, where you consent, to understand how it is used. You can change your preference at any time using the control below.',
     categories: [
